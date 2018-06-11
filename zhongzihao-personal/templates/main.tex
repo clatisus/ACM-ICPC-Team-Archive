@@ -1,0 +1,96 @@
+%!TEX program = xelatex
+\documentclass[9pt, onecolumn, titlepage, a4paper]{book}
+%\usepackage{ctex}
+%\usepackage[fleqn]{amsmath}
+\usepackage[left=1.0cm, right=0.7cm, top=1.5cm, bottom=1.5cm]{geometry}
+\usepackage{listings, color, fontspec, minted, setspace, titlesec, fancyhdr, dingbat, mdframed, multicol}
+\usepackage{graphicx, amssymb, amsmath, textcomp, booktabs}
+\usepackage{xeCJK}
+\usepackage{yfonts}
+
+%\setlength{\parindent}{0em}
+%\setlength{\mathindent}{0pt}
+
+%configure fonts
+\setmonofont{Courier New Bold}[Scale=0.8]
+\setCJKmainfont{STHeiti-Light.ttc}
+
+%\setmainfont{Courier New Bold}
+
+\renewcommand{\theFancyVerbLine}{\sffamily \textcolor[rgb]{0.5,0.5,0.5}{\scriptsize {\arabic{FancyVerbLine}}}}
+
+\setminted[cpp]{
+	style=xcode,
+	mathescape,
+	linenos,
+	autogobble,
+	baselinestretch=1.0,
+	tabsize=4,
+	fontsize=\small,
+	frame=single,
+	framesep=1.0mm,
+	framerule=0.3pt,
+	numbersep=1.0mm,
+	breaklines=true,
+	breaksymbolsepleft=2pt,
+	breakbytoken=false,
+}
+\setminted[java]{
+	style=xcode,
+	mathescape,
+	linenos,
+	autogobble,
+	baselinestretch=1.0,
+	tabsize=4,
+	frame=single,
+	framesep=1.0mm,
+	framerule=0.30pt,
+	numbersep=1.0mm,
+	breaklines=true,
+	breaksymbolsepleft=2pt,
+	breakbytoken=false,
+}
+\setminted[text]{
+	style=xcode,
+	mathescape,
+	linenos,
+	autogobble,
+	baselinestretch=1.0,
+	tabsize=4,
+	%bgcolor=Gray,
+	frame=single,
+	framesep=1mm,
+	framerule=0.3pt,
+	numbersep=1mm,
+	breaklines=true,
+	breaksymbolsepleft=2pt,
+	%breaksymbolleft=\raisebox{0.8ex}{ \small\reflectbox{\carriagereturn}}, %not moe!
+	%breaksymbolright=\small\carriagereturn,
+	breakbytoken=false,
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\title{\Huge{\textgoth{zhongzihao's Standard Code Library}}}
+	\author{\emph{Beihang University}}
+	\date{Dated: \today}
+
+\begin{document}
+
+	\maketitle
+    
+    \begin{multicols}{2}
+	\tableofcontents
+	\end{multicols}
+    
+    \twocolumn
+	\begin{spacing}{1.0}
+		\def \source {source}
+		\input{\source/bignum/bignum.tex}
+		\input{\source/fft/fft.tex}
+		\input{\source/geometry/geometry.tex}
+		\input{\source/matrix/matrix.tex}
+		\input{\source/number_theory/number_theory.tex}
+		\input{\source/others/others.tex}
+		\let \source \undefined
+	\end{spacing}
+\end{document}
