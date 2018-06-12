@@ -300,7 +300,7 @@ double onLeft(L l, P p){
 	return l.v ^ (p - l.p);
 }
 
-std::vector <P> convexHull(std::vector <P> &ps){
+std::vector <P> convexHull(std::vector <P> &ps){ //返回的凸包为逆时针方向
 	const int N = 100010; // 抄时记得修改 
 	static P stack[N];
 	std::sort(ps.begin(), ps.end());
@@ -432,7 +432,7 @@ int tanConPL(std::vector <P> &ps, P q){
 	return ret;
 }
 
-std::vector <P> isConL(std::vector <P> &ps, P p, P q){
+std::vector <P> isConL(std::vector <P> &ps, P p, P q){//要求凸包为逆时针方向
 	std::vector <double> arc;
 	int n = ps.size();
 	for (int i = 0; i < n; ++ i){
@@ -464,6 +464,7 @@ std::vector <P> isConL(std::vector <P> &ps, P p, P q){
 	if (al < arc[0]) al += 2 * PI;
 	int left = (std::lower_bound(arc.begin(), arc.end(), al) - arc.begin()) % n;
 	double ar = l2.angle;
+    if (ar < arc[0]) ar += 2 * PI;
 	int right = std::lower_bound(arc.begin(), arc.end(), ar) - arc.begin();
 	int down = getseg(l1, left, right);
 	int up = getseg(l2, right, left + n);
