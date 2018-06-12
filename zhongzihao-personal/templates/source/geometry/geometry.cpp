@@ -445,7 +445,7 @@ std::vector <P> isConL(std::vector <P> &ps, P p, P q){
 			arc[i] += 2 * PI;
 		}
 	}
-	auto getseg = [ps](L l, int left, int right){
+	auto getseg = [&ps](L l, int left, int right){
 		-- left;
 		while (left < right){
 			int mid = left + right + 1 >> 1;
