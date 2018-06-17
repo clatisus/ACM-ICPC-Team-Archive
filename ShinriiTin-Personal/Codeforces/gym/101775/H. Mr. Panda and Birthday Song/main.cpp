@@ -46,14 +46,14 @@ void testCase() {
     }
      */
     bool dislike = false;
-    for (int i = 1, cnt = 0; i <= n; ++i) {
+    for (int i = 1, cnt = 0; !dislike && i <= n; ++i) {
         if (s[i] != '?' && isVowel(s[i])) {
             cnt = 0;
         } else {
             if (++cnt >= y) dislike = true;
         }
     }
-    for (int i = 1, cnt = 0; i <= n; ++i) {
+    for (int i = 1, cnt = 0; !dislike && i <= n; ++i) {
         if (s[i] != '?' && !isVowel(s[i])) {
             cnt = 0;
         } else {
