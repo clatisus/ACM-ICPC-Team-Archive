@@ -142,7 +142,7 @@ public:
 		FFT(aux, lengthret, 1);
 		FFT(aux1, lengthret, 1);
 		for (int i = 0; i < lengthret; ++ i){
-			aux[i] *= aux1[]
+			aux[i] *= aux1[i];
 		}
 		*/ 
 		FFT(aux, lengthret, -1);
