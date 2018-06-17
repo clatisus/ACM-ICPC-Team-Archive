@@ -1,3 +1,7 @@
+/**
+ * @题目大意：给出一个由小写字母和?组成的字符串，长度不超过10^6，问是否存在一种将?换成字母的方法，使得任意连续的元音字母少于x个，任意连续的辅音字母少于y个，同时问是否可以不满足这个条件。
+ * @题解：不满足的就贪心全部换成元音字母或辅音字母判断一下，满足则用f[0/1][i]进行dp，计算第i位是否为辅音字母时在i处至少由多少个连续的同为元音或辅音的数量即可。
+ */
 #include <bits/stdc++.h>
 
 const int max_N = (int) 1e6 + 21;
@@ -45,7 +49,7 @@ void testCase() {
         printf("f[0][%d] = %d, f[1][%d] = %d\n", i, f[0][i], i, f[1][i]);
     }
      */
-    bool dislike = false;
+    bool dislike = !like;
     for (int i = 1, cnt = 0; !dislike && i <= n; ++i) {
         if (s[i] != '?' && isVowel(s[i])) {
             cnt = 0;
