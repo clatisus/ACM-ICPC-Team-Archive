@@ -32,3 +32,6 @@
 *.app
 
 Makefile
+
+# Mac
+.DS_Store
