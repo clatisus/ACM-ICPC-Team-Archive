@@ -23,7 +23,7 @@ struct poly{
 	poly():length(-1), moder(0){memset(a, 0, sizeof(a));}
 	poly(int moder):length(-1), moder(moder){memset(a, 0, sizeof(a));}
 	
-	poly value(int x){
+	int value(int x){
 		int ret = 0;
 		for (int i = 0, now = 1; i <= length; ++ i){
 			ret = (ret + 1ll * a[i] * now) % moder;
