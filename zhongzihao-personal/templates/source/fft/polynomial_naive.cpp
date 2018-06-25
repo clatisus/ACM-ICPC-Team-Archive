@@ -127,27 +127,34 @@ struct poly{
 	static poly interpolation(std::vector <pii> vec, int moder){
 		int n = vec.size() - 1;
 		poly aux(moder); aux.length = 0; aux.a[0] = 1;
-		for (int i = 0; i <= n; ++ i){
-			poly aux1(moder); aux1.length = 1;
-			aux1.a[1] = 1; aux1.a[0] = moder - vec[i].first;
-			aux1.a[0] -= aux1.a[0] >= moder ? moder : 0;
-			aux = aux * aux1;
+		for (int i = 0; i <= n; ++ i, ++ aux.length){
+            int coe = moder - vec[i].first;
+            coe -= coe >= moder ? moder : 0;
+            for (int j = aux.length; j >= 0; -- j){
+                aux.a[j + 1] += aux.a[j];
+                aux.a[j + 1] -= aux.a[j + 1] >= moder ? moder : 0;
+                aux.a[j] = 1ll * aux.a[j] * coe % moder;
+            }
 		}
 		poly ret(moder);
 		for (int i = 0; i <= n; ++ i){
-			poly aux1(moder); aux1.length = 1;
-			aux1.a[1] = 1; aux1.a[0] = moder - vec[i].first;
-			aux1.a[0] -= aux1.a[0] >= moder ? moder : 0;
-			poly aux2 = aux / aux1;
-			int x = 1;
-			for (int j = 0; j <= n; ++ j){
-				if (i == j) continue;
-				x = 1ll * x * (vec[i].first - vec[j].first) % moder;
-				x += x < 0 ? moder : 0;
-			}
-			x = powermod(x, moder - 2, moder);
-			ret = ret + (aux2 * x) * vec[i].second;
+            int coe = moder - vec[i].first;
+            coe -= coe >= moder ? moder : 0;
+            int x = 1;
+            for (int j = 0; j <= n; ++ j){
+                if (i == j) continue;
+                x = 1ll * x * (vec[i].first - vec[j].first) % moder;
+                x += x < 0 ? moder : 0;
+            }
+            x = 1ll * powermod(x, moder - 2, moder) * vec[i].second % moder;
+            int left = aux.a[aux.length];
+            for (int j = aux.length; j; -- j){
+                ret.a[j - 1] = (ret.a[j - 1] + 1ll * left * x) % moder;
+                left = (aux.a[j - 1] - 1ll * left * coe) % moder;
+                left += left < 0 ? moder : 0;
+            }
 		}
+        ret.length = n;
 		return ret;
 	}
 };
