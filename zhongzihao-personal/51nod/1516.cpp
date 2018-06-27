@@ -90,6 +90,18 @@ int main(){
         v = tmp2[0] == 'V' ? pos2 + n : pos2;
         set[v].insert(u);
     }
+    bool flag = true;
+    for (int i = 0; i < l; ++ i){
+        if (type[i] != type[0]){
+            flag = false;
+            break;
+        }
+    }
+    if (flag){
+        for (int i = 0; i < n; ++ i){
+            add(ts1, 0, i);
+        }
+    }
     for (int i = 0; i < N << 1; ++ i){
         for (auto u : set[i]){
             ts1.addedge(i, u);
