@@ -75,23 +75,13 @@ void dfs1(int x) {
     ++blockSize[x];
 }
 
-void dfs2(int x, int c) {
-    if (blockHead[x]) {
-        c = blockHead[x];
-    } else {
-        blockHead[x] = c;
-    }
-    for (auto &y:vec[x])
-        if (y != p[x]) {
-            dfs2(y, c);
-        }
-}
-
 void getBlocks(int rt) {
     top = 0;
     p[rt] = dep[rt] = 0;
     dfs1(rt);
-    dfs2(rt, rt);
+    while (top) {
+    	blockHead[st[top--]] = rt;
+    }
 }
 
 struct functor {
