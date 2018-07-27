@@ -110,14 +110,13 @@ int main() {
         scanf("%d", a + i);
     }
 
-    SQRT = n / sqrt(n * log(n)) + 1;
-    BLOCK_NUM = sqrt(n * log(n)) + 1;
+    SQRT = sqrt(n) + 1;
+    BLOCK_NUM = (n + SQRT - 1) / SQRT;
 
     rebuild();
 
     scanf("%d", &q);
     for (int ti = 1; ti <= q; ++ ti) {
-        //if (block_num == 2 * BLOCK_NUM) {
         if (!(ti % BLOCK_NUM)) {
             putdown();
             rebuild();
