@@ -114,6 +114,10 @@ P proj(L l, P p){
     return l.p + l.v * (l.v % (p - l.p) / l.v.abs2());
 }
 
+P symmetry(L l, P p){
+    return 2 * proj(l, p) - p;
+}
+
 //判断线段是否严格相交（包括严格重合） 
 bool crsSS(P p1, P p2, P q1, P q2){
     double c1 = (p2 - p1) ^ (q1 - p1);
