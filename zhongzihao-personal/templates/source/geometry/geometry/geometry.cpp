@@ -114,6 +114,10 @@ P proj(L l, P p){
     return l.p + l.v * (l.v % (p - l.p) / l.v.abs2());
 }
 
+P symmetry(L l, P p){
+    return 2 * proj(l, p) - p;
+}
+
 //判断线段是否严格相交（包括严格重合） 
 bool crsSS(P p1, P p2, P q1, P q2){
     double c1 = (p2 - p1) ^ (q1 - p1);
@@ -219,6 +223,20 @@ bool isCs(std::vector <C> &c){
         else left = mid;
     }
     return false;
+}
+
+double areaCC(C c1, C c2){
+    double d = (c1.o - c2.o).abs();
+    if (sig(c1.r + c2.r - d) <= 0){
+        return 0;
+    }
+    if (sig(d - std::abs(c1.r - c2.r)) <= 0){
+        return sqr(std::min(c1.r, c2.r)) * PI;
+    }
+    double x = (sqr(d) + sqr(c1.r) - sqr(c2.r)) / (2 * d);
+    double t1 = std::acos(x / c1.r);
+    double t2 = std::acos((d - x) / c2.r);
+    return sqr(c1.r) * t1 + sqr(c2.r) * t2 - d * c1.r * sin(t1);
 }
 
 std::vector <P> tanCP(C c, P p){ // p在圆上时返回 p 点本身 
