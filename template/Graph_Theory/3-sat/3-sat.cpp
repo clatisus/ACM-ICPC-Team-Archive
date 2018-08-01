@@ -13,14 +13,14 @@ bool sat(int h) {
 }
 
 void dfs(int u) {
-    while (u < C && (sat(W[0][u]) || sat(W[1][u]) || sat(W[2][u]))) ++ u;
+    while (u < C && (sat(W[0][u]) || sat(W[1][u]) || sat(W[2][u]))) ++u;
     if (u == C) {
         found = true;
         return;
     }
     int tmp[3];
-    for (int i = 0; i < 3; ++ i) tmp[i] = press[W[i][u] >> 1];
-    for (int i = 0; i < 3; ++ i) {
+    for (int i = 0; i < 3; ++i) tmp[i] = press[W[i][u] >> 1];
+    for (int i = 0; i < 3; ++i) {
         if (press[W[i][u] >> 1] == -1) {
             press[W[i][u] >> 1] = W[i][u] & 1;
             dfs(u + 1);
@@ -31,7 +31,5 @@ void dfs(int u) {
             if (found) return;
         }
     }
-    for (int i = 0; i < 3; ++ i) press[W[i][u] >> 1] = tmp[i];
+    for (int i = 0; i < 3; ++i) press[W[i][u] >> 1] = tmp[i];
 }
-
-
