@@ -38,9 +38,13 @@
 
 - Dinic's Algo(D)
 
-### Graph
+### Search
 
 - Max Clique(W)
+
+- ~3-sat(W)~
+
+### Graph
 
 - Dominator Tree(W)
 
@@ -108,9 +112,13 @@
 
 ## Miscellaneous
 
+### Fase IO
+
 - Java I/O(W)
 
 - ~Cpp I/O(W)~
+
+### Others
 
 - bitset(W)
 
