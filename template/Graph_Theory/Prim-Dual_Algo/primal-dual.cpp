@@ -123,7 +123,7 @@ namespace primal_dual {
                 cost += adt * sum;
             }
         } while (dijkstra(n, s, t) && sum < 0); //for feasible flow
-		// while (dijkstra(n, s, t); //for max flow
+		// while (dijkstra(n, s, t)); //for max flow
     }
 
     /**
