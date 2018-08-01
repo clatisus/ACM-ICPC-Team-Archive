@@ -1,4 +1,5 @@
 //Min cost feasible flow or max flow
+//modified to long long: inf, dis[], sum, cost, memset(dis, inf)*2, edge.w, addedge(w)
 namespace primal_dual {
     const int max_N = 2333; //vertexes number
     const int inf = 0x3f3f3f3f; //a number larger than all dis
