@@ -34,7 +34,8 @@ namespace primal_dual {
             if (head == max_N) head = 0;
             for (auto it : vec[u]) {
                 if (!e[it ^ 1].c) continue;
-                int v = e[it].v, tmp = dis[u] + e[it ^ 1].w;
+                int v = e[it].v;
+				auto tmp = dis[u] + e[it ^ 1].w;
                 if (dis[v] > tmp) {
                     dis[v] = tmp;
                     if (!vis[v]) {
@@ -60,7 +61,8 @@ namespace primal_dual {
             vis[u] = 1;
             for (auto it : vec[u]) {
                 if (!e[it ^ 1].c) continue;
-                int v = e[it].v, tmp = dis[u] + e[it ^ 1].w;
+                int v = e[it].v;
+				auto tmp = dis[u] + e[it ^ 1].w;
                 if (dis[v] > tmp) {
                     dis[v] = tmp;
                     pq.push({-dis[v], v});
