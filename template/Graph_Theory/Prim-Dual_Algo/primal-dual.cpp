@@ -11,6 +11,15 @@ namespace primal_dual {
 
     std::vector<edge> e; //all edges
     std::vector<int> vec[max_N]; //edge indexes for each vertex
+    
+    void adjust(int s) {
+		for (int it = 0; it < M; it += 2) {
+            int u = e[it ^ 1].v, v = e[it].v;
+            e[it].w += dis[v] - dis[u];
+            e[it ^ 1].w += dis[u] - dis[v];
+        }
+        sum += dis[s];
+	}
 
     void spfa(int n, int s, int t) {
         static int Q[max_N];
@@ -35,12 +44,7 @@ namespace primal_dual {
             }
         }
         if (dis[s] == inf) return;
-        for (int it = 0; it < M; it += 2) {
-            int u = e[it ^ 1].v, v = e[it].v;
-            e[it].w += dis[v] - dis[u];
-            e[it ^ 1].w += dis[u] - dis[v];
-        }
-        sum += dis[s];
+        adjust(s);
     }
 
     bool dijkstra(int n, int s, int t) {
@@ -63,13 +67,7 @@ namespace primal_dual {
             }
         }
         if (!vis[s]) return false;
-        for (int it = 0; it < M; it += 2) {
-            int u = e[it ^ 1].v, v = e[it].v;
-            e[it].w += dis[v] - dis[u];
-            e[it ^ 1].w += dis[u] - dis[v];
-        }
-        sum += dis[s];
-        return true;
+        return adjust(s), true;
     }
 
     int dfs(int t, int u, int a) {
