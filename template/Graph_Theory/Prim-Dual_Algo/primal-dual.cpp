@@ -14,13 +14,13 @@ namespace primal_dual {
     std::vector<int> vec[max_N]; //edge indexes for each vertex
     
     void adjust(int s) {
-		for (int it = 0; it < M; it += 2) {
+        for (int it = 0; it < M; it += 2) {
             int u = e[it ^ 1].v, v = e[it].v;
             e[it].w += dis[v] - dis[u];
             e[it ^ 1].w += dis[u] - dis[v];
         }
         sum += dis[s];
-	}
+    }
 
     void spfa(int n, int s, int t) {
         static int Q[max_N];
@@ -35,7 +35,7 @@ namespace primal_dual {
             for (auto it : vec[u]) {
                 if (!e[it ^ 1].c) continue;
                 int v = e[it].v;
-				auto tmp = dis[u] + e[it ^ 1].w;
+                auto tmp = dis[u] + e[it ^ 1].w;
                 if (dis[v] > tmp) {
                     dis[v] = tmp;
                     if (!vis[v]) {
@@ -62,7 +62,7 @@ namespace primal_dual {
             for (auto it : vec[u]) {
                 if (!e[it ^ 1].c) continue;
                 int v = e[it].v;
-				auto tmp = dis[u] + e[it ^ 1].w;
+                auto tmp = dis[u] + e[it ^ 1].w;
                 if (dis[v] > tmp) {
                     dis[v] = tmp;
                     pq.push({-dis[v], v});
@@ -124,7 +124,7 @@ namespace primal_dual {
                 cost += adt * sum;
             }
         } while (dijkstra(n, s, t) && sum < 0); //for feasible flow
-		//} while (dijkstra(n, s, t)); //for max flow
+        //} while (dijkstra(n, s, t)); //for max flow
     }
 
     /**
