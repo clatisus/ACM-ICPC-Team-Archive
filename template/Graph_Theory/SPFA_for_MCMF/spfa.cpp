@@ -17,7 +17,7 @@ namespace MCMF {
         static int Q[max_N];
         int head = 0, tail = 0;
         memset(dis + 1, 0x3f, n * sizeof(int));
-        memset(vis + 1, 0, sizeof(int));
+        memset(vis + 1, 0, n * sizeof(int));
         dis[s] = 0, vis[s] = 1, Q[tail++] = s;
         while (head != tail) {
             int u = Q[head++];
