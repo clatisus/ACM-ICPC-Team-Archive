@@ -144,7 +144,7 @@ public:
     
     //表示求最高次为n的inv，log和exp同理
     poly inv(int n) const {
-        // if (!~len || !a[0]) assert(("Invalid polynomial inv!", 0));
+        assert(~len && a[0]);
         poly ret(1);
         ret.a[0] = powermod(a[0], moder - 2);
         for (int nowprecision = 0; nowprecision < n; ) {
@@ -177,7 +177,7 @@ public:
     }
 
     poly operator / (const poly &p) const {
-        // if (!~p.len) assert(("Invalid polynomial division!", 0));
+        assert(~p.len);
         if (p.len > len) return poly(-1);
         poly a(*this), b(p);
         std::reverse(a.a.begin(), a.a.begin() + a.len + 1);
@@ -195,7 +195,7 @@ public:
     poly &operator %= (const poly &p) { return *this = *this % p; }
 
     poly log(int n) const {
-        // if (!~len || a[0] != 1) assert(("Invalid polynomial log!", 0));
+        assert(~len && a[0] == 1);
         poly aux(*this, n);
         poly ret = aux.der() * aux.inv(n - 1);
         ret.setlen(n - 1);
@@ -203,7 +203,7 @@ public:
     }
 
     poly exp(int n) const {
-        // if (~len && a[0]) assert(("Invalid polynomial exp!", 0));
+        assert(!~len || !a[0]);
         poly ret(0);
         ret.a[0] = 1;
         poly unit = ret;
