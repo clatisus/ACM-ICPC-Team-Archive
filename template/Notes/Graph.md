@@ -27,7 +27,7 @@ $$
 
 $$
 \begin{aligned}
-|C\_r|=|B\_rB\_r^T|&=\sum\_{S\subset \{1,2,\dots,m\},|S|=n-1}|(B\_r)\_S||(B\_r)\_S^T|\\
+|C\_r|=|B\_rB\_r^T|&=\sum\_{S\subset \{1,2,\dots,m\},|S|=n-1}|(B\_r)\_S||(B\_r)\_S^T|\\\\
 &=\sum\_{S\subset \{1,2,\dots,m\},|S|=n-1}|(B\_r)\_S|^2
 \end{aligned}
 $$
