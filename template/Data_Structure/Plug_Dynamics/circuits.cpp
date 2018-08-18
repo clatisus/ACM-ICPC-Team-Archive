@@ -2,9 +2,8 @@ namespace circuits {
 	//The number of connected blocks on the contour line will
 	//not exceed half of the number of columns
 	using LL = long long;
-
+	using HashT = std::unordered_map<LL, int>;
 	const int max_N = 12;
-
 	struct state {
 		int a[max_N], n, m;
 
@@ -50,5 +49,42 @@ namespace circuits {
 		}
 	};
 
-	std::unordered_map<LL, LL> pre, cur;
+	HashT pre, cur;
+
+	void updt(HashT &map, LL set, int tmp) {
+        if (!map.count(set) || map[set] > tmp) map[set] = tmp;
+	}
+
+	void solve() {
+        //input
+        pre.clear(), pre[0] = 0;
+        for (int r = 0; r < n; ++r) {
+            for (int c = 0; c < m; ++c) {
+                //transfer grid (r, c)
+                cur.clear();
+                for (auto pr : pre) {
+                    state sta(m, pr.first);
+                    int a = sta.a[c], w = sta.a[c + 1];
+                    if (a && w) {
+                        //unite
+                    } else if (!a && !w) {
+                        //add
+                    } else {
+                        //same
+						//swap
+                    }
+                }
+                pre = cur;
+            }
+            //transfer to next row
+            cur.clear();
+            for (auto pr : pre) {
+                state sta(m, pr.first);
+                if (!sta.a[m]) sta.move(), cur[sta.hash()] = pr.second;
+            }
+            pre = cur;
+        }
+        assert(cur.count(0));
+        printf("%d\n", cur[0]);
+	}
 };
