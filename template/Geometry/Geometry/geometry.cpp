@@ -10,143 +10,132 @@ inline int sig(double p){
 
 inline double sqr(double p){return p * p;}
 
-class P{
-public:
+struct P {
     double x, y;
-    explicit P (double x = 0, double y = 0): x(x), y(y){}
-    P operator + (const P &p)const{return P (x + p.x, y + p.y);}
-    P operator - (const P &p)const{return P (x - p.x, y - p.y);}
-    P operator * (const double &p)const{return P (x * p, y * p);}
-    friend P operator * (const double &d, const P &p){return P (d * p.x, d * p.y);}
-    P operator / (const double &p)const{return P (x / p, y / p);}
-    double operator ^ (const P &p)const{return x * p.y - y * p.x;}
-    double operator % (const P &p)const{return x * p.x + y * p.y;}
-    double abs2()const{return *this % *this;}
-    double abs()const{return std::sqrt(abs2());}
-    double angle()const{return std::atan2(y, x);}
+
+    explicit P(double x = 0, double y = 0) : x(x), y(y) {}
+
+    P add(const P &p) const { return P(x + p.x, y + p.y); }
+    P sub(const P &p) const { return P(x - p.x, y - p.y); }
+    P mul(const double &t) const { return P(x * t, y * t); }
+
+    double dot(const P &p) const { return x * p.x + y * p.y; }
+    double det(const P &p) const { return x * p.y - y * p.x; }
+
+    double abs2() const { return dot(*this); }
+    double abs() const { return std::sqrt(abs2()); }
+    double angle() const { return std::atan2(y, x); }
     
     // 逆时针旋转 rad 弧度 
-    P rot(const double &rad)const{
+    P rot(const double &rad) const {
         double sin = std::sin(rad), cos = std::cos(rad);
-        return P (x * cos - y * sin, x * sin + y * cos);
+        return P(x * cos - y * sin, x * sin + y * cos);
     }
     
-    P rot90()const{
-        return P (-y, x);
+    P rot90() const { return P(-y, x); }
+
+    // fa vector
+    P normal() { return rot90() / abs(); }
+    
+    bool operator < (const P &p) const {
+        return sig(x - p.x) ? x < p.x : sig(y - p.y) < 0;
     }
     
-    bool operator < (const P &p)const{
-        if (sig(x - p.x)) return x < p.x;
-        return y < p.y;
-    }
-    
-    bool operator == (const P &p)const{
+    bool operator == (const P &p) const {
         return !sig(x - p.x) && !sig(y - p.y);
-    }
-    
-    void read(){
-        scanf("%lf%lf", &x, &y);
-    }
-    
-    void write(){
-        printf("%.10lf %.10lf\n", x, y);
     }
 };
 
-class L{
-public:
+struct L {
     P p, v;
     double angle;
     
-    L (){}
-    L (P a, P b):p(a), v(b - a){angle = std::atan2(v.y, v.x);}
+    L() {}
+    L(P a, P b) : p(a), v(b.sub(a)) { angle = v.angle(); }
     
-    bool operator < (const L &l)const{
+    bool operator < (const L &l) const {
         return angle < l.angle;
     }
     
-    P point(double t){
-        return p + v * t;
+    P point(double t) {
+        return p.add(v.mul(t));
     }
 };
 
-class C{
-public:
+struct C {
     P o;
     double r;
+
+    C() {}
+    C(P o, double r) : o(o), r(r) {}
     
-    C (){}
-    C (P o, double r):o(o), r(r){}
-    
-    P point(double angle){
-        return P (o + P (std::cos(angle), std::sin(angle)) * r);
+    P point(double angle) {
+        return o.add(P(r, 0).rot(angle));
     }
 };
 
-double rad(P p1, P p2){
-    return std::acos((p1 % p2) / (p1.abs() * p2.abs()));
-}
-
-P normal(P p){
-    return p.rot90() / p.abs();
+double rad(P p1, P p2) {
+    return std::acos(p1.dot(p2) / (p1.abs() * p2.abs()));
 }
 
 // v1 和 v2 是两直线的方向向量 
-double isLL(L l1, L l2){
-    P u = l2.p - l1.p;
-    return (u ^ l2.v) / (l1.v ^ l2.v); // 返回交点在 p1v1 上的位置，可以用来判断射线、线段等
+double isLL(L l1, L l2) {
+    P u = l2.p.sub(l1.p);
+    return u.det(l2.v) / l1.v.det(l2.v); // 返回 t 交点在 p1 + v1 * t，可以用来判断射线、线段等
 }
 
 // 返回有向距离，q 在直线逆时针方向为正 
-double disLP(L l, P p){
-    return l.v ^ (p - l.p) / l.v.abs();
+double disLP(L l, P p) {
+    return l.v.det(p.sub(l.p)) / l.v.abs();
 }
 
-double disSP(P p1, P p2, P q){
-    if (p1 == p2) return (q - p1).abs();
-    P v1 = p2 - p1, v2 = q - p1, v3 = q - p2;
-    if (sig(v1 % v2) < 0) return v2.abs();
-    if (sig(v1 % v3) > 0) return v3.abs();
-    return std::abs(v1 ^ v2) / v1.abs();
+double disSP(P p1, P p2, P q) {
+    if (p1 == p2) return q.sub(p1).abs();
+    P v1 = p2.sub(p1), v2 = q.sub(p1), v3 = q.sub(p2);
+    if (sig(v1.dot(v2)) < 0) return v2.abs();
+    if (sig(v1.dot(v3)) > 0) return v3.abs();
+    return std::abs(v1.det(v2)) / v1.abs();
 }
 
-P proj(L l, P p){
-    return l.p + l.v * (l.v % (p - l.p) / l.v.abs2());
+P proj(L l, P p) {
+    return l.p.add(l.v.mul(l.v.dot(p.sub(l.p) / l.v.abs2()));
 }
 
-P symmetry(L l, P p){
-    return 2 * proj(l, p) - p;
+P symm(L l, P p {
+    return proj(l, p).mul(2).sub(p);
 }
 
-//判断线段是否严格相交（包括严格重合） 
-bool crsSS(P p1, P p2, P q1, P q2){
-    double c1 = (p2 - p1) ^ (q1 - p1);
-    double c2 = (p2 - p1) ^ (q2 - p1);
-    if (!sig(c1) && !sig(c2)){
+// 判断线段是否严格相交（包括严格重合） 
+bool crsSS(P p1, P p2, P q1, P q2) {
+    double c1 = p2.sub(p1).det(q1.sub(p1));
+    double c2 = p2.sub(p1).det(q2.sub(p1));
+    if (!sig(c1) && !sig(c2)) {
+        // overlap
         if (p2 < p1) std::swap(p1, p2);
         if (q2 < q1) std::swap(q1, q2);
         return std::max(p1, q1) < std::min(p2, q2);
     }
-    double c3 = (q2 - q1) ^ (p1 - q1);
-    double c4 = (q2 - q1) ^ (p2 - q1);
+    double c3 = q2.sub(q1).det(p1.sub(q1));
+    double c4 = q2.sub(q1).det(p2.sub(q1));
     return sig(c1) * sig(c2) < 0 && sig(c3) * sig(c4) < 0;
 }
 
-bool onSeg(P p1, P p2, P q){
-    double len = (q - p1).abs();
+bool onSeg(P p1, P p2, P q) {
+    double len = q.sub(p1).abs();
     if (!sig(len)) return true;
-    p1 = p1 - q, p2 = p2 - q;
-    return !sig((p1 ^ p2) / len) && sig(p1 % p2) <= 0;
+    p1 = p1.sub(q), p2 = p2.sub(q);
+    return !sig(p1.det(p2) / len) && sig(p1.dot(p2)) <= 0;
 }
 
-bool onRay(P p1, P p2, P q){
-    double len = (q - p1).abs();
+// p1 -> p2
+bool onRay(P p1, P p2, P q) {
+    double len = q.sub(p1).abs();
     if (!sig(len)) return true;
-    p1 = q - p1, p2 = q - p2;
-    return !sig((p1 ^ p2) / len) && sig(p1 % (p2 - p1)) >= 0;
+    p1 = q.sub(p1), p2 = q.sub(p2);
+    return !sig(p1.det(p2) / len) && sig(p1.dot(p2.sub(p1))) >= 0;
 }
 
-std::vector <double> isCL(C c1, L l){ // 以离 l.p 近为序 
+std::vector<double> isCL(C c1, L l) { // 以离 l.p 近为序 
     double a = l.v.x, b = l.p.x - c1.o.x, c = l.v.y, d = l.p.y - c1.o.y;
     double e = sqr(a) + sqr(c), f = 2 * (a * b + c * d);
     double g = sqr(b) + sqr(d) - sqr(c1.r);
@@ -155,49 +144,48 @@ std::vector <double> isCL(C c1, L l){ // 以离 l.p 近为序
     if (!sig(delta)){
         return {-f / (2 * e)};
     }
-    std::vector <double> ret;
+    std::vector<double> ret;
     ret.push_back((-f - std::sqrt(delta)) / (2 * e));
     ret.push_back((-f + std::sqrt(delta)) / (2 * e));
     return ret;
 }
 
 // 重合:-1，内含:0，内切:1，相交:2，外切:3，相离:4 
-std::pair <int, std::vector <P>> isCC(C c1, C c2){
-    double d = (c1.o - c2.o).abs2();
-    if (!sig(d)){
-        if (!sig(c1.r - c2.r)){
-            return {-1, {}};
-        }
-        return {0, {}};
+// second not empty iff first == 1/2/3
+std::pair<int, std::vector<P>> isCC(C c1, C c2) {
+    double d = c1.o.sub(c2.o).abs2();
+    if (!sig(d)) {
+        return sig(c1.r - c2.r) ? {0, {}} : {-1, {}};
     }
     if (sig(c1.r + c2.r - std::sqrt(d)) < 0) return {4, {}};
     if (sig(std::abs(c1.r - c2.r) - std::sqrt(d)) > 0) return {0, {}};
     double x = ((sqr(c1.r) - sqr(c2.r)) / d + 1) / 2;
     double y = std::max(sqr(c1.r) / d - sqr(x), 0.0);
-    P q1 = c1.o + (c2.o - c1.o) * x;
-    P q2 = ((c2.o - c1.o) * std::sqrt(y)).rot90(); 
-    if (!sig(y)){
+    P q1 = c1.o.add(c2.o.sub(c1.o).mul(x));
+    P q2 = c2.o.sub(c1.o).mul(std::sqrt(y)).rot90();
+    if (!sig(y)) {
         return {!sig(c1.r + c2.r - std::sqrt(d)) ? 3 : 1, {q1}};
     }
-    return {2, {q1 - q2, q1 + q2}};
+    return {2, {q1.sub(q2), q1.add(q2)}};
 }
 
-int isCs(std::vector <C> &c, double mid){
+// sub func
+int isCs(std::vector<C> &c, double mid) {
     int n = c.size();
     double left = -INF, right = INF;
-    for (int i = 0; i < n; ++ i){
+    for (int i = 0; i < n; ++ i) {
         if (sig(mid - c[i].o.x - c[i].r) > 0) return 1;
         if (sig(c[i].o.x - c[i].r - mid) > 0) return 2;
         double delta = std::sqrt(std::max(0.0, sqr(c[i].r) - sqr(mid - c[i].o.x)));
         left = std::max(left, c[i].o.y - delta);
         right = std::min(right, c[i].o.y + delta);
         if (sig(left - right) > 0){
-            for (int j = 0; j < i; ++ j){
+            for (int j = 0; j < i; ++ j) {
                 auto u = isCC(c[i], c[j]);
                 auto ps = u.second;
                 if (u.first <= 1) continue;
                 if (u.first == 4) return 1;
-                if (u.first == 3){
+                if (u.first == 3) {
                     if (!sig(ps[0].x - mid)) continue;
                     return sig(ps[0].x - mid) < 0 ? 1 : 2;
                 }
@@ -209,13 +197,14 @@ int isCs(std::vector <C> &c, double mid){
     return 0;
 }
 
-bool isCs(std::vector <C> &c){
+// nlogn judge
+bool isCs(std::vector<C> &c) {
     double right = -INF, left = INF;
-    for (auto u : c){
+    for (auto u : c) {
         right = std::max(right, u.o.x + u.r);
         left = std::min(left, u.o.x - u.r);
     }
-    for (int i = 0; i < 50; ++ i){
+    for (int i = 0; i < 50; ++ i) {
         double mid = (left + right) / 2;
         int x = isCs(c, mid);
         if (!x) return true;
