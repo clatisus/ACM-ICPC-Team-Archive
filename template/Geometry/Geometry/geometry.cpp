@@ -6,7 +6,7 @@ const double eps = 1e-9;
 const double PI = acos(-1.0);
 const double INF = 1e100;
 
-inline int sig(double p) { return (p > eps) - (p < -eps); }
+inline int dcmp(double p) { return (p > eps) - (p < -eps); }
 
 inline double sqr(double p) { return p * p; }
 
@@ -43,9 +43,9 @@ struct P {
     // 单位法向量
     P normal() { return rot90().mul(1. / abs()); }
 
-    bool operator<(const P &p) const { return sig(x - p.x) ? x < p.x : sig(y - p.y) < 0; }
+    bool operator<(const P &p) const { return dcmp(x - p.x) ? x < p.x : dcmp(y - p.y) < 0; }
 
-    bool operator==(const P &p) const { return !sig(x - p.x) && !sig(y - p.y); }
+    bool operator==(const P &p) const { return !dcmp(x - p.x) && !dcmp(y - p.y); }
 };
 
 struct L {
@@ -96,8 +96,8 @@ double disLP(L l, P p) {
 double disSP(P p1, P p2, P q) {
     if (p1 == p2) return q.sub(p1).abs();
     P v1 = p2.sub(p1), v2 = q.sub(p1), v3 = q.sub(p2);
-    if (sig(v1.dot(v2)) < 0) return v2.abs();
-    if (sig(v1.dot(v3)) > 0) return v3.abs();
+    if (dcmp(v1.dot(v2)) < 0) return v2.abs();
+    if (dcmp(v1.dot(v3)) > 0) return v3.abs();
     return std::abs(v1.det(v2)) / v1.abs();
 }
 
@@ -115,30 +115,30 @@ P symm(L l, P p) {
 bool crsSS(P p1, P p2, P q1, P q2) {
     double c1 = p2.sub(p1).det(q1.sub(p1));
     double c2 = p2.sub(p1).det(q2.sub(p1));
-    if (!sig(c1) && !sig(c2)) { // 重合的情况
+    if (!dcmp(c1) && !dcmp(c2)) { // 重合的情况
         if (p2 < p1) std::swap(p1, p2);
         if (q2 < q1) std::swap(q1, q2);
         return std::max(p1, q1) < std::min(p2, q2);
     }
     double c3 = q2.sub(q1).det(p1.sub(q1));
     double c4 = q2.sub(q1).det(p2.sub(q1));
-    return sig(c1) * sig(c2) < 0 && sig(c3) * sig(c4) < 0;
+    return dcmp(c1) * dcmp(c2) < 0 && dcmp(c3) * dcmp(c4) < 0;
 }
 
 // 返回点 q 是否在线段 p1->p2 上, 包括是端点的情况
 bool onSeg(P p1, P p2, P q) {
     double len = q.sub(p1).abs();
-    if (!sig(len)) return true;
+    if (!dcmp(len)) return true;
     p1 = p1.sub(q), p2 = p2.sub(q);
-    return !sig(p1.det(p2) / len) && sig(p1.dot(p2)) <= 0;
+    return !dcmp(p1.det(p2) / len) && dcmp(p1.dot(p2)) <= 0;
 }
 
 // 返回点 q 是否在射线 p1->p2 上, 包括是p1的情况
 bool onRay(P p1, P p2, P q) {
     double len = q.sub(p1).abs();
-    if (!sig(len)) return true;
+    if (!dcmp(len)) return true;
     p1 = q.sub(p1), p2 = q.sub(p2);
-    return !sig(p1.det(p2) / len) && sig(p1.dot(p2.sub(p1))) >= 0;
+    return !dcmp(p1.det(p2) / len) && dcmp(p1.dot(p2.sub(p1))) >= 0;
 }
 
 // 返回圆 c1 和直线 l 的交点集合
@@ -147,8 +147,8 @@ std::vector<double> isCL(C c1, L l) {
     double e = sqr(a) + sqr(c), f = 2 * (a * b + c * d);
     double g = sqr(b) + sqr(d) - sqr(c1.r);
     double delta = sqr(f) - 4 * e * g;
-    if (sig(delta) < 0) return {};
-    if (!sig(delta)) return {-f / (2 * e)};
+    if (dcmp(delta) < 0) return {};
+    if (!dcmp(delta)) return {-f / (2 * e)};
     std::vector<double> ret;
     ret.push_back((-f - std::sqrt(delta)) / (2 * e));
     ret.push_back((-f + std::sqrt(delta)) / (2 * e));
@@ -158,18 +158,18 @@ std::vector<double> isCL(C c1, L l) {
 // 返回圆 c1 和 c2 的位置关系(重合:-1，内含:0，内切:1，相交:2，外切:3，相离:4)和交点集合
 std::pair<int, std::vector<P>> isCC(C c1, C c2) {
     double d = c1.o.sub(c2.o).abs2();
-    if (!sig(d)) {
-        if (!sig(c1.r - c2.r)) return {-1, {}};
+    if (!dcmp(d)) {
+        if (!dcmp(c1.r - c2.r)) return {-1, {}};
         return {0, {}};
     }
-    if (sig(c1.r + c2.r - std::sqrt(d)) < 0) return {4, {}};
-    if (sig(std::abs(c1.r - c2.r) - std::sqrt(d)) > 0) return {0, {}};
+    if (dcmp(c1.r + c2.r - std::sqrt(d)) < 0) return {4, {}};
+    if (dcmp(std::abs(c1.r - c2.r) - std::sqrt(d)) > 0) return {0, {}};
     double x = ((sqr(c1.r) - sqr(c2.r)) / d + 1) / 2;
     double y = std::max(sqr(c1.r) / d - sqr(x), 0.0);
     P q1 = c1.o.add(c2.o.sub(c1.o).mul(x));
     P q2 = c2.o.sub(c1.o).mul(std::sqrt(y)).rot90();
-    if (!sig(y)) {
-        return {!sig(c1.r + c2.r - std::sqrt(d)) ? 3 : 1, {q1}};
+    if (!dcmp(y)) {
+        return {!dcmp(c1.r + c2.r - std::sqrt(d)) ? 3 : 1, {q1}};
     }
     return {2, {q1.sub(q2), q1.add(q2)}};
 }
@@ -181,23 +181,23 @@ int isCs(std::vector<C> &c, double mid) {
     int n = c.size();
     double left = -INF, right = INF;
     for (int i = 0; i < n; ++i) {
-        if (sig(mid - c[i].o.x - c[i].r) > 0) return 1;
-        if (sig(c[i].o.x - c[i].r - mid) > 0) return 2;
+        if (dcmp(mid - c[i].o.x - c[i].r) > 0) return 1;
+        if (dcmp(c[i].o.x - c[i].r - mid) > 0) return 2;
         double delta = std::sqrt(std::max(0.0, sqr(c[i].r) - sqr(mid - c[i].o.x)));
         left = std::max(left, c[i].o.y - delta);
         right = std::min(right, c[i].o.y + delta);
-        if (sig(left - right) > 0) {
+        if (dcmp(left - right) > 0) {
             for (int j = 0; j < i; ++j) {
                 auto u = isCC(c[i], c[j]);
                 auto ps = u.second;
                 if (u.first <= 1) continue;
                 if (u.first == 4) return 1;
                 if (u.first == 3) {
-                    if (!sig(ps[0].x - mid)) continue;
-                    return sig(ps[0].x - mid) < 0 ? 1 : 2;
+                    if (!dcmp(ps[0].x - mid)) continue;
+                    return dcmp(ps[0].x - mid) < 0 ? 1 : 2;
                 }
-                if (!sig(ps[0].x - mid) || sig(ps[1].x - mid) != sig(ps[0].x - mid)) continue;
-                return sig(ps[0].x - mid) < 0 ? 1 : 2;
+                if (!dcmp(ps[0].x - mid) || dcmp(ps[1].x - mid) != dcmp(ps[0].x - mid)) continue;
+                return dcmp(ps[0].x - mid) < 0 ? 1 : 2;
             }
         }
     }
@@ -226,8 +226,8 @@ bool isCs(std::vector<C> &c) {
 // 返回圆 c1 与圆 c2 的交集面积
 double areaCC(C c1, C c2) {
     double d = c1.o.sub(c2.o).abs();
-    if (sig(c1.r + c2.r - d) <= 0) return 0;
-    if (sig(d - std::abs(c1.r - c2.r)) <= 0) return sqr(std::min(c1.r, c2.r)) * PI;
+    if (dcmp(c1.r + c2.r - d) <= 0) return 0;
+    if (dcmp(d - std::abs(c1.r - c2.r)) <= 0) return sqr(std::min(c1.r, c2.r)) * PI;
     double x = (sqr(d) + sqr(c1.r) - sqr(c2.r)) / (2 * d);
     double t1 = std::acos(x / c1.r), t2 = std::acos((d - x) / c2.r);
     return sqr(c1.r) * t1 + sqr(c2.r) * t2 - d * c1.r * sin(t1);
@@ -237,8 +237,8 @@ double areaCC(C c1, C c2) {
 std::vector<P> tanCP(C c, P p) {
     P v = p.sub(c.o);
     double d = v.abs2(), x = d - sqr(c.r);
-    if (sig(x) < 0) return {};
-    if (!sig(x)) return {p};
+    if (dcmp(x) < 0) return {};
+    if (!dcmp(x)) return {p};
     P q1 = v.mul(sqr(c.r) / d);
     P q2 = v.mul(-c.r * std::sqrt(x) / d).rot90();
     P ret = c.o.add(q1);
@@ -248,7 +248,7 @@ std::vector<P> tanCP(C c, P p) {
 // 返回圆 c1 与圆 c2 的公切线集合
 std::vector<L> tanCC(C c1, C c2) {
     std::vector<L> ret;
-    if (!sig(c1.r - c2.r)) {
+    if (!dcmp(c1.r - c2.r)) {
         P dir = c2.o.sub(c1.o);
         dir = dir.mul(c1.r / dir.abs()).rot90();
         ret.push_back(L(c1.o.add(dir), c2.o.add(dir)));
@@ -301,7 +301,7 @@ int inPolygon(std::vector<P> &ps, P q) {
     for (int i = 0; i < n; ++i) {
         P a = ps[i], b = ps[(i + 1) % n];
         if (a.y > b.y) std::swap(a, b);
-        if (sig(a.sub(q).det(b.sub(q))) < 0 && sig(a.y - q.y) < 0 && sig(b.y - q.y) >= 0) ret = -ret;
+        if (dcmp(a.sub(q).det(b.sub(q))) < 0 && dcmp(a.y - q.y) < 0 && dcmp(b.y - q.y) >= 0) ret = -ret;
     }
     return ret;
 }
@@ -317,7 +317,7 @@ std::vector<P> convexHull(std::vector<P> &ps) {
     std::sort(ps.begin(), ps.end());
     int n = ps.size(), top = 0;
     auto check = [&](int i) {
-        return sig(onLeft(L(stack[top - 2], stack[top - 1]), ps[i])) <= 0;
+        return dcmp(onLeft(L(stack[top - 2], stack[top - 1]), ps[i])) <= 0;
     };
     for (int i = 0; i < n; ++i) {
         while (top > 1 && check(i)) --top;
@@ -339,7 +339,7 @@ std::vector<P> minkSum(std::vector<P> &ps, std::vector<P> &qs) {
     int n = ps.size(), m = qs.size();
     P cur = ps[0].add(qs[0]);
     for (int i = 0, j = 0; i < n || j < m;) {
-        if (i < n && (j == m || sig(ps[i + 1].sub(ps[i]).det(qs[j + 1].sub(qs[j]))) >= 0)) {
+        if (i < n && (j == m || dcmp(ps[i + 1].sub(ps[i]).det(qs[j + 1].sub(qs[j]))) >= 0)) {
             cur = cur.add(ps[i + 1].sub(ps[i]));
             ++i;
         } else {
@@ -354,17 +354,17 @@ std::vector<P> minkSum(std::vector<P> &ps, std::vector<P> &qs) {
 // O(logn) 判断点 q 是否在凸包 ps 内部(包括恰在边上)
 bool inConvex(std::vector<P> &ps, P q) {
     int n = ps.size();
-    if (sig(onLeft(L(ps[0], ps[1]), q)) < 0 || sig(onLeft(L(ps[0], ps[n - 1]), q) > 0)) return false;
+    if (dcmp(onLeft(L(ps[0], ps[1]), q)) < 0 || dcmp(onLeft(L(ps[0], ps[n - 1]), q) > 0)) return false;
     int lo = 2, hi = n - 1;
     while (lo < hi) {
         int mi = (lo + hi) >> 1;
-        if (sig(onLeft(L(ps[0], ps[mi]), q)) <= 0) {
+        if (dcmp(onLeft(L(ps[0], ps[mi]), q)) <= 0) {
             hi = mi;
         } else {
             lo = mi + 1;
         }
     }
-    return sig(onLeft(L(ps[lo - 1], ps[lo]), q)) >= 0;
+    return dcmp(onLeft(L(ps[lo - 1], ps[lo]), q)) >= 0;
 }
 
 // O(logn) 求过凸包 ps 外一点 q 与凸包的切线交点, 右边的一个
@@ -451,7 +451,7 @@ std::vector<P> isConL(std::vector<P> &ps, P p, P q) {
         --left;
         while (left < right) {
             int mid = (left + right + 1) >> 1;
-            if (sig(l.v.det(ps[mid].sub(l.p))) < 0) {
+            if (dcmp(l.v.det(ps[mid].sub(l.p))) < 0) {
                 left = mid;
             } else {
                 right = mid - 1;
@@ -486,10 +486,10 @@ std::vector<P> cutCon(std::vector<P> &ps, P p, P q) {
     int n = ps.size();
     for (int i = 0; i < n; ++i) {
         P a = ps[i], b = ps[(i + 1) % n];
-        if (sig(q.sub(p).det(a.sub(p))) >= 0) ret.push_back(a);
-        if (!sig(q.sub(p).det(b.sub(a)))) {
+        if (dcmp(q.sub(p).det(a.sub(p))) >= 0) ret.push_back(a);
+        if (!dcmp(q.sub(p).det(b.sub(a)))) {
             double t = isLL(L(a, b), L(p, q));
-            if (sig(t) > 0 && sig(t - 1) < 0) {
+            if (dcmp(t) > 0 && dcmp(t - 1) < 0) {
                 ret.push_back(a.add(b.sub(a).mul(t)));
             }
         }
@@ -506,14 +506,14 @@ std::vector<P> isHalfPlane(std::vector<L> &ls) {
     int n = ls.size();
     auto isLLP = [](L l1, L l2) { return l1.point(isLL(l1, l2)); };
     for (int i = 1; i < n; ++i) {
-        while (!ps.empty() && sig(onLeft(ls[i], ps.back())) <= 0) ps.pop_back(), dq.pop_back();
-        while (!ps.empty() && sig(onLeft(ls[i], ps.front())) <= 0) ps.pop_front(), dq.pop_front();
+        while (!ps.empty() && dcmp(onLeft(ls[i], ps.back())) <= 0) ps.pop_back(), dq.pop_back();
+        while (!ps.empty() && dcmp(onLeft(ls[i], ps.front())) <= 0) ps.pop_front(), dq.pop_front();
         L l = dq.back();
-        if (sig(ls[i].v.det(l.v))) {
+        if (dcmp(ls[i].v.det(l.v))) {
             dq.push_back(ls[i]);
             ps.push_back(isLLP(l, ls[i]));
         } else {
-            if (sig(onLeft(l, ls[i].p)) > 0) {
+            if (dcmp(onLeft(l, ls[i].p)) > 0) {
                 dq.pop_back();
                 if (!dq.empty()) {
                     ps.pop_back();
@@ -523,7 +523,7 @@ std::vector<P> isHalfPlane(std::vector<L> &ls) {
             }
         }
     }
-    while (!ps.empty() && sig(onLeft(dq.front(), ps.back())) <= 0) ps.pop_back(), dq.pop_back();
+    while (!ps.empty() && dcmp(onLeft(dq.front(), ps.back())) <= 0) ps.pop_back(), dq.pop_back();
     if (dq.size() <= 2) return {};
     ps.push_back(isLLP(dq.front(), dq.back()));
     std::vector<P> ret;
@@ -534,9 +534,10 @@ std::vector<P> isHalfPlane(std::vector<L> &ls) {
     return ret;
 }
 
+// 返回圆 c 与简单多边形 ps 的交集面积
 double areaCPol(C c, std::vector<P> &ps) {
     auto area = [c](P p, P q) {
-        double theta = (p - c.o).angle() - (q - c.o).angle();
+        double theta = p.sub(c.o).angle() - q.sub(c.o).angle();
         if (theta < 0) theta += PI * 2;
         if (theta >= 2 * PI) theta -= PI * 2;
         theta = std::min(theta, 2 * PI - theta);
@@ -549,31 +550,36 @@ double areaCPol(C c, std::vector<P> &ps) {
         L l(p1, p2);
         std::vector<double> vec = isCL(c, l);
         double tmp = 0;
-        bool flag1 = sig((p1 - c.o).abs2() - sqr(c.r)) <= 0, flag2 = sig((p2 - c.o).abs2() - sqr(c.r)) <= 0;
+        P v1 = p1.sub(c.o), v2 = p2.sub(c.o);
+        bool flag1 = dcmp(v1.abs2() - sqr(c.r)) <= 0, flag2 = dcmp(v2.abs2() - sqr(c.r)) <= 0;
         if (flag1 && flag2) {
-            tmp = std::abs((p1 - c.o) ^ (p2 - c.o));
+            tmp = std::abs(v1.det(v2));
         } else if (flag1 || flag2) {
             if (!flag1) {
                 P p = l.point(vec[0]);
-                tmp = area(p1, p) + std::abs((p - c.o) ^ (p2 - c.o));
+                tmp = area(p1, p) + std::abs(p.sub(c.o).det(v2));
             } else {
                 P p = l.point(*(--vec.end()));
-                tmp = area(p, p2) + std::abs((p1 - c.o) ^ (p - c.o));
+                tmp = area(p, p2) + std::abs(v1.det(p.sub(c.o)));
             }
         } else {
-            if (vec.size() == 2 && sig(vec[0]) > 0 && sig(vec[0] - 1) < 0) {
+            if (vec.size() == 2 && dcmp(vec[0]) > 0 && dcmp(vec[0] - 1) < 0) {
                 P p3 = l.point(vec[0]), p4 = l.point(vec[1]);
-                tmp = area(p1, p3) + area(p4, p2) + std::abs((p3 - c.o) ^ (p4 - c.o));
+                tmp = area(p1, p3) + area(p4, p2) + std::abs(p3.sub(c.o).det(p4.sub(c.o)));
             } else {
                 tmp = area(p1, p2);
             }
         }
-        ret += tmp * sig((p1 - c.o) ^ (p2 - c.o));
+        ret += tmp * dcmp(v1.det(v2));
     }
     return std::abs(ret) / 2;
 }
 
-std::pair<double, P> areaCs(std::vector<C> &cs) { // 圆并面积，重心，被卡时间时可预先去掉被其它圆包含的圆
+/*************************************************************************************************************************/
+// 圆并与圆交
+
+// O(n^2logn) 求圆集合 cs 的并集面积与中心，被卡时间时可预先去掉被其它圆包含的圆
+std::pair<double, P> areaCs(std::vector<C> &cs) {
     double ret = 0;
     P pret;
     int n = cs.size();
@@ -582,17 +588,13 @@ std::pair<double, P> areaCs(std::vector<C> &cs) { // 圆并面积，重心，被
                                                    {PI * 2, 0}};
         int cnt = 1;
         for (int j = 0; j < n; ++j) {
-            double dis = (cs[i].o - cs[j].o).abs();
-            if (!sig(dis) && !sig(cs[i].r - cs[j].r)) {
-                if (i < j) {
-                    ++cnt;
-                }
+            double dis = cs[i].o.sub(cs[j].o).abs();
+            if (!dcmp(dis) && !dcmp(cs[i].r - cs[j].r)) {
+                if (i < j) ++cnt;
                 continue;
             }
-            if (sig(dis - cs[j].r - cs[i].r) >= 0 || sig(dis + cs[j].r - cs[i].r) <= 0) {
-                continue;
-            }
-            if (sig(dis + cs[i].r - cs[j].r) <= 0) {
+            if (dcmp(dis - cs[j].r - cs[i].r) >= 0 || dcmp(dis + cs[j].r - cs[i].r) <= 0) continue;
+            if (dcmp(dis + cs[i].r - cs[j].r) <= 0) {
                 ++cnt;
                 continue;
             }
@@ -615,38 +617,39 @@ std::pair<double, P> areaCs(std::vector<C> &cs) { // 圆并面积，重心，被
             cnt += vec[j].second;
             if (cnt == 1) {
                 double delta = vec[j + 1].first - vec[j].first;
-                if (sig(delta) <= 0) continue;
+                if (dcmp(delta) <= 0) continue;
                 double sin = std::sin(delta / 2);
                 P cen(4 * cs[i].r * sin * sin * sin / (3 * (delta - std::sin(delta))), 0);
-                cen = cen.rot((vec[j].first + vec[j + 1].first) / 2) + cs[i].o;
+                cen = cen.rot((vec[j].first + vec[j + 1].first) / 2).add(cs[i].o);
                 double area = sqr(cs[i].r) * (delta - std::sin(delta));
-                pret = pret + cen * area;
+                pret = pret.add(cen.mul(area));
                 ret += area;
                 P p1 = cs[i].point(vec[j].first), p2 = cs[i].point(vec[j + 1].first);
-                area = p1 ^ p2;
-                pret = pret + (p1 + p2) * area / 3;
+                area = p1.det(p2);
+                pret = pret.add(p1.add(p2).mul(area / 3));
                 ret += area;
             }
         }
     }
-    return {ret / 2, pret / ret};
+    return {ret / 2, pret.mul(1. / ret)};
 }
 
+// O(n^2logn) 求圆集合 ccs 的交集面积
 double areaisCs(std::vector<C> &ccs) {
     std::vector<C> cs;
     for (int i = 0, sz = ccs.size(); i < sz; ++i) {
         bool flag = true;
         for (int j = 0; j < sz; ++j) {
             if (i == j) continue;
-            double dis = (ccs[i].o - ccs[j].o).abs();
-            if (sig(dis - ccs[i].r - ccs[j].r) >= 0) return 0.0;
-            if (!sig(dis) && !sig(ccs[i].r - ccs[j].r)) {
+            double dis = ccs[i].o.sub(ccs[j].o).abs();
+            if (dcmp(dis - ccs[i].r - ccs[j].r) >= 0) return 0.0;
+            if (!dcmp(dis) && !dcmp(ccs[i].r - ccs[j].r)) {
                 if (i < j) {
                     flag = false;
                     break;
                 }
             } else {
-                if (sig(dis + ccs[i].r - ccs[j].r) <= 0) {
+                if (dcmp(dis + ccs[i].r - ccs[j].r) <= 0) {
                     flag = false;
                     break;
                 }
@@ -665,7 +668,7 @@ double areaisCs(std::vector<C> &ccs) {
         std::vector<pdd> vec = {{0, 2 * PI}};
         for (int j = 0; j < n; ++j) {
             double angle = L(cs[i].o, cs[j].o).angle;
-            double dis = (cs[i].o - cs[j].o).abs();
+            double dis = cs[i].o.sub(cs[j].o).abs();
             double p = (sqr(cs[i].r) + sqr(dis) - sqr(cs[j].r)) / (2 * cs[i].r * dis);
             p = std::acos(std::max(-1.0, std::min(1.0, p)));
             double left = angle - p, right = angle + p;
@@ -688,28 +691,30 @@ double areaisCs(std::vector<C> &ccs) {
             P p1 = cs[i].point(u.first), p2 = cs[i].point(u.second);
             double delta = u.second - u.first;
             ret += sqr(cs[i].r) * (delta - std::sin(delta));
-            ret += p1 ^ p2;
+            ret += p1.det(p2);
         }
     }
     return ret / 2;
 }
 
-// 求点到凸多边形 ps 的距离，ps必须是逆时针的，p必须在ps外部
+/*************************************************************************************************************************/
+
+// 求点 q 到凸多边形 ps 的距离，ps 必须是逆时针的，p 必须在 ps 外部
 double disConvexP(std::vector<P> &ps, P q) {
     int n = ps.size();
     int left = 0, right = n;
     auto pin = [](P p1, P p2, P q) {
-        return sig(p1 ^ q) >= 0 && sig(p2 ^ q) <= 0;
+        return dcmp(p1.det(q)) >= 0 && dcmp(p2.det(q)) <= 0;
     };
     auto in = [pin](P p1, P p2, P p3, P p4, P q) {
-        P o12 = (p1 - p2).rot90();
-        P o23 = (p2 - p3).rot90();
-        P o34 = (p3 - p4).rot90();
-        return pin(o12, o23, q - p2) || pin(o23, o34, q - p3)
-               || pin(o23, p3 - p2, q - p2) && pin(p2 - p3, o23, q - p3);
+        P o12 = p1.sub(p2).rot90();
+        P o23 = p2.sub(p3).rot90();
+        P o34 = p3.sub(p4).rot90();
+        return pin(o12, o23, q.sub(p2)) || pin(o23, o34, q.sub(p3))
+               || (pin(o23, p3.sub(p2), q.sub(p2)) && pin(p2.sub(p3), o23, q.sub(p3)));
     };
     while (right - left > 1) {
-        int mid = left + right >> 1;
+        int mid = (left + right) >> 1;
         if (in(ps[(left + n - 1) % n], ps[left], ps[mid], ps[(mid + 1) % n], q)) {
             right = mid;
         } else {
@@ -731,15 +736,15 @@ double convexDiameter(std::vector<P> &ps) {
             js = i;
         }
     }
-    double maxd = (ps[is] - ps[js]).abs();
+    double maxd = ps[is].sub(ps[js]).abs();
     int i = is, j = js;
     do {
-        if (sig((ps[(i + 1) % n] - ps[i]) ^ (ps[(j + 1) % n] - ps[j])) >= 0) {
+        if (dcmp((ps[(i + 1) % n].sub(ps[i])).det((ps[(j + 1) % n].sub(ps[j])))) >= 0) {
             j = (j + 1) % n;
         } else {
             i = (i + 1) % n;
         }
-        maxd = std::max(maxd, (ps[i] - ps[j]).abs());
+        maxd = std::max(maxd, ps[i].sub(ps[j]).abs());
     } while (i != is || j != js);
     return maxd;
 }
@@ -750,13 +755,13 @@ C minCoverC(std::vector<P> &ps) {
     std::random_shuffle(ps.begin(), ps.end());
     C ret(ps[0], 0);
     for (int i = 1; i < n; ++i) {
-        if (sig((ps[i] - ret.o).abs() - ret.r) > 0) {
+        if (dcmp(ps[i].sub(ret.o).abs() - ret.r) > 0) {
             ret = C(ps[i], 0);
             for (int j = 0; j < i; ++j) {
-                if (sig((ps[j] - ret.o).abs() - ret.r) > 0) {
-                    ret = C((ps[i] + ps[j]) / 2, (ps[i] - ps[j]).abs() / 2);
+                if (dcmp(ps[j].sub(ret.o).abs() - ret.r) > 0) {
+                    ret = C(ps[i].add(ps[j]).mul(0.5), ps[i].sub(ps[j]).abs() / 2);
                     for (int k = 0; k < j; ++k) {
-                        if (sig((ps[k] - ret.o).abs() - ret.r) > 0) {
+                        if (dcmp(ps[k].sub(ret.o).abs() - ret.r) > 0) {
                             ret = outC(ps[i], ps[j], ps[k]);
                         }
                     }
@@ -768,69 +773,72 @@ C minCoverC(std::vector<P> &ps) {
 }
 
 /*
-void work() {
-    scanf("%d" , &n);
-    for (int i = 0 ; i < n ; ++ i) {
-        L[i].input();
-        P[i] = L[i];
-    }
-    int m = n;
-    for (int i = 0 ; i + 1 < n ; ++ i)
-        for (int j = i + 1 ; j + 1 < n ; ++ j) {
-            if (dcmp((P[i + 1] - P[i]) ^ (P[j + 1] - P[j])) != 0)
-                P[m ++] = GetLineIntersection(P[i] , P[i + 1] - P[i] , P[j] , P[j + 1] - P[j]);
+namespace plane {
+    void work() {
+        scanf("%d" , &n);
+        for (int i = 0 ; i < n ; ++ i) {
+            L[i].input();
+            P[i] = L[i];
         }
-    sort(P , P + m);
-    m = unique(P , P + m) - P;
-    memset(pre , -1 , sizeof(pre));
-    set< pair<int , int> > Hash;
-    for (int i = 0 ; i + 1 < n ; ++ i) {
-        vector< pair <Point , int> > V;
-        for (int j = 0 ; j < m ; ++ j)
-            if (OnSegment(P[j] , L[i] , L[i + 1]))
-                V.push_back(make_pair(P[j] , j));
-        sort(V.begin() , V.end());
-        for (int j = 0 ; j + 1 < V.size() ; ++ j) {
-            int x = V[j].second , y = V[j + 1].second;
-            if (!Hash.count(make_pair(x , y))) {
-                Hash.insert(make_pair(x , y));
-                e[mcnt] = (edge) {y , pre[x]} , pre[x] = mcnt ++;
+        int m = n;
+        for (int i = 0 ; i + 1 < n ; ++ i)
+            for (int j = i + 1 ; j + 1 < n ; ++ j) {
+                if (dcmp((P[i + 1] - P[i]) ^ (P[j + 1] - P[j])) != 0)
+                    P[m ++] = GetLineIntersection(P[i] , P[i + 1] - P[i] , P[j] , P[j + 1] - P[j]);
             }
-            if (!Hash.count(make_pair(y , x))) {
-                Hash.insert(make_pair(y , x));
-                e[mcnt] = (edge) {x , pre[y]} , pre[y] = mcnt ++;
+        sort(P , P + m);
+        m = unique(P , P + m) - P;
+        memset(pre , -1 , sizeof(pre));
+        set< pair<int , int> > Hash;
+        for (int i = 0 ; i + 1 < n ; ++ i) {
+            vector< pair <Point , int> > V;
+            for (int j = 0 ; j < m ; ++ j)
+                if (OnSegment(P[j] , L[i] , L[i + 1]))
+                    V.push_back(make_pair(P[j] , j));
+            sort(V.begin() , V.end());
+            for (int j = 0 ; j + 1 < V.size() ; ++ j) {
+                int x = V[j].second , y = V[j + 1].second;
+                if (!Hash.count(make_pair(x , y))) {
+                    Hash.insert(make_pair(x , y));
+                    e[mcnt] = (edge) {y , pre[x]} , pre[x] = mcnt ++;
+                }
+                if (!Hash.count(make_pair(y , x))) {
+                    Hash.insert(make_pair(y , x));
+                    e[mcnt] = (edge) {x , pre[y]} , pre[y] = mcnt ++;
+                }
             }
         }
-    }
-    for (int x = 0 ; x < m ; ++ x) {
-        vector< pair<double , int> > V;
-        for (int i = pre[x] ; ~i ; i = e[i].next) {
-            int y = e[i].x;
-            V.push_back(make_pair((P[y] - P[x]).arg() , i));
-        }
-        sort(V.begin() , V.end());
-        for (int i = 0 ; i < V.size() ; ++ i) {
-            int j = (i + 1) % V.size();
-            Next[V[j].second ^ 1] = V[i].second;
-        }
-    }
-    double res = 0;
-    for (int i = 0 ; i < mcnt ; ++ i) {
-        if (!vis[i]) {
-            int x = i;
-            double area = 0;
-            while (!vis[x]) {
-                vis[x] = 1;
-                area += (P[e[x ^ 1].x] ^ P[e[x].x]);
-                x = Next[x];
+        for (int x = 0 ; x < m ; ++ x) {
+            vector< pair<double , int> > V;
+            for (int i = pre[x] ; ~i ; i = e[i].next) {
+                int y = e[i].x;
+                V.push_back(make_pair((P[y] - P[x]).arg() , i));
             }
-            if (x == i && dcmp(area) > 0)
-                res += area;
+            sort(V.begin() , V.end());
+            for (int i = 0 ; i < V.size() ; ++ i) {
+                int j = (i + 1) % V.size();
+                Next[V[j].second ^ 1] = V[i].second;
+            }
         }
+        double res = 0;
+        for (int i = 0 ; i < mcnt ; ++ i) {
+            if (!vis[i]) {
+                int x = i;
+                double area = 0;
+                while (!vis[x]) {
+                    vis[x] = 1;
+                    area += (P[e[x ^ 1].x] ^ P[e[x].x]);
+                    x = Next[x];
+                }
+                if (x == i && dcmp(area) > 0)
+                    res += area;
+            }
+        }
+        printf("%.8f\n" , res / 2);
     }
-    printf("%.8f\n" , res / 2);
-}
+};
 */
+
 
 int main() {
     srand((unsigned) time(NULL));
