@@ -24,19 +24,13 @@
 
 ### Flow
 
-- SPFA for MCMF(D)
-
-- Prim-Dual Algo(D)
-
+- ~~SPFA for MCMF(D)~~
+- ~~Prim-Dual Algo(D)~~
 - Simplex(W)
-
-- Gomory Hu tree(D)
-
-- Stoer-Wagner Algo for Global Cut(D)
-
+- ~~Gomory Hu tree(D)~~
+- ~~Stoer-Wagner Algo for Global Cut(D)~~
 - Kuhn-Munkres Algo(W)
-
-- Dinic's Algo(D)
+- ~~Dinic's Algo(D)~~
 
 ### Search
 
@@ -127,5 +121,5 @@
 - Notes(图论、网络流)
 
 - Notes(字符串)
- 
+
 - Notes(其他、tricks)
