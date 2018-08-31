@@ -30,10 +30,11 @@ bool fir[max_N], vis[max_N];
 
 struct functor {
     bool operator()(int a, int b) {
-        P x = p[Q[a + 1]].sub(p[Q[a]]), y = p[Q[b + 1]].sub(p[Q[b]]);
+        P x = p[Q[a + 1]].sub(p[Q[a]]);
+        P y = p[Q[b + 1]].sub(p[Q[b]]);
         LL det = x.det(y);
         if (det) return det > 0;
-        if (!cur.det(y) && x.dot(y) < 0) return cur.dot(x) > 0;
+        if (x.dot(y) < 0) return cur.dot(x) > 0;
         return a < b;
     }
 };
@@ -88,9 +89,11 @@ void solve() {
     P st = cur, pre = cur;
     while (!set.empty()) {
         int x = *set.begin();
-        set.erase(x);
+        set.erase(set.begin());
         cur = p[Q[x + 1]].sub(p[Q[x]]);
-        if ((pre.det(st) > 0 || (!pre.det(st) && pre.dot(st) < 0)) && (st.det(cur) > 0 || (!st.det(cur) && st.dot(cur) > 0))) break;
+        if ((pre.det(st) > 0 || (!pre.det(st) && pre.dot(st) < 0)) &&
+            (st.det(cur) > 0 || (!st.det(cur) && st.dot(cur) > 0)))
+            break;
         swap(x);
         pre = cur;
     }
