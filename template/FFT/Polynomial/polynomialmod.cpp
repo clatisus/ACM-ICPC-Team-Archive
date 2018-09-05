@@ -29,12 +29,10 @@ void init(){
 }
 */
 
-class poly{
-private:
+struct poly{
     std::vector<int> a;
     int len;
     
-public:
     poly() : len(-1) {}
     poly(int len) : len(len) { a.resize(len + 1); }
     poly(const poly &p, int len) : len(len) { 
@@ -45,7 +43,6 @@ public:
     }
     
     int &operator [] (int n) { assert(n >= 0 && n <= len); return a[n]; }
-    int getlen() { return len; }
     
     void setlen(int len) {
         a.resize(len + 1);
