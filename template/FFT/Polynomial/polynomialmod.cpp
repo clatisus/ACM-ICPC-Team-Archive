@@ -44,7 +44,7 @@ public:
         }
     }
     
-    int &operator [] (int n) { return a[n]; }
+    int &operator [] (int n) { assert(n >= 0 && n <= len); return a[n]; }
     int getlen() { return len; }
     
     void setlen(int len) {
