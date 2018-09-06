@@ -144,12 +144,12 @@ struct poly{
         assert(~len && a[0]);
         poly ret(1);
         ret.a[0] = powermod(a[0], moder - 2);
-        for (int nowprecision = 0; nowprecision < n; ) {
-            nowprecision = nowprecision << 1 | 1;
-            poly aux(*this, nowprecision), aux1 = ret;
+        for (int noweps = 0; noweps < n; ) {
+            noweps = noweps << 1 | 1;
+            poly aux(*this, noweps), aux1 = ret;
             ret *= ret;
-            ret.setlen(nowprecision);
-            aux *= ret, aux.setlen(nowprecision);
+            ret.setlen(noweps);
+            aux *= ret, aux.setlen(noweps);
             ret = aux1 + aux1 - aux;
         }
         ret.setlen(n);
@@ -204,11 +204,11 @@ struct poly{
         poly ret(0);
         ret.a[0] = 1;
         poly unit = ret;
-        for (int nowprecision = 0; nowprecision < n; ){
-            nowprecision = nowprecision << 1 | 1;
-            poly aux(*this, nowprecision);
-            ret *= unit - ret.log(nowprecision) + aux;
-            ret.setlen(nowprecision);
+        for (int noweps = 0; noweps < n; ){
+            noweps = noweps << 1 | 1;
+            poly aux(*this, noweps);
+            ret *= unit - ret.log(noweps) + aux;
+            ret.setlen(noweps);
         }
         ret.setlen(n);
         return ret;
