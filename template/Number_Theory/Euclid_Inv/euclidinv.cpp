@@ -23,7 +23,7 @@ T inv(T a, T moder){
 	T x, y;
 	T gcd = ex_euc(a, moder, x, y);
 	if (gcd != 1) return -1;
-	return x + moder >= moder ? x : x + moder;
+	return x < 0 ? x + moder : x;
 }
 
 int main(){
