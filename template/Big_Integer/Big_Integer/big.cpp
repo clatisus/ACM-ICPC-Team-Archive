@@ -35,6 +35,14 @@ struct Big{
         if (!len) sig = 0;
     }
 
+    ll toint(){
+        ll ret = 0;
+        for (int i = len - 1; i >= 0; -- i){
+            ret = ret * 10 + a[i];
+        }
+        return ret;
+    }
+
     void read(){
         a.clear();
         len = 0;
