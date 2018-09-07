@@ -328,9 +328,9 @@ struct Big{
 
 int main(){
     init();
-    Big a, b;
-    a.read(), b.read();
-    (a + b).write();
+    Big a;
+    a.read();
+    a.sqrt().write();
     putchar('\n');
     return 0;
 }
