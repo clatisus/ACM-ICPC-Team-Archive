@@ -20,10 +20,16 @@ T ex_euc(T a, T b, T &x, T &y){
 
 template <typename T>
 T inv(T a, T moder){
-	T x, y;
-	T gcd = ex_euc(a, moder, x, y);
-	if (gcd != 1) return -1;
-	return x < 0 ? x + moder : x;
+    T b = moder, s = 1, t = 0;
+    while (b){
+        T tmp = a, q = a / b;
+        a = b, b = tmp % a;
+        tmp = s;
+        s = t;
+        t = tmp - s * q;
+    }
+    if (a > 1) return -1;
+	return s < 0 ? s + moder : s;
 }
 
 int main(){
