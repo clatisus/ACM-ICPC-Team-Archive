@@ -27,7 +27,7 @@ struct Big{
         }
     }
 
-    int operator [](int n)const{return n >= len || n < -len ? 0 : a[n < 0 ? len + n : n];}
+    int operator [](int n)const{return n >= len || n < -len ? 0 : a[n + (n < 0 ? len : 0)];}
 
     void normal(){
         for ( ; len && !a[len - 1]; -- len)
@@ -90,8 +90,8 @@ struct Big{
             p.a[i] = remain / x;
             remain %= x;
         }
-        p.normal();
         remain *= p.sig;
+        p.normal();
         p.sig *= q < 0 ? -1 : 1;
         return remain;
     }
@@ -194,14 +194,14 @@ struct Big{
 
     Big operator * (const int &p)const{
         if (!p || !sig) return Big();
-        Big ret(*this, len + 40);
+        Big ret;
         ll x = std::abs(p), remain = 0;
-        for (int i = 0; i < len + 39; ++ i){
-            remain += ret.a[i] * x;
-            ret.a[i] = remain % base;
+        for (int i = 0; i < len || remain; ++ i){
+            remain += a[i] * x;
+            ret.push_back(remain % base);
             remain /= base;
         }
-        ret.normal();
+        ret.len = ret.a.size();
         ret.sig = sig * (p < 0 ? -1 : 1);
         return ret;
     }
@@ -216,7 +216,7 @@ struct Big{
         for (int i = 0; i < 5; ++ i){
             x *= base;
         }
-        Big ret(x / num), aux(*this), aux1(p);
+        Big ret(x / num), aux = *this, aux1 = p;
         aux.sig = aux1.sig = 1;
         int noweps = 1;
         for ( ; noweps <= len - p.len; noweps <<= 1){
