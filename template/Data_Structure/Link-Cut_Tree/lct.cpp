@@ -7,6 +7,7 @@ namespace LCT {
 
     struct node {
         int val, rev;
+		// int r_siz, v_siz;
         ptr max, p, ch[2];
 
         void updt() {
@@ -17,6 +18,7 @@ namespace LCT {
             if (ch[1]->max->val > max->val) {
                 max = ch[1]->max;
             }
+			// r_siz = v_siz + ch[0]->r_siz + ch[1]->r_siz;
         }
 
         void down() {
@@ -43,6 +45,7 @@ namespace LCT {
 
     ptr new_node(int val) {
         ptr x = tail++;
+		// x->r_siz = x->v_siz = 1;
         x->val = val;
         x->rev = 0;
         x->ch[0] = x->ch[1] = x->p = null;
@@ -77,6 +80,8 @@ namespace LCT {
         ptr y = x, rch = null;
         for (; x != null; x = x->p) {
             splay(x);
+			// x->v_siz += x->ch[1]->r_siz;
+			// x->v_siz -= rch->r_siz;
             x->set_ch(rch, 1);
             x->updt();
             rch = x;
@@ -95,6 +100,8 @@ namespace LCT {
 
     void link(ptr x, ptr y) {
         evert(x), x->p = y;
+		// evert(x), access(y), x->p = y;
+		// y->v_siz += x->r_siz, y->updt();
     }
 
     void cut(ptr x, ptr y) {
