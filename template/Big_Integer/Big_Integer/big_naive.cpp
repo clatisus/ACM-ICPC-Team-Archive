@@ -96,10 +96,11 @@ struct Big{ // 仅支持非负整数
         i128 remain = 0;
         Big ret;
         for (int i = 0; i < len || remain; ++ i){
-            remain += (i128) a[i] * p;
+            remain += (i128) (*this)[i] * p;
             ret.a.push_back(remain % base);
             remain /= base;
         }
+        ret.len = ret.a.size();
         return ret;
     }
 

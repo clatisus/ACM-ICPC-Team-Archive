@@ -197,7 +197,7 @@ struct Big{
         Big ret;
         ll x = std::abs(p), remain = 0;
         for (int i = 0; i < len || remain; ++ i){
-            remain += a[i] * x;
+            remain += (*this)[i] * x;
             ret.push_back(remain % base);
             remain /= base;
         }
