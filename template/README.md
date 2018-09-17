@@ -58,7 +58,7 @@
 
 - Z Algo(W)
 
-- Minimal Representing String(D)
+- ~~Minimal Representing String(D)~~
 
 - Aho-Corasick Automation(W)
 
@@ -68,7 +68,7 @@
 
 - Suffix Tree(x)
 
-- Palindrome Tree(D)
+- ~~Palindrome Tree(D)~~
 
 - Palindrome Partition(D)
 
