@@ -62,7 +62,7 @@
 
 - Aho-Corasick Automation(W)
 
-- Suffix Array(D)
+- ~~Suffix Array(D)~~
 
 - Suffix Automaton(W)
 
