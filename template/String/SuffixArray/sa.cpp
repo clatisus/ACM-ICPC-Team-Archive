@@ -1,3 +1,4 @@
+// 字符串从1开始
 namespace SuffixArray {
     int sa[max_N], rk[max_N], height[max_N];
     int tmp[max_N], cnt[max_N], bc[max_N];
