@@ -55,7 +55,7 @@ namespace circuits {
         if (!map.count(set) || map[set] > tmp) map[set] = tmp;
 	}
 
-	void solve() {
+	void solve(int n, int m) {
         //input
         pre.clear(), pre[0] = 0;
         for (int r = 0; r < n; ++r) {
