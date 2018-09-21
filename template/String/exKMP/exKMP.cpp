@@ -5,11 +5,9 @@ namespace exKMP {
 	// ext[i] : s[i...n] 与 t 的lcp长度
 
     void solve(const char *s, int n, const char *t, int m) { // O(n + m)
-        int a;
         nxt[1] = m;
         for (int &x = nxt[2] = 0; x < m - 1 && t[x + 1] == t[x + 2]; ++x);
-        a = 2;
-        for (int i = 3; i <= m; ++i) {
+        for (int a = 2, i = 3; i <= m; ++i) {
             int p = a + nxt[a] - 1, q = nxt[i - a + 1];
             if (i + q <= p) {
                 nxt[i] = q;
@@ -20,8 +18,7 @@ namespace exKMP {
             }
         }
         for (int &x = ext[1] = 0; x < n && x < m && s[x + 1] == t[x + 1]; ++x);
-        a = 1;
-        for (int i = 2; i <= n; ++i) {
+        for (int a = 1, i = 2; i <= n; ++i) {
             int p = a + ext[a] - 1, q = nxt[i - a + 1];
             if (i + q <= p) {
                 ext[i] = q;
