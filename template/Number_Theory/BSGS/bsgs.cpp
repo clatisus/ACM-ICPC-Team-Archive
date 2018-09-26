@@ -4,7 +4,7 @@
 
 #include<bits/stdc++.h>
 #include"euclidinv.cpp"
-#define std::make_pair mp
+#define mp std::make_pair
 
 typedef long long ll;
 typedef std::pair <int, int> pii;
