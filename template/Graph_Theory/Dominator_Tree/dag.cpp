@@ -35,7 +35,6 @@ namespace domi_tree {
 	}
 
 	void solve(int s) {
-		sp(s);
 		int tail = 0;
 		Q[++tail] = s;
 		for (int i = 1; i <= tail; ++i) {
