@@ -45,7 +45,7 @@ int Bsgs(int a, int b, int moder){
         if (b % gcd) return -1;
         moder /= gcd;
         b = 1ll * b / gcd * inv <int>(a / gcd, moder) % moder;
-        if (b == 1)    return cnt + 1;
+        if (b == 1) return cnt + 1;
     }
     int ret = BSGS(a, b, moder);
     return !~ret ? -1 : ret + cnt;
