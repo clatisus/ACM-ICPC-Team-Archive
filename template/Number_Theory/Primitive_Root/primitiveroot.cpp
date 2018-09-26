@@ -8,43 +8,43 @@
 template <typename T>
 class root{
 private:
-	T a, ans;
-	std::vector <T> fact;
-	
-	void solve(){
-		pollardrho <T> p(a - 1);
-		fact = p.solve();
-		std::sort(fact.begin(), fact.end());
-		fact.erase(std::unique(fact.begin(), fact.end()), fact.end());
-		for (T i = 1; i < a; ++ i){
-			if (checkroot(i)){
-				ans = i;
-				return;
-			}
-		}
-	}
+    T a, ans;
+    std::vector <T> fact;
+    
+    void solve(){
+        pollardrho <T> p(a - 1);
+        fact = p.solve();
+        std::sort(fact.begin(), fact.end());
+        fact.erase(std::unique(fact.begin(), fact.end()), fact.end());
+        for (T i = 1; i < a; ++ i){
+            if (checkroot(i)){
+                ans = i;
+                return;
+            }
+        }
+    }
 
 public:
-	root(){}
-	
-	root(T a):a(a){
-		solve();
-	}
-	
-	bool checkroot(T rt){
-		for (auto u : fact){
-			if (powermod(rt, a / u, a) == 1) return false;
-		}
-		return true;
-	}
-	
-	T minroot(){
-		return ans;
-	}
+    root(){}
+    
+    root(T a):a(a){
+        solve();
+    }
+    
+    bool checkroot(T rt){
+        for (auto u : fact){
+            if (powermod(rt, a / u, a) == 1) return false;
+        }
+        return true;
+    }
+    
+    T minroot(){
+        return ans;
+    }
 };
 
 int main(){
-	srand((unsigned) time(NULL));
-	printf("%d\n", root <int>(1000210433).minroot());
-	return 0;
+    srand((unsigned) time(NULL));
+    printf("%d\n", root <int>(1000210433).minroot());
+    return 0;
 }
