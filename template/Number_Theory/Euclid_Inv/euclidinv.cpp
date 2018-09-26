@@ -8,14 +8,14 @@ typedef long long ll;
 // x, y 满足 |x|+|y| 最小 
 template <typename T>
 T ex_euc(T a, T b, T &x, T &y){
-	if (!b){
-		x = 1, y = 0;
-		return a;
-	}
-	T ret = ex_euc(b, a % b, x, y), tmp = y;
-	y = x - a / b * y;
-	x = tmp;
-	return ret;
+    if (!b){
+        x = 1, y = 0;
+        return a;
+    }
+    T ret = ex_euc(b, a % b, x, y), tmp = y;
+    y = x - a / b * y;
+    x = tmp;
+    return ret;
 }
 
 template <typename T>
@@ -29,7 +29,7 @@ T inv(T a, T moder){
         t = tmp - s * q;
     }
     if (a > 1) return -1;
-	return s < 0 ? s + moder : s;
+    return s < 0 ? s + moder : s;
 }
 
 int main(){
