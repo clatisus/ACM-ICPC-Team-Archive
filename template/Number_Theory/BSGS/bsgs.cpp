@@ -23,7 +23,7 @@ int powermod(int a, int exp, int moder){
 int BSGS(int a, int b, int moder){
     a = (a % moder + moder) % moder;
     b = (b % moder + moder) % moder;
-    if (!a && !b) return 0;
+    if (!a && !b) return 1;
     if (!a || !b) return -1;
     int now = b, x = a, m = std::sqrt(moder) + 1;
     std::vector <pii> vec;
