@@ -142,15 +142,13 @@ struct poly{
     //表示求最高次为n的inv，log和exp同理
     poly inv(int n) const {
         assert(~len && a[0]);
-        poly ret(1);
+        poly ret(0);
         ret.a[0] = powermod(a[0], moder - 2);
         for (int noweps = 0; noweps < n; ) {
             noweps = noweps << 1 | 1;
-            poly aux(*this, noweps), aux1 = ret;
-            ret *= ret;
-            ret.setlen(noweps);
-            aux *= ret, aux.setlen(noweps);
-            ret = aux1 + aux1 - aux;
+            poly aux = poly(*this, noweps) * (ret * ret);
+            aux.setlen(noweps);
+            ret = ret + ret - aux;
         }
         ret.setlen(n);
         return ret;
@@ -206,13 +204,42 @@ struct poly{
         poly unit = ret;
         for (int noweps = 0; noweps < n; ){
             noweps = noweps << 1 | 1;
-            poly aux(*this, noweps);
-            ret *= unit - ret.log(noweps) + aux;
+            ret *= unit - ret.log(noweps) + poly(*this, noweps);
             ret.setlen(noweps);
         }
         ret.setlen(n);
         return ret;
     }
+
+    /*------------a little faster-------------
+    poly exp(int n) const {
+        assert(!~len || !a[0]);
+        poly ret(0), invaux(0);
+        ret.a[0] = invaux.a[0] = 1;
+        poly unit = ret;
+        for (int noweps = 0; noweps < n; ){
+            noweps = noweps << 1 | 1;
+            //inv
+            poly aux1 = invaux * invaux;
+            poly aux = ret * aux1;
+            aux.setlen(noweps);
+            aux = invaux + invaux - aux;
+            //log
+            aux *= ret.der();
+            aux.setlen(noweps - 1);
+            aux = aux.integral();
+            //exp
+            ret *= unit - aux + poly(*this, noweps);
+            ret.setlen(noweps);
+            //real inv
+            aux = ret * aux1;
+            aux.setlen(noweps);
+            invaux = invaux + invaux - aux;
+        }
+        ret.setlen(n);
+        return ret;
+    }
+    */
 
     template <typename T>
     poly power(T exp) const {
