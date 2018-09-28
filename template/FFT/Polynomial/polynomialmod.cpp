@@ -254,3 +254,58 @@ struct poly{
         return ret;
     }
 };
+
+poly aux[N];
+
+void dfs(int l, int r, int id, std::vector <int> &vec){
+    if (l == r){
+        aux[id] = poly(1);
+        aux[id][1] = 1;
+        aux[id][0] = vec[l] ? moder - vec[l] : 0;
+        return;
+    }
+    int mid = (l + r) >> 1;
+    dfs(l, mid, id << 1, vec);
+    dfs(mid + 1, r, id << 1 | 1, vec);
+    aux[id] = aux[id << 1] * aux[id << 1 | 1];
+}
+
+std::vector <int> solve1(int l, int r, int id, poly p){
+    if (l == r){
+        return {p[0]};
+    }
+    int mid = (l + r) >> 1;
+    std::vector <int> vec1 = solve1(l, mid, id << 1, p % aux[id << 1]);
+    std::vector <int> vec2 = solve1(mid + 1, r, id << 1 | 1, p % aux[id << 1 | 1]);
+    vec1.insert(vec1.end(), vec2.begin(), vec2.end());
+    return vec1;
+}
+
+std::vector <int> multivalue(poly p, std::vector <int> vec){
+    int n = vec.size();
+    dfs(0, n - 1, 1, vec);
+    return solve1(0, n - 1, 1, p);
+}
+
+poly solve2(int l, int r, int id, std::vector <int> &vec){
+    if (l == r){
+        poly p(0);
+        p[0] = vec[l];
+        return p;
+    }
+    int mid = (l + r) >> 1;
+    poly p1 = solve2(l, mid, id << 1, vec);
+    poly p2 = solve2(mid + 1, r, id << 1 | 1, vec);
+    return p1 * aux[id << 1 | 1] + p2 * aux[id << 1];
+}
+
+poly interpolation(std::vector <int> vecx, std::vector <int> vecy){
+    int n = vecx.size() - 1;
+    dfs(0, n, 1, vecx);
+    poly p = aux[1].der();
+    std::vector <int> vec = multivalue(p, vecx);
+    for (int i = 0; i <= n; ++ i){
+        vec[i] = 1ll * vecy[i] * powermod(vec[i], moder - 2) % moder;
+    }
+    return solve2(0, n, 1, vec);
+}
