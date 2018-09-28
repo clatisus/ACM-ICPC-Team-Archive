@@ -172,6 +172,7 @@ struct poly{
 
     static int interpolation(std::vector <int> vec, int x){
         int n = vec.size() - 1;
+        if (x >= 0 && x <= n) return vec[x];
         std::vector <int> pre(n + 1), suf(n + 1);
         pre[0] = suf[n] = 1;
         for (int i = 1; i <= n; ++ i){
