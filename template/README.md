@@ -29,30 +29,30 @@
 - Simplex(W)
 - ~~Gomory Hu tree(D)~~
 - ~~Stoer-Wagner Algo for Global Cut(D)~~
-- Kuhn-Munkres Algo(W)
+- ~~Kuhn-Munkres Algo(W)~~
 - ~~Dinic's Algo(D)~~
 
 ### Search
 
-- Max Clique(W)
+- ~Max Clique(W)~
 
 - ~3-sat(W)~
 
 ### Graph
 
-- Dominator Tree(W)
+- ~Dominator Tree(W)~
 
-- Virtual Tree(W)
+- ~Virtual Tree(W)~
 
-- Tarjan for SCC, Cut Vertex, Bridge(D)
+- ~Tarjan for SCC, Cut Vertex, Bridge(D)~
 
 - Hu-Tucker Tree(W)
 
 - Tree Heavy-Light Decomposition(W)
 
-- Centroidal Division(W)
+- ~Centroidal Division(W)~
 
-- Chu-Liu's Algo for MSA(D)
+- ~Chu-Liu's Algo for MSA(D)~
 
 ## String
 
@@ -60,11 +60,11 @@
 
 - ~~Minimal Representing String(D)~~
 
-- Aho-Corasick Automation(W)
+- ~Aho-Corasick Automation(W)~
 
 - ~~Suffix Array(D)~~
 
-- Suffix Automaton(W)
+- ~Suffix Automaton(W)~
 
 - Suffix Tree(x)
 
@@ -108,7 +108,7 @@
 
 ### Fase IO
 
-- Java I/O(W)
+- ~Java I/O(W)~
 
 - ~~Cpp I/O(W)~~
 
