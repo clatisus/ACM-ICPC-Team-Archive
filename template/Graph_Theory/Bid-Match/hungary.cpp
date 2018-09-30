@@ -1,3 +1,4 @@
+// O(VE)
 namespace Hungary {
     int n;
 
