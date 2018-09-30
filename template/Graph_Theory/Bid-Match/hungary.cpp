@@ -1,7 +1,3 @@
-#include <bits/stdc++.h>
-
-#define MAXN (3010)
-
 namespace Hungary {
     int n;
 
@@ -37,8 +33,4 @@ namespace Hungary {
         }
         return ret;
     }
-}
-
-int main() {
-    return 0;
 }
