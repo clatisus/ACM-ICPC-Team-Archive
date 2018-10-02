@@ -2,7 +2,8 @@ namespace persistent_stack { // min x + ky
     const int max_N = (int) 1e5 + 21;
     const int log_N = 20;
 
-    int x[max_N], y[max_N], st[max_N][log_N];
+    int x[max_N], y[max_N], dep[max_N], bit[max_N], st[max_N][log_N];
+	// bit[1] = 0, bit[i] = bit[i >> 1] + 1;
 
     inline int calc(int u, int k) {
         for (int i = log_N - 1; i > 1; --i) {
@@ -10,9 +11,7 @@ namespace persistent_stack { // min x + ky
             if (!r) continue;
             int l = st[u][i];
             if (!l) {
-				for (int j = i - 1; ~j; --j) {
-					if (l = st[r][j]) break;
-				}
+				l = st[r][bit[dep[r]]];
 				if (!l) continue;
 			}
             int fl = x[l] + k * y[l];
