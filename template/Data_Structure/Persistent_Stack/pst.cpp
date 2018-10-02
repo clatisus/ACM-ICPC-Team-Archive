@@ -9,7 +9,12 @@ namespace persistent_stack { // min x + ky
             int r = st[u][i - 1];
             if (!r) continue;
             int l = st[u][i];
-            if (!l) l = st[u][i - 1];
+            if (!l) {
+				for (int j = i - 1; ~j; --j) {
+					if (l = st[r][j]) break;
+				}
+				if (!l) continue;
+			}
             int fl = x[l] + k * y[l];
             int fr = x[r] + k * y[r];
             if (fl < fr) {
