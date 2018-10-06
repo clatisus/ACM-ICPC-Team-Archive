@@ -69,20 +69,25 @@ struct SAM {
         }
         get_accept();//
     }
+	
+	int cnt[MAXN], ord[MAXN << 1];
+	
+	void sort() {
+		int n = maxlen[last];
+		for (int i = 0; i <= n; ++i) cnt[i] = 0;
+		for (int i = 1; i <= tot; ++i) cnt[maxlen[i]]++;
+		for (int i = 1; i <= n; ++i) cnt[i] += cnt[i - 1];
+		for (int i = tot; i; --i) ord[cnt[maxlen[i]]--] = i;
+	}
 } sam;
 
 int n;
 char str[MAXN];
-int cnt[MAXN], ord[MAXN << 1];
 
 int main() {
     sam.init();
     scanf("%d%s", &n, str);
     sam.build(str);
-
-    for (int i = 1; i <= sam.tot; ++i) cnt[sam.maxlen[i]]++;
-    for (int i = 1; i <= n; ++i) cnt[i] += cnt[i - 1];
-    for (int i = sam.tot; i >= 1; --i) ord[cnt[sam.maxlen[i]]--] = i;
 
     return 0;
 }
