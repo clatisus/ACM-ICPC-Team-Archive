@@ -303,16 +303,16 @@ public:
 			x *= base;
 		}
 		BigInteger ret(x / num, base);
-		int nowprecision = 1;
-		for ( ; nowprecision <= length - p.length; nowprecision <<= 1){
-			BigInteger aux((nowprecision << 1) + 3, base, 0);
+		int noweps = 1;
+		for ( ; noweps <= length - p.length; noweps <<= 1){
+			BigInteger aux((noweps << 1) + 3, base, 0);
 			for (int i = p.length - aux.length; i < p.length; ++ i){
 				aux.a[i - p.length + aux.length] = i >= 0 ? p.a[i] : 0;
 			}
-			aux = (aux * ret >> nowprecision + 2) * ret >> nowprecision + 2;
-			ret = (ret * 2 << nowprecision) - aux;
+			aux = (aux * ret >> noweps + 2) * ret >> noweps + 2;
+			ret = (ret * 2 << noweps) - aux;
 		}
-		ret = ret * *this >> p.length + nowprecision + 1;
+		ret = ret * *this >> p.length + noweps + 1;
 		ret.sig = std::abs(ret.sig);
 		BigInteger aux(p);
 		aux.sig = std::abs(aux.sig);
@@ -340,18 +340,18 @@ public:
 			x *= base;
 		}
 		BigInteger ret((ll) std::sqrt(1.0 * x / num), base);
-		int nowprecision = 2;
-		for ( ; nowprecision <= (length >> 1) + 1; nowprecision = (nowprecision << 1) - 1){
-			BigInteger aux((nowprecision << 1) + 1 + (length & 1), base, 0);
+		int noweps = 2;
+		for ( ; noweps <= (length >> 1) + 1; noweps = (noweps << 1) - 1){
+			BigInteger aux((noweps << 1) + 1 + (length & 1), base, 0);
 			for (int i = length - aux.length; i < length; ++ i){
 				aux.a[i - length + aux.length] = i >= 0 ? a[i] : 0;
 			}
-			aux = ((aux * ret >> nowprecision + 1) * ret >> nowprecision + 1) / 2;
-			BigInteger aux1(nowprecision + 1 << 1, base, 0);
+			aux = ((aux * ret >> noweps + 1) * ret >> noweps + 1) / 2;
+			BigInteger aux1(noweps + 1 << 1, base, 0);
 			aux1.a[aux1.length - 1] = 1, aux1.a[aux1.length - 2] = 5;
-			ret = ret * (aux1 - aux) >> nowprecision + 2;
+			ret = ret * (aux1 - aux) >> noweps + 2;
 		}
-		ret = ret * *this >> (length >> 1) + nowprecision + 1;
+		ret = ret * *this >> (length >> 1) + noweps + 1;
 		if (!absgreaterequal(ret * ret)) -- ret;
 		else {++ ret; if (!absgreaterequal(ret * ret)) -- ret;}
 		return ret;
