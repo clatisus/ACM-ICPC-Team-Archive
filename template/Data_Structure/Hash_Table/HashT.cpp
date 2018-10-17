@@ -1,7 +1,7 @@
 struct HashT {
     std::pair<int, pii> data[23333];
     int head[65536], vis[65536], time, nxt[23333], tot;
-    inline void clear() {
+    inline void clear() { // 必须先clear再使用
         tot = 0, ++time;
     }
     inline pii &operator[](int s) {
