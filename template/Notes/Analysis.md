@@ -2,11 +2,15 @@
 
 ## Wallis公式
 
-$$\frac{\pi}{2} = \lim_{n \to +\infty}\frac{[\frac{(2n)!!}{(2n-1)!!}]^{2}}{2n+1}$$
+$$
+\frac{\pi}{2} = \lim_{n \to +\infty}\frac{[\frac{(2n)!!}{(2n-1)!!}]^{2}}{2n+1}
+$$
 
 ## Stirling公式
 
-$$n!\sim\sqrt{2\pi n}(\frac{n}{e})^{n}$$
+$$
+n!\sim\sqrt{2\pi n}(\frac{n}{e})^{n}
+$$
 
 ## n维球
 
