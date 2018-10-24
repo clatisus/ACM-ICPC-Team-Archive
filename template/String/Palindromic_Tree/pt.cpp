@@ -8,7 +8,7 @@ struct PalindromicTree {
     int diff[max_N], slink[max_N]; // palindrome series
     // Approval 1: diff[v] within path of serial links is non-increasing
 
-    // Approval 2: link[v] == slink[v] -> diff[link[v]] < len[v] / 2, 
+    // Approval 2: link[v] == slink[v] -> len[slink[v]] < len[v] / 2, 
 	// so that there are no more than O(logn) vertices in the slink chain
 	
     inline int new_node(int l) {
