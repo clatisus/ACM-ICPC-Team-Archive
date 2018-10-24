@@ -6,13 +6,11 @@ struct PalindromicTree {
     int ch[max_N][sigma], len[max_N], cnt[max_N], link[max_N];
 
     int diff[max_N], slink[max_N]; // palindrome series
-    // Approval 1: path within serial links to the root contain only O(logn) vertices
+    // Approval 1: diff[v] within path of serial links is non-increasing
 
-    // Approval 2: link[v] != slink[v] ->
-    // the previous occurrence of link[v] in the string was in position i - diff[v],
-    // while in this position there is no suffix-palindrome with length len[v],
-    // i.e. link[v] was the beginning of the series in that position
-
+    // Approval 2: link[v] == slink[v] -> diff[link[v]] < len[v] / 2, 
+	// so that there are no more than O(logn) vertices in the slink chain
+	
     inline int new_node(int l) {
         int x = tot++;
         len[x] = l;
@@ -48,7 +46,6 @@ struct PalindromicTree {
     inline void get_cnt() {
         for (int i = tot - 1; ~i; --i) cnt[link[i]] += cnt[i];
     }
-
 
     inline void init() {
         last = tot = 0;
