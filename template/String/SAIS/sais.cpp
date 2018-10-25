@@ -4,8 +4,7 @@ namespace sais {
 #define pushS(x) sa[cur[s[x]]--] = x
 #define pushL(x) sa[cur[s[x]]++] = x
 #define inducedSort(v)                                                        \
-    memset(sa, -1, n * sizeof(int));                                          \
-    memset(cnt, 0, m * sizeof(int));                                          \
+    std::fill_n(sa, n, -1), std::fill_n(cnt, m, 0);                           \
     for (int i = 0; i < n; i++) cnt[s[i]]++;                                  \
     for (int i = 1; i < m; i++) cnt[i] += cnt[i-1];                           \
     for (int i = 0; i < m; i++) cur[i] = cnt[i]-1;                            \
