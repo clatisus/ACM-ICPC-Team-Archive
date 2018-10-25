@@ -14,8 +14,8 @@ struct PalindromicTree {
     inline int new_node(int l) {
         int x = tot++;
         len[x] = l;
-        memset(ch[x], 0, sigma);
-        cnt[x] = diff[x] = slink[x] = 0;
+        std::fill_n(ch[x], sigma, 0);
+        cnt[x] = link[x] = diff[x] = slink[x] = 0;
         return x;
     }
 
