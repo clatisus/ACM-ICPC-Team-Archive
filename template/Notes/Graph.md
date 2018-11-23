@@ -74,3 +74,11 @@ $step4.$ 对附加弧进行合并：对于原图中每个点 $i$ 记录 $d[i]=\s
 如果 $d[i]>0$，则连一条容量为 $d[i]$ 的弧 $ss\to i$，如果 $d[i]<0$，则连一条容量为 $-d[i]$ 的弧 $i\to tt$。
 
 $step5.$ 求改造后的网络的ss-tt最大流，当且仅当所有的附加弧满载时原网络有s-t可行流。
+
+# 霍尔婚配定理
+
+左部为 $X$，右部为 $Y$ 的二分图 $G=(X+Y,E)$ 中（不妨假设$|X|\le|Y|$），存在一个匹配覆盖 $X$ 的充分必要条件是：$\displaystyle\forall S(S\subseteq X \to\left|S\right|\le\left|\bigcup\limits_{x\in S}T(x)\right|)$，其中 $T(x)=\{y|y\in Y\land\left[(x,y)\in E\right]\}$。
+
+# 广义霍尔定理
+
+二分图 $A+B$ 中存在一个匹配能覆盖顶点集合 $X+Y$ 的充要条件是存在一个匹配能覆盖 $X$，且存在一个匹配能覆盖 $Y$（$X\in A\land Y\in B$）。
