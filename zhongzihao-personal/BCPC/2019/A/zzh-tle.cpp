@@ -1,23 +1,12 @@
 #include <cstdio>
-#include <cctype>
 #include <vector>
+#include <algorithm>
 
 const int N = 10000010;
 const int moder = 998244353;
 
 int min[N], ans[N];
 std::vector <int> prime;
-
-void read(int &x){
-    char ch;
-    while (!isdigit(ch = getchar()))
-        ;
-    x = 0;
-    while (isdigit(ch)){
-        x = x * 10 + ch - '0';
-        ch = getchar();
-    }
-}
 
 int main(){
     for (int i = 2; i < N; ++ i){
@@ -35,32 +24,44 @@ int main(){
     for (int i = 1; i < N - 1; ++ i){
         ans[i] = 1;
         int x = i;
+        typedef std::pair <int, int> pii;
+        std::vector <pii> vec;
         while (x > 1){
-            int cnt = 0, tmp = min[x];
+            int tmp = min[x], cnt = 0;
             while (x % tmp == 0){
                 x /= tmp;
                 ++ cnt;
             }
-            ans[i] = 1ll * ans[i] * (cnt + 1) % moder;
+            vec.push_back({tmp, cnt});
         }
         x = i + 1;
         while (x > 1){
-            int cnt = 0, tmp = min[x];
+            int tmp = min[x], cnt = 0;
             while (x % tmp == 0){
                 x /= tmp;
                 ++ cnt;
             }
-            ans[i] = 1ll * ans[i] * (cnt * i + 1) % moder;
+            vec.push_back({tmp, cnt * i});
+        }
+        std::sort(vec.begin(), vec.end());
+        int sum = 0, sz = vec.size();
+        for (int j = 0; j < sz; ++ j){
+            sum += vec[j].second;
+            if (j == sz - 1 || vec[j].first != vec[j + 1].first){
+                ans[i] = 1ll * ans[i] * (sum + 1) % moder;
+                sum = 0;
+            }
         }
         ans[i] += ans[i - 1];
         ans[i] -= ans[i] >= moder ? moder : 0;
     }
     int test;
-    read(test);
+    scanf("%d", &test);
     for (int i = 1; i <= test; ++ i){
         int x;
-        read(x);
+        scanf("%d", &x);
         printf("%d\n", ans[x]);
     }
     return 0;
 }
+
