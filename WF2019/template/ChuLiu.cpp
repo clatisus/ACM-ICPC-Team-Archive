@@ -1,33 +1,23 @@
 namespace ChuLiu {
     const int max_N = 1000 + 21;
     const int max_M = (int) 2e4 + 21;
-
     using LL = long long;
-
     const LL inf = (int) 1e9;
-
     LL val[max_M], tag[max_M];
-
     int n, m, u[max_M], v[max_M], ls[max_M], rs[max_M];
-
     int st[max_N], top, rt[max_N];
-
     struct dsu {
         int f[max_N];
-
         int find(int x) {
             return x == f[x] ? x : f[x] = find(f[x]);
         }
-
         void merge(int x, int y) {
             f[find(x)] = find(y);
         }
-
         bool check(int x, int y) {
             return find(x) == find(y);
         }
     } F[2];
-
     inline void down(int x) {
         if (tag[x]) {
             val[x] += tag[x];
@@ -36,7 +26,6 @@ namespace ChuLiu {
             tag[x] = 0;
         }
     }
-
     int merge(int x, int y) {
         down(x), down(y);
         if (!x || !y)
@@ -48,7 +37,6 @@ namespace ChuLiu {
         std::swap(ls[x], rs[x]);
         return x;
     }
-
     void solve() {
         scanf("%d%d", &n, &m);
         for (int i = 0; i <= n; ++i) {
