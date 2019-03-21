@@ -6,17 +6,6 @@
 const int moder = 1e9 + 7;
 const int inv2 = 5e8 + 4;
 
-int powermod(int a, int exp){
-	int ret = 1;
-	for ( ; exp; exp >>= 1){
-		if (exp & 1){
-			ret = 1ll * ret * a % moder;
-		}
-		a = 1ll * a * a % moder;
-	}
-	return ret;
-}
-
 void FWT_XOR(int *a, int length, int type){
 	int len = -1;
 	for (int x = length; x; ++ len, x >>= 1);

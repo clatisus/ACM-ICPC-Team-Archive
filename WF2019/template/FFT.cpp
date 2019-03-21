@@ -7,36 +7,6 @@ typedef long long ll;
 
 int moder;
 
-struct comp{
-    double real, imag;
-
-    comp(double real = 0, double imag = 0):real(real), imag(imag){}
-
-    comp operator +(const comp &c)const{
-        return comp(real + c.real, imag + c.imag);
-    }
-
-    comp operator -(const comp &c)const{
-        return comp(real - c.real, imag - c.imag);
-    }
-
-    comp operator *(const comp &c)const{
-        return comp(real * c.real - imag * c.imag, real * c.imag + imag * c.real);
-    }
-
-    comp operator *(const double &c)const{
-        return comp(real * c, imag * c);
-    }
-
-    comp conj()const{
-        return comp(real, -imag);
-    }
-
-    comp operator /(const comp &c)const{
-        return *this * c.conj() * (1 / (sqr(c.real) + sqr(c.imag)));
-    }
-};
-
 comp w[2][1 << MAX];
 
 void init(){
@@ -83,37 +53,6 @@ void FFTcomb(std::vector <comp> &a, std::vector <comp> &b){
         comp tmp2 = (a[i] - b[i]) * comp(0, -0.5);
         a[i] = tmp1, b[i] = tmp2;
     }
-}
-
-poly operator * (const poly &p)const{
-    if (!~len || !~p.len) return poly(-1);
-    int n = len + p.len;
-    int lenret = 1;
-    for ( ; lenret <= n; lenret <<= 1)
-        ;
-    std::vector <comp> aux(lenret), aux1(lenret);
-    //---------------myy的黑科技-------------------
-    for (int i = 0; i < lenret; ++i){
-        aux[i] = comp(i > len ? 0 : a[i], i > p.len ? 0 : p.a[i]);
-    }
-    FFTcomb(aux, aux1);
-    /*---------------普通的FFT------------------
-    for (int i = 0; i < lenret; ++i){
-        aux[i] = comp(i > len ? 0 : a[i], 0);
-        aux1[i] = comp(i > p.len ? 0 : p.a[i], 0);
-    }
-    FFT(aux, lenret, 0);
-    FFT(aux1, lenret, 0);
-    */
-    for (int i = 0; i < lenret; ++i){
-        aux[i] = aux[i] * aux1[i];
-    }
-    FFT(aux, lenret, 1);
-    poly ret(n);
-    for (int i = 0; i <= n; ++i){
-        ret.a[i] = aux[i].real;
-    }
-    return ret;
 }
 
 poly operator * (const poly &p)const{

@@ -6,28 +6,9 @@
 
 typedef long long ll;
 
-// 据说会快 orz 
-inline int multmod(int x,int y, int MOD) {
-    int ret; 
-    __asm__ __volatile__ ("\tmull %%ebx\n\tdivl %%ecx\n":"=d"(ret):"a"(x),"b"(y),"c"(MOD));
-    return ret;
-}
-
-// const int moder = 998244353;
-// const int root = 3;
-// const int invroot = (moder + 1) / root;
 const int N = 1000010;
 
 int invn[N];
-
-/*
-void init(){
-    invn[0] = 0, invn[1] = 1;
-    for (int i = 2; i < N; ++i) {
-        invn[i] = (moder - 1ll * (moder / i) * invn[moder % i] % moder) % moder;
-    }
-}
-*/
 
 struct poly{
     std::vector<int> a;
@@ -48,32 +29,7 @@ struct poly{
         a.resize(len + 1);
         this->len = len;
     }
-    
-    // 相当于乘以 x ^ dis
-    poly operator << (const int &dis) const {
-        poly ret(len + dis);
-        std::copy(a.begin(), a.begin() + len + 1, ret.a.begin() + dis);
-        return ret;
-    }
-    
-    // 相当于除以 x ^ dis
-    poly operator >> (const int &dis) const {
-        if (dis > len) return poly(-1);
-        int retlen = len - dis;
-        poly ret(retlen);
-        std::copy(a.begin(), a.begin() + retlen + 1, ret.a.begin());
-        return ret;
-    }
-    
-    int value(int x) {
-        int now = 1, ret = 0;
-        for (int i = 0; i <= len; ++i) {
-            ret = (ret + 1ll * a[i] * now) % moder;
-            now = 1ll * now * x % moder;
-        }
-        return ret;
-    }
-    
+
     poly operator + (const poly &p) const {
         poly ret(*this, std::max(len, p.len));
         for (int i = 0; i <= p.len; ++i) {
@@ -95,15 +51,7 @@ struct poly{
             ;
         return ret;
     }
-    
-    poly operator - () const {
-        poly ret(len);
-        for (int i = 0; i <= len; ++i){
-            ret.a[i] = a[i] ? moder - a[i] : 0;
-        }
-        return ret;
-    }
-    
+
     poly operator * (const poly &p) const {
         if (!~len || !~p.len) return poly(-1);
         int n = len + p.len;
@@ -132,13 +80,7 @@ struct poly{
         }
         return ret;
     }
-    
-    friend poly operator * (const int &q, const poly &p) { return p * q; }
-    poly &operator += (const poly &p) { return *this = *this + p; }
-    poly &operator -= (const poly &p) { return *this = *this - p; }
-    poly &operator *= (const poly &p) { return *this = *this * p; }
-    poly &operator *= (const int &p) { return *this = *this * p; }
-    
+
     //表示求最高次为n的inv，log和exp同理
     poly inv(int n) const {
         assert(~len && a[0]);
@@ -154,23 +96,6 @@ struct poly{
         return ret;
     }
     
-    poly der() const {
-        if (!~len) return poly(-1);
-        poly ret(len - 1);
-        for (int i = 0; i < len; ++i){
-            ret.a[i] = 1ll * a[i + 1] * (i + 1) % moder;
-        }
-        return ret;
-    }
-
-    poly integral() const {
-        poly ret(len + 1);
-        for (int i = len + 1; i; --i){
-            ret.a[i] = 1ll * a[i - 1] * invn[i] % moder;
-        }
-        return ret;
-    }
-
     poly operator / (const poly &p) const {
         assert(~p.len);
         if (p.len > len) return poly(-1);
@@ -208,49 +133,6 @@ struct poly{
             ret.setlen(noweps);
         }
         ret.setlen(n);
-        return ret;
-    }
-
-    /*------------a little faster-------------
-    poly exp(int n) const {
-        assert(!~len || !a[0]);
-        poly ret(0), invaux(0);
-        ret.a[0] = invaux.a[0] = 1;
-        poly unit = ret;
-        for (int noweps = 0; noweps < n; ){
-            noweps = noweps << 1 | 1;
-            //inv
-            poly aux1 = invaux * invaux;
-            poly aux = ret * aux1;
-            aux.setlen(noweps);
-            aux = invaux + invaux - aux;
-            //log
-            aux *= ret.der();
-            aux.setlen(noweps - 1);
-            aux = aux.integral();
-            //exp
-            ret *= unit - aux + poly(*this, noweps);
-            ret.setlen(noweps);
-            //real inv
-            aux = ret * aux1;
-            aux.setlen(noweps);
-            invaux = invaux + invaux - aux;
-        }
-        ret.setlen(n);
-        return ret;
-    }
-    */
-
-    template <typename T>
-    poly power(T exp) const {
-        poly ret(0), aux = this;
-        ret.a[0] = 1;
-        for ( ; exp; exp >>= 1){
-            if (exp & 1){
-                ret *= aux;
-            }
-            aux *= aux;
-        }
         return ret;
     }
 };

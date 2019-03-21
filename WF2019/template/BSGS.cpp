@@ -9,17 +9,6 @@
 typedef long long ll;
 typedef std::pair <int, int> pii;
 
-int powermod(int a, int exp, int moder){
-    int ret = 1;
-    for ( ; exp > 0; exp >>= 1){
-        if (exp & 1){
-            ret = 1ll * ret * a % moder;
-        }
-        a = 1ll * a * a % moder;
-    }
-    return ret;
-}
-
 int BSGS(int a, int b, int moder){
     a = (a % moder + moder) % moder;
     b = (b % moder + moder) % moder;

@@ -8,17 +8,6 @@ const int invroot = (moder + 1) / root;
 
 int w[2][1 << MAX];
 
-int powermod(int a, int exp){
-    int ret = 1;
-    for ( ; exp > 0; exp >>= 1){
-        if (exp & 1){
-            ret = 1ll * a * ret % moder;
-        }
-        a = 1ll * a * a % moder;
-    }
-    return ret;
-}
-
 void init(){
     w[0][0] = w[1][0] = 1;
     w[0][1] = powermod(root, (moder - 1) >> MAX);
