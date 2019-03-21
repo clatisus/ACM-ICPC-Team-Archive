@@ -243,7 +243,7 @@ struct poly{
 
     template <typename T>
     poly power(T exp) const {
-        poly ret(0), aux = this;
+        poly ret(0), aux = *this;
         ret.a[0] = 1;
         for ( ; exp; exp >>= 1){
             if (exp & 1){
