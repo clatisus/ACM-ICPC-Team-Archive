@@ -31,6 +31,8 @@ namespace centroid {
 	}
 	void init(int n) {
 		memset(vis + 1, 0, n * sizeof(bool));
-		for (int i = 1; i <= n; ++i) std::vector<int>().swap(vec[i]);
+		for (int i = 1; i <= n; ++i) {
+			std::vector<int>().swap(vec[i]);
+		}
 	}
 };

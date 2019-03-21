@@ -6,7 +6,8 @@ struct SparseTable {
         for (int i = 1; i <= n; ++i)max[i][0] = a[i];
         for (int j = 1; j <= bit[n]; ++j) {
             for (int i = 1; i + (1 << j) - 1 <= n; ++i) {
-                max[i][j] = std::max(max[i][j - 1], max[i + (1 << (j - 1))][j - 1]);
+                max[i][j] = std::max(max[i][j - 1], 
+					max[i + (1 << (j - 1))][j - 1]);
             }
         }
     }

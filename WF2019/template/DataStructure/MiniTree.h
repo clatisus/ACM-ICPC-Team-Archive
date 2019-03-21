@@ -1,3 +1,7 @@
+/*
+ * Description: Build mini tree for key vertices st[1...top].
+ * Time: $O(n\log{n})$
+ */
 namespace mini_tree {
     int st[max_N << 1], top;
     struct functor {
@@ -20,7 +24,8 @@ namespace mini_tree {
         top = 1;
         for (int i = 2; i <= tmp; ++i) {
             while (top && !isanc(st[top], st[i])) --top;
-            _vec[st[top]].emplace_back(st[i], dep[st[i]] - dep[st[top]]);
+            _vec[st[top]].emplace_back(
+				st[i], dep[st[i]] - dep[st[top]]);
             st[++top] = st[i];
         }
     }

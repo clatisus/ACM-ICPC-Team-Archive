@@ -8,13 +8,15 @@ void dfs(int u, int fa, int head, int tail) {
     int l = head, r = tail - 2;
     while (l < r) {
         int m = (l + r) >> 1;
-        if (gety(que[m + 1], que[m]) <= d[u] * getx(que[m + 1], que[m])) {
+        if (gety(que[m + 1], que[m]) 
+			<= d[u] * getx(que[m + 1], que[m])) {
             l = m + 1;
         } else {
             r = m;
         }
     }
-    if (l + 1 < tail && gety(que[l + 1], que[l]) <= d[u] * getx(que[l + 1], que[l])) {
+    if (l + 1 < tail && gety(que[l + 1], que[l]) 
+		<= d[u] * getx(que[l + 1], que[l])) {
         ++l;
     }
     head = l;
@@ -22,13 +24,15 @@ void dfs(int u, int fa, int head, int tail) {
     l = head + 2, r = tail;
     while (l < r) {
         int m = (l + r) >> 1;
-        if (gety(que[m - 1], que[m - 2]) * getx(u, que[m - 1]) >= gety(u, que[m - 1]) * getx(que[m - 1], que[m - 2])) {
+        if (gety(que[m - 1], que[m - 2]) * getx(u, que[m - 1]) 
+			>= gety(u, que[m - 1]) * getx(que[m - 1], que[m - 2])) {
             r = m;
         } else {
             l = m + 1;
         }
     }
-    if (l - 1 > head && gety(que[l - 1], que[l - 2]) * getx(u, que[l - 1]) >= gety(u, que[l - 1]) * getx(que[l - 1], que[l - 2])) {
+    if (l - 1 > head && gety(que[l - 1], que[l - 2]) * getx(u, que[l - 1]) 
+		>= gety(u, que[l - 1]) * getx(que[l - 1], que[l - 2])) {
         --l;
     }
     tail = l;

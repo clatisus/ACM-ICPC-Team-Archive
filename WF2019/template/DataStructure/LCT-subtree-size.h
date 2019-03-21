@@ -1,3 +1,7 @@
+/*
+ * Description: LCT maintains subtree size.
+ * Time: $O(n\log{n})$
+ */
 namespace LCT {
     const int max_N = (int) 4e5 + 21;
     using ptr = struct node *;

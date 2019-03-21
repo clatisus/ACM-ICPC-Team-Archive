@@ -1,4 +1,8 @@
-namespace kth { // 求k长路, O((n+m)logn+klogk)
+/*
+ * Description: Kth longest/shortest path.
+ * Time: $O((n+m)logn+klogk)$
+ */
+namespace kth {
     const int max_N = (int) 3e5 + 21;
     const int log_N = 20;
     using edge = std::pair<int, int>;
@@ -35,11 +39,13 @@ namespace kth { // 求k长路, O((n+m)logn+klogk)
         return x;
     }
     using state = std::pair<int, ptr>;
-    std::priority_queue<state, std::vector<state>, std::less<state>> pq;
+    std::priority_queue<state, std::vector<state>, 
+		std::less<state>> pq;
     // 求k短路时改成std::greater<state>
     int solve(int k) {
         // 建图, vec为反向边表, _vec为原边表
-        // 求最长（最短）路, p中记录最长（最短）路树, Q保存树上拓扑序（路径长度序）
+        // 求最长（最短）路, p中记录最长（最短）路树
+		// Q保存树上拓扑序（路径长度序）
         if (k == 1) return dis[s];
 
         for (int i = 1; i <= tot; ++i) {
@@ -48,14 +54,16 @@ namespace kth { // 求k长路, O((n+m)logn+klogk)
             for (auto &e : _vec[u]) {
                 int v = e.first, w = e.second;
                 if (dis[v] == -1 || p[u] == v) continue;
-                // 当有重边存在的时候不能简单判断p[u], 要记录树边的编号
+                // 当有重边存在的时候不能简单判断p[u], 
+				// 要记录树边的编号
                 ptr x = new_node(v, dis[u] - dis[v] - w);
                 // 求k短路时改为 w - dis[u] + dis[v]
                 rt[u] = merge(rt[u], x);
             }
         }
         if (rt[s]) pq.emplace(dis[s] - rt[s]->v, rt[s]);
-        //当求k短路的时候改为 dis[s] + rt[s]->v, 后面代码中的加减也相应取反
+        // 当求k短路的时候改为 dis[s] + rt[s]->v, 
+		// 后面代码中的加减也相应取反
         while (k--) {
             auto x = pq.top();
             pq.pop();

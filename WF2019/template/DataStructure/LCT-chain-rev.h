@@ -1,3 +1,7 @@
+/*
+ * Description: LCT maintains chain-reverse operation.
+ * Time: $O(n\log{n})$
+ */
 const int max_N = (int) 1e5 + 21;
 namespace Splay {
     typedef struct node *star;
@@ -125,7 +129,9 @@ namespace LCT {
         star top;
         pd(x, top), x->link = top->link;
         for (int d, d1; ~(d = x->d()); rot(x))
-            if (~(d1 = x->p->d()))rot(d ^ d1 ? x : x->p);
+            if (~(d1 = x->p->d())) {
+				rot(d ^ d1 ? x : x->p);
+			}
         x->update();
     }
     inline void change_rch(star x, star y) {
@@ -136,8 +142,10 @@ namespace LCT {
         x->update(), x->link->update();
     }
     inline void Access(star x) {
-        star rch = null;
-        for (star y = x; y != null; rch = y, y = y->p)splay(y), change_rch(y, rch);
+        star y = x, rch = null;
+        for (; y != null; rch = y, y = y->p) {
+			splay(y), change_rch(y, rch);
+		}
         splay(x);
     }
     inline void Evert(star x) {

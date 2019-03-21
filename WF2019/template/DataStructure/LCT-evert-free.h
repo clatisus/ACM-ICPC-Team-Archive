@@ -1,4 +1,7 @@
-//evert free 
+/*
+ * Description: LCT without evert operation.
+ * Time: $O(n\log{n})$
+ */
 namespace lct {
     using star = struct node *;
 #define Siz(x) ((x) ? (x)->siz : 0)
