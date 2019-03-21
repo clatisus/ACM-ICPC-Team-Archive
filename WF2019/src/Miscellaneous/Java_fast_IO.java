@@ -1,7 +1,3 @@
-import java.io.*;
-import java.util.*;
-import java.math.*;
-
 public class javatemplate {
 	public static void main(String[] args){
 		InputStream inputStream = System.in;

@@ -1,18 +1,12 @@
-#define eps (1e-9)
-
 typedef std::vector<double> VD;
-
 // maximize: cx
 // subject to: Ax <= b
 // x >= 0
-
-// A[0..n+m-1][0..n-1] =
-//                      (m * n)
-//                      (-In)
+// A[0..n+m-1][0..n-1] = (m * n)
+//                       (-In)
 // c[0..n-1]
 // b[0..n+m-1] = (m * 1)
 //               (n * [0])
-
 VD simplex(std::vector<VD> A, VD b, VD c) {
 	int n = A.size(), m = A[0].size() + 1, r = n, s = m - 1;
 	std::vector<VD> D(n + 2, VD(m + 1, 0));
@@ -20,8 +14,7 @@ VD simplex(std::vector<VD> A, VD b, VD c) {
 	for (int i = 0; i < n + m; ++i) ix[i] = i;
 	for (int i = 0; i < n; ++i) {
 		for (int j = 0; j < m - 1; ++j) D[i][j] = -A[i][j];
-		D[i][m - 1] = 1;
-		D[i][m] = b[i];
+		D[i][m - 1] = 1; D[i][m] = b[i];
 		if (D[r][m] > D[i][m]) r = i;
 	}
 	for (int j = 0; j < m - 1; ++j) D[n][j] = c[j];
@@ -36,9 +29,8 @@ VD simplex(std::vector<VD> A, VD b, VD c) {
 				if (D[r][j]) speedUp.push_back(j);
 			}
 			for (int i = 0; i <= n + 1; ++i) if (i != r) {
-				for (auto j : speedUp) {
+				for (auto j : speedUp)
 					D[i][j] += D[r][j] * D[i][s];
-				}
 				D[i][s] *= D[r][s];
 			}
 		}
@@ -51,13 +43,9 @@ VD simplex(std::vector<VD> A, VD b, VD c) {
 			if (r < 0
 				|| (d = D[r][m] / D[r][s] - D[i][m] / D[i][s]) < -eps || (d < eps && ix[r + m] > ix[i + m]))
 				r = i;
-		if (r < 0) {
-			return VD(); // unbounded
-		}
+		if (r < 0) return VD(); // unbounded
 	}
-	if (D[n + 1][m] < -eps) {
-		return VD(); // infeasible
-	}
+	if (D[n + 1][m] < -eps) return VD(); // infeasible
 	VD x(m - 1);
 	for (int i = m; i < n + m; ++i) if (ix[i] < m - 1) x[ix[i]] = D[i - m][m];
 	printf("%.0f\n", D[n][m]);
