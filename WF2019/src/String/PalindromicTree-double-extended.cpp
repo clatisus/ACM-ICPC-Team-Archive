@@ -10,9 +10,8 @@ struct PalindromicTree {
 	}
 	inline void addLast(int st, int ed, int c) {
 		auto get_node = [&](int x) {
-			while (ed - len[x] - 1 < st || s[ed - len[x] - 1] != s[ed]) {
+			while (ed - len[x] - 1 < st || s[ed - len[x] - 1] != s[ed])
 				x = link[x];
-			}
 			return x;
 		};
 		int u = get_node(last);
@@ -24,15 +23,12 @@ struct PalindromicTree {
 			ch[u][c] = v;
 		}
 		last = v;
-		if (len[v] == ed - st + 1) {
-			first = v;
-		}
+		if (len[v] == ed - st + 1) first = v;
 	}
 	inline void addFirst(int st, int ed, int c) {
 		auto get_node = [&](int x) {
-			while (st + len[x] + 1 > ed || s[st + len[x] + 1] != s[st]) {
+			while (st + len[x] + 1 > ed || s[st + len[x] + 1] != s[st])
 				x = link[x];
-			}
 			return x;
 		};
 		int u = get_node(first);
@@ -44,9 +40,7 @@ struct PalindromicTree {
 			ch[u][c] = v;
 		}
 		first = v;
-		if (len[v] == ed - st + 1) {
-			last = v;
-		}
+		if (len[v] == ed - st + 1) last = v;
 	}
 	inline void init() {
 		first = last = tot = 0;

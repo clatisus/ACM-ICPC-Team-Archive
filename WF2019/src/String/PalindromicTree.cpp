@@ -25,13 +25,9 @@ struct PalindromicTree {
 			v = new_node(len[u] + 2);
 			link[v] = ch[get_node(n, link[u])][c];
 			ch[u][c] = v;
-
 			diff[v] = len[v] - len[link[v]];
-			if (diff[v] == diff[link[v]]) {
-				slink[v] = slink[link[v]];
-			} else {
-				slink[v] = link[v];
-			}
+			if (diff[v] == diff[link[v]]) slink[v] = slink[link[v]];
+			else slink[v] = link[v];
 		}
 		++cnt[last = v];
 	}

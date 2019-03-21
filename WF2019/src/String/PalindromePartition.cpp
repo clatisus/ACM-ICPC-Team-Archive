@@ -21,9 +21,8 @@ int main() {
 		dp[i] = 0;
 		for (int v = pt.last; pt.len[v] > 0; v = pt.slink[v]) {
 			series_dp[v] = dp[i - (pt.len[pt.slink[v]] + pt.diff[v])];
-			if (pt.diff[v] == pt.diff[pt.link[v]]) {
+			if (pt.diff[v] == pt.diff[pt.link[v]])
 				(series_dp[v] += series_dp[pt.link[v]]) >= mod && (series_dp[v] -= mod);
-			}
 			if (i & 1) continue;
 			(dp[i] += series_dp[v]) >= mod && (dp[i] -= mod);
 		}

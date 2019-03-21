@@ -1,5 +1,4 @@
-// 字符串从 0 开始
-namespace minimal_representation {
+namespace minimal_representation { // 字符串从 0 开始
 	char s[max_N << 1];
 	int solve(char *S, int n) {
 		memcpy(s, S, sizeof(char) * n);

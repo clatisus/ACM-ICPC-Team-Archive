@@ -13,19 +13,16 @@ namespace KMP {
 			if (s[i] == s[j + 1]) ++j;
 		}
 		for (int i = 0; i < n; ++i) {
-			for (int j = 0; j < sigma; ++j) {
+			for (int j = 0; j < sigma; ++j)
 				last[i][j] = last[fail[i]][j];
-			}
 			last[i][s[i + 1] - 'a'] = i;
 			for (int j = 0; j < sigma; ++j) {
 				trans[i][j] = last[i][j];
-				if (s[trans[i][j] + 1] - 'a' == j) {
+				if (s[trans[i][j] + 1] - 'a' == j)
 					++trans[i][j];
-				}
 			}
 		}
-		for (int j = 0; j < sigma; ++j) {
+		for (int j = 0; j < sigma; ++j)
 			trans[n][j] = trans[fail[n]][j];
-		}
 	}
 };
