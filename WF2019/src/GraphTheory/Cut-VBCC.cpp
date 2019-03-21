@@ -30,9 +30,8 @@ namespace BCC {
 					bcc[u].push_back(tot);
 					par[tot] = u;
 				}
-			} else if (dfn[v] < dfn[u]) {
+			} else if (dfn[v] < dfn[u])
 				low[u] = std::min(low[u], dfn[v]);
-			}
 		}
 		if (!p && ch == 1) {
 			cut[u] = false;

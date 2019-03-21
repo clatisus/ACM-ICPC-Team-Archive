@@ -1,22 +1,17 @@
 // O(V^{0.5}E)
 namespace HK {
-	int match[MAXN];
-	int d[MAXN];
+	int match[MAXN], d[MAXN], dis;
 	bool vis[MAXN];
-	int dis;
-	// left -> right
-	std::vector<int> vec[MAXN];
-	std::vector<int> left;
+	std::vector<int> vec[MAXN], left;
 	bool bfs() {
 		std::queue<int> q;
 		dis = INT_MAX;
 		memset(d, -1, sizeof(d));
-		for (auto u : left) {
+		for (auto u : left)
 			if (match[u] == -1) {
 				d[u] = 0;
 				q.push(u);
 			}
-		}
 		while (!q.empty()) {
 			int u = q.front(); q.pop();
 			if (d[u] > dis) break;
@@ -33,7 +28,7 @@ namespace HK {
 		return dis != INT_MAX;
 	}
 	bool dfs(int u) {
-		for (auto v : vec[u]) {
+		for (auto v : vec[u])
 			if (!vis[v] && d[v] == d[u] + 1) {
 				vis[v] = true;
 				if (match[v] != -1 && d[v] == dis) continue;
@@ -43,20 +38,16 @@ namespace HK {
 					return true;
 				}
 			}
-		}
 		return false;
 	}
 	int hk() {
 		memset(match, -1, sizeof(match));
-
 		int ret = 0;
 		while (bfs()) {
 			memset(vis, 0, sizeof(vis));
-			for (auto u : left) {
-				if (match[u] == -1 && dfs(u)) {
+			for (auto u : left)
+				if (match[u] == -1 && dfs(u))
 					++ret;
-				}
-			}
 		}
 		return ret;
 	}

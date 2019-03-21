@@ -10,9 +10,8 @@ namespace SCC {
 			if (!dfn[v]) {
 				dfs(v);
 				low[u] = std::min(low[u], low[v]);
-			} else if (!sccno[v]) {
+			} else if (!sccno[v])
 				low[u] = std::min(low[u], dfn[v]);
-			}
 		}
 		if (dfn[u] != low[u]) return;
 		sccno[u] = ++scc_cnt;

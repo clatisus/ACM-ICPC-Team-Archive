@@ -8,15 +8,9 @@ namespace ChuLiu {
 	int st[max_N], top, rt[max_N];
 	struct dsu {
 		int f[max_N];
-		int find(int x) {
-			return x == f[x] ? x : f[x] = find(f[x]);
-		}
-		void merge(int x, int y) {
-			f[find(x)] = find(y);
-		}
-		bool check(int x, int y) {
-			return find(x) == find(y);
-		}
+		int find(int x) { return x == f[x] ? x : f[x] = find(f[x]);}
+		void merge(int x, int y) { f[find(x)] = find(y); }
+		bool check(int x, int y) { return find(x) == find(y); }
 	} F[2];
 	inline void down(int x) {
 		if (tag[x]) {
@@ -28,11 +22,8 @@ namespace ChuLiu {
 	}
 	int merge(int x, int y) {
 		down(x), down(y);
-		if (!x || !y)
-			return x + y;
-		if (val[x] > val[y]) {
-			std::swap(x, y);
-		}
+		if (!x || !y) return x + y;
+		if (val[x] > val[y]) std::swap(x, y);
 		rs[x] = merge(rs[x], y);
 		std::swap(ls[x], rs[x]);
 		return x;

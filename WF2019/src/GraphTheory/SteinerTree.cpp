@@ -6,13 +6,11 @@ void solve() {
 	for (int i = 0; i < m; ++i) dp[1 << i][pos[i]] = 1; 
 	for (int s = 1; s < (1 << m); ++s) {
 		for (int u = 1; u <= n; ++u) {
-			for (int s1 = (s - 1) & s; s1; (--s1) &= s) {
+			for (int s1 = (s - 1) & s; s1; (--s1) &= s)
 				dp[s][u] = std::min(dp[s][u],
 					dp[s1][u] + dp[s ^ s1][u] - 1);
-			}
-			if (dp[s][u] < inf) {
+			if (dp[s][u] < inf)
 				pq.emplace(-dp[s][u], u);
-			}
 		}
 		dijkstra(s);
 	}

@@ -42,9 +42,8 @@ namespace maxFlow {
 		return ret;
 	}
 	void init(int n) {
-		e.clear();
+		e.clear(); M = 0;
 		memset(head + 1, -1, n * sizeof(int));
-		M = 0;
 	}
 	void addEdge(int u, int v, flowType c) {
 		e.push_back({v, head[u], c});

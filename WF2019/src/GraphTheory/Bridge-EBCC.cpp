@@ -10,14 +10,11 @@ namespace EBCC {
 			if (!dfn[v]) {
 				tarjan(v, u);
 				low[u] = std::min(low[u], low[v]);
-				/*
-				if (dfn[u] < low[v]) {
-					// 若不存在重边则 u->v 是桥边
-				}
-				*/
-			} else if (dfn[v] < dfn[u]) {
+				//if (dfn[u] < low[v]) {
+				//	 若不存在重边则 u->v 是桥边
+				//}
+			} else if (dfn[v] < dfn[u])
 				low[u] = std::min(low[u], dfn[v]);
-			}
 		}
 		if (dfn[u] == low[u]) {
 			std::vector<int>().swap(ebcc[++ebcc_cnt]);

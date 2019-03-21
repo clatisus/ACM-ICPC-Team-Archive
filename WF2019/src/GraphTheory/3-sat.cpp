@@ -6,9 +6,7 @@
  */
 int C, W[3][MAXN], press[26];
 bool found;
-bool sat(int h) {
-	return press[h >> 1] == (h & 1);
-}
+bool sat(int h) { return press[h >> 1] == (h & 1); }
 void dfs(int u) {
 	while (u < C && (sat(W[0][u]) || sat(W[1][u]) || sat(W[2][u]))) ++u;
 	if (u == C) {

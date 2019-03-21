@@ -1,6 +1,4 @@
-#include <bits/stdc++.h>
 #define MAXN (300)
-#define ui unsigned int
 struct BIT{
 	ui v[8];
 	void clear(){ for(int i = 0; i < 8; ++ i) v[i] = 0; }
@@ -29,19 +27,17 @@ void dfs(int u){
 	}
 }
 int main(){
-	int test;
-	scanf("%d", &test);
+	int test;scanf("%d", &test);
 	while(test --){
 		scanf("%d%d", &n, &m);
 		for(int i = 0; i < n; ++ i) gra[i].clear(), arg[i].clear();
 		for(int i = 0; i < n; ++ i){
 			scanf("%s", str);
-			for(int j = 0; j < n; ++ j){
+			for(int j = 0; j < n; ++ j)
 				if(str[j] == '1'){
 					gra[i].set(j);
 					arg[j].set(i);
 				}
-			}
 		}
 		while(m --){
 			scanf("%d", &k);
@@ -52,10 +48,8 @@ int main(){
 				gra[u].flip(v);
 				arg[v].flip(u);
 			}
-
 			for(int i = 0; i < n; ++ i) vis.set(i);
 			for(int i = 0; i < n; ++ i) if(vis.get(i)) sfd(i);
-
 			int ans = 0;
 			for(int i = 0; i < n; ++ i) vis.set(i);
 			while(!stack.empty()){
@@ -66,7 +60,6 @@ int main(){
 					ans += now * (now - 1) / 2;
 				}
 			}
-
 			printf("%d\n", ans);
 		}
 	}

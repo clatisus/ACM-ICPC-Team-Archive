@@ -10,9 +10,8 @@ namespace domi_tree {
 		if (f[u] == u) return u;
 		int v = f[u];
 		f[u] = find(v);
-		if (cmp(sdom[pos[v]], sdom[pos[u]])) {
+		if (cmp(sdom[pos[v]], sdom[pos[u]]))
 			pos[u] = pos[v];
-		}
 		return f[u];
 	}
 	void dfs(int u) {
@@ -34,9 +33,8 @@ namespace domi_tree {
 			for (auto v : _vec[u]) {
 				if (!dfn[v]) continue;
 				find(v);
-				if (cmp(sdom[pos[v]], sdom[u])) {
+				if (cmp(sdom[pos[v]], sdom[u]))
 					sdom[u] = sdom[pos[v]];
-				}
 			}
 			tmp[sdom[u]].push_back(u);
 			int p = f[u] = par[u];
