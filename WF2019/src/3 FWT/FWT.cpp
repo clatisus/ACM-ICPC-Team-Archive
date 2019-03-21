@@ -1,5 +1,3 @@
-// FWT模板
-// length必须为2的幂，不需要像FFT那样扩大两倍 
 void FWT_XOR(int *a, int length, int type){
 	int len = -1;
 	for (int x = length; x; ++ len, x >>= 1);

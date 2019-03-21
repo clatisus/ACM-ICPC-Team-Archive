@@ -1,7 +1,3 @@
-const int MAX = 20;
-const int moder = 998244353;
-const int root = 3;
-const int invroot = (moder + 1) / root;
 int w[2][1 << MAX];
 void init(){
 	w[0][0] = w[1][0] = 1;

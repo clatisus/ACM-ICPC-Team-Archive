@@ -1,5 +1,3 @@
-// Miller-Rabin 模板
-// 该算法为随机算法，若要调整准确率，请修改 solve(int n) 中的 const int S 以调节判断次数，S 越大，准确率越高，速度越慢
 bool solve(int n, int t, int u){
 	int a = random(n);
 	if(!a || a == 1) return true;

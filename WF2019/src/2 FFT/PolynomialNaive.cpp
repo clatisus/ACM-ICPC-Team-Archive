@@ -1,4 +1,3 @@
-int inv[N], invf[N];
 struct poly{
 	static const int N = 1000;
 	int a[N], len;

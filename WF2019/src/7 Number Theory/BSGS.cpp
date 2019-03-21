@@ -1,6 +1,4 @@
-// bsgs模板
 // 求方程 a^x = b(mod moder) 的最小正解，无解时返回-1
-// solve() 返回解
 int BSGS(int a, int b, int moder){
 	a = (a % moder + moder) % moder;
 	b = (b % moder + moder) % moder;

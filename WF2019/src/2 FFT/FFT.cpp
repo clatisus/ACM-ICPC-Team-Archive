@@ -1,4 +1,3 @@
-const int MAX = 20;
 int moder;
 comp w[2][1 << MAX];
 void init(){

@@ -1,5 +1,3 @@
-// Pollard-Rho 模板
-// 分解出一个因子，需要递归下去做，直到为质数
 int solve(int n){
 	int c = random(n - 1) + 1, x = random(n), y = x, i = 0, k = 1;
 	for ( ; ; ){

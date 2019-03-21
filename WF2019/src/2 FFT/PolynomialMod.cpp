@@ -1,6 +1,3 @@
-// 多项式模板（取模）
-// 使用方法见多项式模板 
-int invn[N];
 struct poly{
 	std::vector<int> a;
 	int len;
@@ -14,24 +11,6 @@ struct poly{
 	int &operator [] (int n) { assert(n >= 0 && n <= len); return a[n]; }
 	void setlen(int len) {
 		a.resize(len + 1); this->len = len;
-	}
-	poly operator + (const poly &p) const {
-		poly ret(*this, std::max(len, p.len));
-		for (int i = 0; i <= p.len; ++i) {
-			ret.a[i] += p.a[i];
-			ret.a[i] -= ret.a[i] >= moder ? moder : 0;
-		}
-		for ( ; ~ret.len && !ret.a[ret.len]; --ret.len);
-		return ret;
-	}
-	poly operator - (const poly &p) const {
-		poly ret(*this, std::max(len, p.len));
-		for (int i = 0; i <= p.len; ++i) {
-			ret.a[i] -= p.a[i];
-			ret.a[i] += ret.a[i] < 0 ? moder : 0;
-		}
-		for ( ; ~ret.len && !ret.a[ret.len]; --ret.len);
-		return ret;
 	}
 	poly operator * (const poly &p) const {
 		if (!~len || !~p.len) return poly(-1);
@@ -47,14 +26,6 @@ struct poly{
 			ret.a[i] = 1ll * ret.a[i] * aux[i] % moder;
 		NTT(ret.a, lenret, 1);
 		ret.len = n;
-		return ret;
-	}
-	poly operator * (const int &p) const {
-		int q = (p % moder + moder) % moder;
-		if (!q) return poly(-1);
-		poly ret(len);
-		for (int i = 0; i <= len; ++i)
-			ret.a[i] = 1ll * a[i] * q % moder;
 		return ret;
 	}
 	//表示求最高次为n的inv，log和exp同理
@@ -84,9 +55,6 @@ struct poly{
 		std::reverse(ret.a.begin(), ret.a.begin() + retlen + 1);
 		return ret;
 	}
-	poly operator % (const poly &p) const { return *this - *this / p * p; }
-	poly &operator /= (const poly &p) { return *this = *this / p; }
-	poly &operator %= (const poly &p) { return *this = *this % p; }
 	poly log(int n) const {
 		assert(~len && a[0] == 1);
 		poly aux(*this, n);

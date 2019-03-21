@@ -1,7 +1,3 @@
-// 中国剩余定理模板
-// 求方程组 x = first1(mod second1), x = first2(mod second2) 的解
-// p.crt(q) 返回方程 p, q 的解 
-// 如果没有 __int128 就只能这么写啦 
 ll multmod(ll a, ll b, ll second){
 	ll ret = a * b - (ll)((long double) a * b / second + 0.5) * second;
 	return ret < 0 ? ret + second : ret;
