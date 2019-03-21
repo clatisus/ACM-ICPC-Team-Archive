@@ -1,40 +1,15 @@
-#include <bits/stdc++.h>
-
-#define ALL(x) (x).begin(), (x).end()
-
-using LL = long long;
-using PII = std::pair<int, int>;
-
-const int max_N = 2000 + 21;
-
 struct P {
 	int x, y;
-
-	explicit P(int x = 0, int y = 0) : x(x), y(y) {}
-
-	inline P sub(const P &p) const { return P(x - p.x, y - p.y); }
-
-	inline LL dot(const P &p) const { return 1ll * x * p.x + 1ll * y * p.y; }
-
-	inline LL det(const P &p) const { return 1ll * x * p.y - 1ll * y * p.x; }
-
-	inline P rot90() const { return P(-y, x); }
 } p[max_N], v[max_N][max_N];
-
 int n, Q[max_N], rk[max_N];
-
 LL S;
-
 std::vector<PII> vec;
-
 LL area(int i, int j, int k) { return p[i].sub(p[k]).det(p[j].sub(p[k])); }
-
 struct functor {
 	inline bool operator()(const PII &a, const PII &b) const {
 		return v[a.first][a.second].det(v[b.first][b.second]) > 0;
 	}
 };
-
 void binarySearch(int u, int v) {
 	int lo = 1, hi = n;
 	while (lo <= hi) {
@@ -51,7 +26,6 @@ void binarySearch(int u, int v) {
 		else hi = mi - 1;
 	}
 }
-
 void solve() {
 	std::sort(p + 1, p + 1 + n, [&](P a, P b) { return a.y == b.y ? a.x < b.x : a.y < b.y; });
 	for (int i = 1; i <= n; ++i)
@@ -70,14 +44,4 @@ void solve() {
 		std::swap(rk[u], rk[v]);
 	}
 	puts("No");
-}
-
-int main() {
-	scanf("%d%lld", &n, &S);
-	S <<= 1;
-	for (int i = 1; i <= n; ++i) {
-		scanf("%d%d", &p[i].x, &p[i].y);
-	}
-	solve();
-	return 0;
 }

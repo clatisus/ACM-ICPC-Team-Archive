@@ -1,62 +1,28 @@
-#include <bits/stdc++.h>
-
-const int max_N = 10000 + 21;
-
-using Float = double;
-
-const Float eps = 1e-9;
-
-inline int dcmp(Float x) {
-	if (x > +eps) return +1;
-	if (x < -eps) return -1;
-	return 0;
-}
-
-inline Float sqr(Float x) {
-	return x * x;
-}
-
-#define rep(i, n) for (int i = 0; i < n; ++i)
-
 struct poi {
 	Float cor[3];
-
 	explicit poi(Float x = 0, Float y = 0, Float z = 0) {
 		cor[0] = x, cor[1] = y, cor[2] = z;
 	}
-
 	inline poi add(const poi &p) const {
 		poi ret;
-		rep(i, 3) {
-			ret.cor[i] = cor[i] + p.cor[i];
-		}
+		rep(i, 3) ret.cor[i] = cor[i] + p.cor[i];
 		return ret;
 	}
-
 	inline poi sub(const poi &p) const {
 		poi ret;
-		rep(i, 3) {
-			ret.cor[i] = cor[i] - p.cor[i];
-		}
+		rep(i, 3) ret.cor[i] = cor[i] - p.cor[i];
 		return ret;
 	}
-
 	inline poi mul(Float k) const {
 		poi ret;
-		rep(i, 3) {
-			ret.cor[i] = cor[i] * k;
-		}
+		rep(i, 3) ret.cor[i] = cor[i] * k;
 		return ret;
 	}
-
 	inline Float dot(const poi &p) const {
 		Float ret = 0;
-		rep(i, 3) {
-			ret += cor[i] * p.cor[i];
-		}
+		rep(i, 3) ret += cor[i] * p.cor[i];
 		return ret;
 	}
-
 	inline poi det(const poi &p) const {
 		poi ret;
 		rep(i, 3) {
@@ -66,86 +32,55 @@ struct poi {
 		}
 		return ret;
 	}
-
-	inline Float abs2() const {
-		return dot(*this);
-	}
+	inline Float abs2() const {return dot(*this);}
 } p[max_N];
-
 int n;
-
 Float a[7][7], ans[7];
-
 inline void gauss(int n) {
 	for (int i = 0, j, k; i < n; ++i) {
 		for (k = j = i; j < n; ++j)
-			if (std::abs(a[k][i]) < std::abs(a[j][i])) {
-				k = j;
-			}
-
-		if (i != k) {
-			for (j = i; j <= n; ++j) {
-				std::swap(a[i][j], a[k][j]);
-			}
-		}
-
-		for (j = i + 1; j <= n; ++j) {
-			a[i][j] /= a[i][i];
-		}
+			if (std::abs(a[k][i]) < std::abs(a[j][i])) k = j;
+		if (i != k)
+			for (j = i; j <= n; ++j) std::swap(a[i][j], a[k][j]);
+		for (j = i + 1; j <= n; ++j) a[i][j] /= a[i][i];
 		a[i][i] = 1.;
-
 		for (j = 0; j < n; ++j) {
 			if (i == j) continue;
-			for (k = i + 1; k <= n; ++k) {
-				a[j][k] -= a[j][i] * a[i][k];
-			}
+			for (k = i + 1; k <= n; ++k) a[j][k] -= a[j][i] * a[i][k];
 			a[j][i] = 0.;
 		}
 	}
 	rep(i, n) ans[i] = a[i][n];
 }
-
 using Ball = std::pair<poi, Float>;
-
 inline bool cmp(const Ball &B1, const Ball &B2) {
 	return B1.second < B2.second;
 }
-
 inline Float dis2(const poi &p1, const poi &p2) {
 	return p2.sub(p1).abs2();
 }
-
 inline bool inBall(const Ball &B, const poi &p) {
 	return dcmp(dis2(B.first, p) - B.second) <= 0;
 }
-
 inline Ball Ball2(const poi &p1, const poi &p2) {
 	return {p1.add(p2).mul(0.5), dis2(p1, p2) * 0.25};
 }
-
 inline Ball Ball3(const poi &p1, const poi &p2, const poi &p3) {
 	poi nor = p2.sub(p1).det(p3.sub(p1));
 	Float S = nor.abs2();
-	if (!dcmp(S)) {
+	if (!dcmp(S))
 		return std::max(std::max(Ball2(p1, p2), Ball2(p1, p3), cmp), Ball2(p2, p3), cmp);
-	}
-
 	rep(i, 3) a[0][i] = 2 * (p2.cor[i] - p1.cor[i]);
 	a[0][3] = p2.abs2() - p1.abs2();
-
 	rep(i, 3) a[1][i] = 2 * (p3.cor[i] - p1.cor[i]);
 	a[1][3] = p3.abs2() - p1.abs2();
-
 	rep(i, 3) a[2][i] = nor.cor[i];
 	a[2][3] = nor.dot(p1);
-
 	gauss(3);
-
 	poi o = poi(ans[0], ans[1], ans[2]);
 	Float r2 = dis2(o, p1);
 	return {o, r2};
 }
-
 inline Ball Ball4(const poi &p1, const poi &p2, const poi &p3, const poi &p4) {
 	poi nor = p2.sub(p1).det(p3.sub(p1));
 	Float V = p4.sub(p1).dot(nor);
@@ -154,23 +89,17 @@ inline Ball Ball4(const poi &p1, const poi &p2, const poi &p3, const poi &p4) {
 		Ball tmp2 = std::max(Ball3(p1, p3, p4), Ball3(p2, p3, p4), cmp);
 		return std::max(tmp1, tmp2, cmp);
 	}
-
 	rep(i, 3) a[0][i] = 2 * (p2.cor[i] - p1.cor[i]);
 	a[0][3] = p2.abs2() - p1.abs2();
-
 	rep(i, 3) a[1][i] = 2 * (p3.cor[i] - p1.cor[i]);
 	a[1][3] = p3.abs2() - p1.abs2();
-
 	rep(i, 3) a[2][i] = 2 * (p4.cor[i] - p1.cor[i]);
 	a[2][3] = p4.abs2() - p1.abs2();
-
 	gauss(3);
-
 	poi o = poi(ans[0], ans[1], ans[2]);
 	Float r2 = dis2(o, p1);
 	return {o, r2};
 }
-
 void solve() {
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 	std::shuffle(p + 1, p + 1 + n, std::default_random_engine(seed));
@@ -193,16 +122,4 @@ void solve() {
 	}
 	double ans = std::sqrt(B.second);
 	printf("%.3f\n", ans);
-}
-
-int main() {
-	while (~scanf("%d", &n)) {
-		for (int i = 1; i <= n; ++i) {
-			double x, y, z;
-			scanf("%lf%lf%lf", &x, &y, &z);
-			p[i] = poi(x, y, z);
-		}
-		solve();
-	}
-	return 0;
 }
