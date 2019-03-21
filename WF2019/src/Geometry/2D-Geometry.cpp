@@ -1,91 +1,47 @@
-#include<bits/stdc++.h>
 // Geometry Fundamental
-const double eps = 1e-9;
-const double PI = acos(-1.0);
-const double INF = 1e100;
+const double eps = 1e-9, PI = acos(-1.0), INF = 1e100;
 inline int dcmp(double p) { return (p > eps) - (p < -eps); }
 inline double sqr(double p) { return p * p; }
-// Point(sometimes also Vector)
 struct P {
 	double x, y;
-
 	explicit P(double x = 0, double y = 0) : x(x), y(y) {}
-
-	P add(const P &p) const { return P(x + p.x, y + p.y); }
-
-	P sub(const P &p) const { return P(x - p.x, y - p.y); }
-
-	P mul(const double &t) const { return P(x * t, y * t); }
-
-	double dot(const P &p) const { return x * p.x + y * p.y; }
-
-	double det(const P &p) const { return x * p.y - y * p.x; }
-
-	double abs2() const { return dot(*this); }
-
-	double abs() const { return std::sqrt(abs2()); }
-
 	double angle() const { return std::atan2(y, x); }
-
-	// 逆时针旋转 rad 弧度
 	P rot(const double &rad) const {
 		double sin = std::sin(rad), cos = std::cos(rad);
 		return P(x * cos - y * sin, x * sin + y * cos);
 	}
-
 	P rot90() const { return P(-y, x); }
-
-	// 单位法向量
 	P normal() { return rot90().mul(1. / abs()); }
-
 	bool operator<(const P &p) const { return dcmp(x - p.x) ? x < p.x : dcmp(y - p.y) < 0; }
-
 	bool operator==(const P &p) const { return !dcmp(x - p.x) && !dcmp(y - p.y); }
 };
-
 struct L {
-	P p, v;
-	double angle;
-
+	P p, v; double angle;
 	L() {}
-
 	L(P a, P b) : p(a), v(b.sub(a)) { angle = v.angle(); }
-
 	bool operator<(const L &l) const { return angle < l.angle; }
-
-	// 直线上一点，满足方向向量系数为t
 	P point(double t) { return p.add(v.mul(t)); }
 };
-
 struct C {
-	P o;
-	double r;
-
+	P o; double r;
 	C() {}
-
 	C(P o, double r) : o(o), r(r) {}
-
 	// 圆上一点，满足x轴正方向到该点圆心连线逆时针角度为angle
 	P point(double angle) { return o.add(P(r, 0).rot(angle)); }
 };
-
 // 两直线夹角
 double rad(P p1, P p2) {
 	return std::acos(p1.dot(p2) / (p1.abs() * p2.abs()));
 }
-
 // 交点与距离相关
-
 // Intersection of Line l1 and Line l2
 double isLL(L l1, L l2) {
 	return l2.p.sub(l1.p).det(l2.v) / l1.v.det(l2.v); // 返回 t, 交点在 l1.p + l1.v * t, 可以用来判断射线、线段等
 }
-
 // 返回点 p 到直线 l 的有向距离, p 在直线逆时针方向为正
 double disLP(L l, P p) {
 	return l.v.det(p.sub(l.p)) / l.v.abs();
 }
-
 // 返回点 q 到线段 p1->p2 的距离
 double disSP(P p1, P p2, P q) {
 	if (p1 == p2) return q.sub(p1).abs();
@@ -94,17 +50,14 @@ double disSP(P p1, P p2, P q) {
 	if (dcmp(v1.dot(v3)) > 0) return v3.abs();
 	return std::abs(v1.det(v2)) / v1.abs();
 }
-
 // 返回点 p 在直线 l 上的投影坐标
 P proj(L l, P p) {
 	return l.p.add(l.v.mul(l.v.dot(p.sub(l.p).mul(1. / l.v.abs2()))));
 }
-
 // 返回点 p 关于直线 l 对称后的点坐标
 P symm(L l, P p) {
 	return proj(l, p).mul(2).sub(p);
 }
-
 // 判断线段是否严格相交（包括严格重合）, 即交点不仅是端点处
 bool crsSS(P p1, P p2, P q1, P q2) {
 	double c1 = p2.sub(p1).det(q1.sub(p1));
@@ -118,7 +71,6 @@ bool crsSS(P p1, P p2, P q1, P q2) {
 	double c4 = q2.sub(q1).det(p2.sub(q1));
 	return dcmp(c1) * dcmp(c2) < 0 && dcmp(c3) * dcmp(c4) < 0;
 }
-
 // 返回点 q 是否在线段 p1->p2 上, 包括是端点的情况
 bool onSeg(P p1, P p2, P q) {
 	double len = q.sub(p1).abs();
@@ -126,7 +78,6 @@ bool onSeg(P p1, P p2, P q) {
 	p1 = p1.sub(q), p2 = p2.sub(q);
 	return !dcmp(p1.det(p2) / len) && dcmp(p1.dot(p2)) <= 0;
 }
-
 // 返回点 q 是否在射线 p1->p2 上, 包括是p1的情况
 bool onRay(P p1, P p2, P q) {
 	double len = q.sub(p1).abs();
@@ -134,7 +85,6 @@ bool onRay(P p1, P p2, P q) {
 	p1 = q.sub(p1), p2 = q.sub(p2);
 	return !dcmp(p1.det(p2) / len) && dcmp(p1.dot(p2.sub(p1))) >= 0;
 }
-
 // 返回圆 c1 和直线 l 的交点集合
 std::vector<double> isCL(C c1, L l) {
 	double a = l.v.x, b = l.p.x - c1.o.x, c = l.v.y, d = l.p.y - c1.o.y;
@@ -148,7 +98,6 @@ std::vector<double> isCL(C c1, L l) {
 	ret.push_back((-f + std::sqrt(delta)) / (2 * e));
 	return ret;
 }
-
 // 返回圆 c1 和 c2 的位置关系(重合:-1，内含:0，内切:1，相交:2，外切:3，相离:4)和交点集合
 std::pair<int, std::vector<P>> isCC(C c1, C c2) {
 	double d = c1.o.sub(c2.o).abs2();
@@ -167,10 +116,7 @@ std::pair<int, std::vector<P>> isCC(C c1, C c2) {
 	}
 	return {2, {q1.sub(q2), q1.add(q2)}};
 }
-
-
 // nlog{A / eps) 判断n个圆交集是否为空
-
 int isCs(std::vector<C> &c, double mid) {
 	int n = c.size();
 	double left = -INF, right = INF;
@@ -197,7 +143,6 @@ int isCs(std::vector<C> &c, double mid) {
 	}
 	return 0;
 }
-
 bool isCs(std::vector<C> &c) {
 	double right = -INF, left = INF;
 	for (auto u : c) {
@@ -213,10 +158,7 @@ bool isCs(std::vector<C> &c) {
 	}
 	return false;
 }
-
-
 // 圆相关
-
 // 返回圆 c1 与圆 c2 的交集面积
 double areaCC(C c1, C c2) {
 	double d = c1.o.sub(c2.o).abs();
@@ -226,7 +168,6 @@ double areaCC(C c1, C c2) {
 	double t1 = std::acos(x / c1.r), t2 = std::acos((d - x) / c2.r);
 	return sqr(c1.r) * t1 + sqr(c2.r) * t2 - d * c1.r * sin(t1);
 }
-
 // 返回过点 p 的切线与圆 c 的交点集合, p 在圆上时返回 p 点本身, p 在圆内时返回空
 std::vector<P> tanCP(C c, P p) {
 	P v = p.sub(c.o);
@@ -238,7 +179,6 @@ std::vector<P> tanCP(C c, P p) {
 	P ret = c.o.add(q1);
 	return {ret.sub(q2), ret.add(q2)};
 }
-
 // 返回圆 c1 与圆 c2 的公切线集合
 std::vector<L> tanCC(C c1, C c2) {
 	std::vector<L> ret;
@@ -264,14 +204,12 @@ std::vector<L> tanCC(C c1, C c2) {
 	}
 	return ret;
 }
-
 // 返回三角形 p1->p2->p3 的内切圆
 C inC(P p1, P p2, P p3) {
 	double a = p3.sub(p2).abs(), b = p1.sub(p3).abs(), c = p2.sub(p1).abs();
 	P p = p1.mul(a).add(p2.mul(b).add(p3.mul(c))).mul(1. / (a + b + c)); // (a * p1 + b * p2 + c * p3) / (a + b + c)
 	return C(p, std::abs(disLP(L(p1, p2), p)));
 }
-
 // 返回三角形 p1->p2->p3 的外接圆
 C outC(P p1, P p2, P p3) {
 	P q1 = p1.add(p2).mul(0.5), v1 = p1.sub(p2).normal();
@@ -281,16 +219,12 @@ C outC(P p1, P p2, P p3) {
 	P p = l1.point(t);
 	return C(p, p1.sub(p).abs());
 }
-
-
 // 多边形, 凸包, 半平面交
-
 // 返回点 q 与简单多边形 ps 的位置关系(内部:1, 外部:-1, 边上:0)
 int inPolygon(std::vector<P> &ps, P q) {
 	int n = ps.size();
-	for (int i = 0; i < n; ++i) {
+	for (int i = 0; i < n; ++i)
 		if (onSeg(ps[i], ps[(i + 1) % n], q)) return 0;
-	}
 	int ret = -1;
 	for (int i = 0; i < n; ++i) {
 		P a = ps[i], b = ps[(i + 1) % n];
@@ -299,12 +233,10 @@ int inPolygon(std::vector<P> &ps, P q) {
 	}
 	return ret;
 }
-
 // 当返回值大于0时, 点 q 在直线 l 左边
 double onLeft(L l, P p) {
 	return l.v.det(p.sub(l.p));
 }
-
 // 返回点集 ps 的凸包, 返回的凸包为逆时针方向
 std::vector<P> convexHull(std::vector<P> &ps) {
 	static P stack[100010]; // 抄时记得修改
@@ -326,7 +258,6 @@ std::vector<P> convexHull(std::vector<P> &ps) {
 	for (int i = 0; i < top; ++i) ret.push_back(stack[i]);
 	return ret;
 }
-
 // O(n + m) 求凸包 ps 和 qs 的闵科夫斯基和的凸包
 std::vector<P> minkSum(std::vector<P> &ps, std::vector<P> &qs) {
 	std::vector<P> ret;
@@ -344,7 +275,6 @@ std::vector<P> minkSum(std::vector<P> &ps, std::vector<P> &qs) {
 	}
 	return ret;
 }
-
 // O(logn) 判断点 q 是否在凸包 ps 内部(包括恰在边上)
 bool inConvex(std::vector<P> &ps, P q) {
 	int n = ps.size();
@@ -360,7 +290,6 @@ bool inConvex(std::vector<P> &ps, P q) {
 	}
 	return dcmp(onLeft(L(ps[lo - 1], ps[lo]), q)) >= 0;
 }
-
 // O(logn) 求过凸包 ps 外一点 q 与凸包的切线交点, 右边的一个
 int tanConPR(std::vector<P> &ps, P q) {
 	int ret = 0, n = ps.size();
@@ -369,31 +298,19 @@ int tanConPR(std::vector<P> &ps, P q) {
 		bool dnl = onLeft(L(q, ps[lo + 1]), ps[lo]) > 0;
 		int mid = (lo + hi) >> 1;
 		bool dnm = onLeft(L(q, ps[mid + 1]), ps[mid]) > 0;
-		if (dnm) {
-			if (onLeft(L(q, ps[ret]), ps[mid]) > 0) {
-				ret = mid;
-			}
-		}
+		if (dnm && onLeft(L(q, ps[ret]), ps[mid]) > 0)
+			ret = mid;
 		if (dnl) {
-			if (onLeft(L(q, ps[ret]), ps[lo]) > 0) {
-				ret = lo;
-			}
-			if (dnm && onLeft(L(q, ps[lo]), ps[mid]) > 0) {
-				hi = mid - 1;
-			} else {
-				lo = mid + 1;
-			}
+			if (onLeft(L(q, ps[ret]), ps[lo]) > 0) ret = lo;
+			if (dnm && onLeft(L(q, ps[lo]), ps[mid]) > 0) hi = mid - 1;
+			else lo = mid + 1;
 		} else {
-			if (!dnm && onLeft(L(q, ps[lo]), ps[mid]) > 0) {
-				lo = mid + 1;
-			} else {
-				hi = mid - 1;
-			}
+			if (!dnm && onLeft(L(q, ps[lo]), ps[mid]) > 0) lo = mid + 1;
+			else hi = mid - 1;
 		}
 	}
 	return ret;
 }
-
 // O(logn) 求过凸包 ps 外一点 q 与凸包的切线交点, 左边的一个
 int tanConPL(std::vector<P> &ps, P q) {
 	int ret = 0, n = ps.size();
@@ -402,54 +319,37 @@ int tanConPL(std::vector<P> &ps, P q) {
 		bool dnl = onLeft(L(q, ps[lo - 1]), ps[lo]) < 0;
 		int mid = (lo + hi + 1) >> 1;
 		bool dnm = onLeft(L(q, ps[mid - 1]), ps[mid]) < 0;
-		if (dnm) {
-			if (onLeft(L(q, ps[ret]), ps[mid]) < 0) {
-				ret = mid;
-			}
-		}
+		if (dnm && onLeft(L(q, ps[ret]), ps[mid]) < 0)
+			ret = mid;
 		if (dnl) {
-			if (onLeft(L(q, ps[ret]), ps[lo]) < 0) {
-				ret = lo;
-			}
-			if (dnm && onLeft(L(q, ps[lo]), ps[mid]) < 0) {
-				lo = mid + 1;
-			} else {
-				hi = mid - 1;
-			}
+			if (onLeft(L(q, ps[ret]), ps[lo]) < 0) ret = lo;
+			if (dnm && onLeft(L(q, ps[lo]), ps[mid]) < 0) lo = mid + 1;
+			else hi = mid - 1;
 		} else {
-			if (!dnm && onLeft(L(q, ps[lo]), ps[mid]) > 0) {
-				hi = mid - 1;
-			} else {
-				lo = mid + 1;
-			}
+			if (!dnm && onLeft(L(q, ps[lo]), ps[mid]) > 0) hi = mid - 1;
+			else lo = mid + 1;
 		}
 	}
 	return ret;
 }
-
 // 求凸包 ps 与直线 p->q 的交点集合, 要求凸包为逆时针方向
 std::vector<P> isConL(std::vector<P> &ps, P p, P q) {
 	std::vector<double> arc;
 	int n = ps.size();
-	for (int i = 0; i < n; ++i) {
+	for (int i = 0; i < n; ++i)
 		ps.push_back(ps[i]);
-	}
 	ps.push_back(ps[0]);
 	for (int i = 0; i < n; ++i) {
 		arc.push_back(L(ps[i], ps[i + 1]).angle);
-		if (i && arc[i] < arc[i - 1]) {
+		if (i && arc[i] < arc[i - 1])
 			arc[i] += 2 * PI;
-		}
 	}
 	auto getseg = [&ps](L l, int left, int right) {
 		--left;
 		while (left < right) {
 			int mid = (left + right + 1) >> 1;
-			if (dcmp(l.v.det(ps[mid].sub(l.p))) < 0) {
-				left = mid;
-			} else {
-				right = mid - 1;
-			}
+			if (dcmp(l.v.det(ps[mid].sub(l.p))) < 0) left = mid;
+			else right = mid - 1;
 		}
 		return left;
 	};
@@ -473,7 +373,6 @@ std::vector<P> isConL(std::vector<P> &ps, P p, P q) {
 	ps.erase(ps.begin() + n, ps.end());
 	return ret;
 }
-
 // 用直线 p->q 切割凸包 ps, 保留左半平面部分, O(n)
 std::vector<P> cutCon(std::vector<P> &ps, P p, P q) {
 	std::vector<P> ret;
@@ -483,14 +382,12 @@ std::vector<P> cutCon(std::vector<P> &ps, P p, P q) {
 		if (dcmp(q.sub(p).det(a.sub(p))) >= 0) ret.push_back(a);
 		if (!dcmp(q.sub(p).det(b.sub(a)))) {
 			double t = isLL(L(a, b), L(p, q));
-			if (dcmp(t) > 0 && dcmp(t - 1) < 0) {
+			if (dcmp(t) > 0 && dcmp(t - 1) < 0)
 				ret.push_back(a.add(b.sub(a).mul(t)));
-			}
 		}
 	}
 	return ret;
 }
-
 // 返回直线集合 ls 的半平面交
 std::vector<P> isHalfPlane(std::vector<L> &ls) {
 	std::sort(ls.begin(), ls.end());
@@ -506,15 +403,13 @@ std::vector<P> isHalfPlane(std::vector<L> &ls) {
 		if (dcmp(ls[i].v.det(l.v))) {
 			dq.push_back(ls[i]);
 			ps.push_back(isLLP(l, ls[i]));
-		} else {
-			if (dcmp(onLeft(l, ls[i].p)) > 0) {
+		} else if (dcmp(onLeft(l, ls[i].p)) > 0) {
 				dq.pop_back();
 				if (!dq.empty()) {
 					ps.pop_back();
 					ps.push_back(isLLP(dq.back(), ls[i]));
 				}
 				dq.push_back(ls[i]);
-			}
 		}
 	}
 	while (!ps.empty() && dcmp(onLeft(dq.front(), ps.back())) <= 0) ps.pop_back(), dq.pop_back();
@@ -527,7 +422,6 @@ std::vector<P> isHalfPlane(std::vector<L> &ls) {
 	}
 	return ret;
 }
-
 // 返回圆 c 与简单多边形 ps 的交集面积
 double areaCPol(C c, std::vector<P> &ps) {
 	auto area = [c](P p, P q) {
@@ -546,9 +440,8 @@ double areaCPol(C c, std::vector<P> &ps) {
 		double tmp = 0;
 		P v1 = p1.sub(c.o), v2 = p2.sub(c.o);
 		bool flag1 = dcmp(v1.abs2() - sqr(c.r)) <= 0, flag2 = dcmp(v2.abs2() - sqr(c.r)) <= 0;
-		if (flag1 && flag2) {
-			tmp = std::abs(v1.det(v2));
-		} else if (flag1 || flag2) {
+		if (flag1 && flag2) tmp = std::abs(v1.det(v2));
+		else if (flag1 || flag2) {
 			if (!flag1) {
 				P p = l.point(vec[0]);
 				tmp = area(p1, p) + std::abs(p.sub(c.o).det(v2));
@@ -560,26 +453,20 @@ double areaCPol(C c, std::vector<P> &ps) {
 			if (vec.size() == 2 && dcmp(vec[0]) > 0 && dcmp(vec[0] - 1) < 0) {
 				P p3 = l.point(vec[0]), p4 = l.point(vec[1]);
 				tmp = area(p1, p3) + area(p4, p2) + std::abs(p3.sub(c.o).det(p4.sub(c.o)));
-			} else {
-				tmp = area(p1, p2);
-			}
+			} else tmp = area(p1, p2);
 		}
 		ret += tmp * dcmp(v1.det(v2));
 	}
 	return std::abs(ret) / 2;
 }
-
-
 // 圆并与圆交
-
 // O(n^2logn) 求圆集合 cs 的并集面积与中心，被卡时间时可预先去掉被其它圆包含的圆
 std::pair<double, P> areaCs(std::vector<C> &cs) {
 	double ret = 0;
 	P pret;
 	int n = cs.size();
 	for (int i = 0; i < n; ++i) {
-		std::vector<std::pair<double, int>> vec = {{0,      0},
-												   {PI * 2, 0}};
+		std::vector<std::pair<double, int>> vec = {{0, 0},{PI * 2, 0}};
 		int cnt = 1;
 		for (int j = 0; j < n; ++j) {
 			double dis = cs[i].o.sub(cs[j].o).abs();
@@ -627,7 +514,6 @@ std::pair<double, P> areaCs(std::vector<C> &cs) {
 	}
 	return {ret / 2, pret.mul(1. / ret)};
 }
-
 // O(n^2logn) 求圆集合 ccs 的交集面积
 double areaisCs(std::vector<C> &ccs) {
 	std::vector<C> cs;
@@ -642,11 +528,9 @@ double areaisCs(std::vector<C> &ccs) {
 					flag = false;
 					break;
 				}
-			} else {
-				if (dcmp(dis + ccs[i].r - ccs[j].r) <= 0) {
-					flag = false;
-					break;
-				}
+			} else if (dcmp(dis + ccs[i].r - ccs[j].r) <= 0) {
+				flag = false;
+				break;
 			}
 		}
 		if (flag) cs.push_back(ccs[i]);
@@ -690,9 +574,6 @@ double areaisCs(std::vector<C> &ccs) {
 	}
 	return ret / 2;
 }
-
-
-
 // 求点 q 到凸多边形 ps 的距离，ps 必须是逆时针的，p 必须在 ps 外部
 double disConvexP(std::vector<P> &ps, P q) {
 	int n = ps.size();
@@ -711,62 +592,46 @@ double disConvexP(std::vector<P> &ps, P q) {
 		int mid = (left + right) >> 1;
 		if (in(ps[(left + n - 1) % n], ps[left], ps[mid], ps[(mid + 1) % n], q)) {
 			right = mid;
-		} else {
-			left = mid;
-		}
+		} else left = mid;
 	}
 	return disSP(ps[left], ps[right % n], q);
 }
-
 // 求凸多边形 ps 的直径
 double convexDiameter(std::vector<P> &ps) {
 	int n = ps.size();
 	int is = 0, js = 0;
 	for (int i = 1; i < n; ++i) {
-		if (ps[i].x > ps[is].x) {
-			is = i;
-		}
-		if (ps[i].x < ps[js].x) {
-			js = i;
-		}
+		if (ps[i].x > ps[is].x) is = i;
+		if (ps[i].x < ps[js].x) js = i;
 	}
 	double maxd = ps[is].sub(ps[js]).abs();
 	int i = is, j = js;
 	do {
 		if (dcmp((ps[(i + 1) % n].sub(ps[i])).det((ps[(j + 1) % n].sub(ps[j])))) >= 0) {
 			j = (j + 1) % n;
-		} else {
-			i = (i + 1) % n;
-		}
+		} else i = (i + 1) % n;
 		maxd = std::max(maxd, ps[i].sub(ps[j]).abs());
 	} while (i != is || j != js);
 	return maxd;
 }
-
 // 求 ps 中的点的最小包围圆
 C minCoverC(std::vector<P> &ps) {
 	int n = ps.size();
 	std::random_shuffle(ps.begin(), ps.end());
 	C ret(ps[0], 0);
-	for (int i = 1; i < n; ++i) {
+	for (int i = 1; i < n; ++i)
 		if (dcmp(ps[i].sub(ret.o).abs() - ret.r) > 0) {
 			ret = C(ps[i], 0);
-			for (int j = 0; j < i; ++j) {
+			for (int j = 0; j < i; ++j)
 				if (dcmp(ps[j].sub(ret.o).abs() - ret.r) > 0) {
 					ret = C(ps[i].add(ps[j]).mul(0.5), ps[i].sub(ps[j]).abs() / 2);
-					for (int k = 0; k < j; ++k) {
-						if (dcmp(ps[k].sub(ret.o).abs() - ret.r) > 0) {
+					for (int k = 0; k < j; ++k)
+						if (dcmp(ps[k].sub(ret.o).abs() - ret.r) > 0)
 							ret = outC(ps[i], ps[j], ps[k]);
-						}
-					}
 				}
-			}
 		}
-	}
 	return ret;
 }
-
-/*
 namespace plane {
 	void work() {
 		scanf("%d" , &n);
@@ -776,10 +641,9 @@ namespace plane {
 		}
 		int m = n;
 		for (int i = 0 ; i + 1 < n ; ++ i)
-			for (int j = i + 1 ; j + 1 < n ; ++ j) {
+			for (int j = i + 1 ; j + 1 < n ; ++ j)
 				if (dcmp((P[i + 1] - P[i]) ^ (P[j + 1] - P[j])) != 0)
 					P[m ++] = GetLineIntersection(P[i] , P[i + 1] - P[i] , P[j] , P[j + 1] - P[j]);
-			}
 		sort(P , P + m);
 		m = unique(P , P + m) - P;
 		memset(pre , -1 , sizeof(pre));
@@ -815,7 +679,7 @@ namespace plane {
 			}
 		}
 		double res = 0;
-		for (int i = 0 ; i < mcnt ; ++ i) {
+		for (int i = 0 ; i < mcnt ; ++ i)
 			if (!vis[i]) {
 				int x = i;
 				double area = 0;
@@ -827,14 +691,6 @@ namespace plane {
 				if (x == i && dcmp(area) > 0)
 					res += area;
 			}
-		}
 		printf("%.8f\n" , res / 2);
 	}
 };
-*/
-
-
-int main() {
-	srand((unsigned) time(NULL));
-	return 0;
-}
