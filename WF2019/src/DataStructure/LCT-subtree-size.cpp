@@ -12,12 +12,10 @@ namespace LCT {
 		ptr max, p, ch[2];
 		void updt() {
 			max = this;
-			if (ch[0]->max->val > max->val) {
+			if (ch[0]->max->val > max->val)
 				max = ch[0]->max;
-			}
-			if (ch[1]->max->val > max->val) {
+			if (ch[1]->max->val > max->val)
 				max = ch[1]->max;
-			}
 			// r_siz = v_siz + ch[0]->r_siz + ch[1]->r_siz;
 		}
 		void down() {
@@ -34,9 +32,7 @@ namespace LCT {
 		}
 		void set_ch(ptr x, int d) {
 			if (~d) ch[d] = x;
-			if (x != null) {
-				x->p = this;
-			}
+			if (x != null) x->p = this;
 		}
 	} pool[max_N];
 	ptr new_node(int val) {
@@ -63,9 +59,8 @@ namespace LCT {
 		putdown(x);
 		int d, dd;
 		for(; ~(d = x->dir()); rot(x))
-			if (~(dd = x->p->dir())) {
+			if (~(dd = x->p->dir()))
 				rot((d ^ dd) ? x : x->p);
-			}
 		x->updt();
 	}
 	void access(ptr x) {

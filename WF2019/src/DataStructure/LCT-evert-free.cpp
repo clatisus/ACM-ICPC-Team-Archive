@@ -37,16 +37,14 @@ namespace lct {
 	}
 	void splay(star x) {
 		for (int d, d1; ~(d = x->dir()); rot(x))
-			if (~(d1 = x->p->dir())) {
+			if (~(d1 = x->p->dir()))
 				rot((d ^ d1) ? x : x->p);
-			}
 		x->update();
 	}
 	void access(star x) {
 		star rch = 0;
-		for (star y = x; y; rch = y, y = y->p) {
+		for (star y = x; y; rch = y, y = y->p)
 			splay(y), y->set(rch, 1), y->update();
-		}
 		splay(x);
 	}
 	void link(star x, star y) {//p[x]=y

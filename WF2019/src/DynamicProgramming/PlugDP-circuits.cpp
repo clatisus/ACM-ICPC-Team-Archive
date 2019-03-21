@@ -8,9 +8,8 @@ namespace circuits {
 		int a[max_N], n, m;
 		state(int col, LL s) : n(col + 1) {
 			m = 0;
-			for (int i = n - 1; ~i; --i) {
+			for (int i = n - 1; ~i; --i)
 				a[i] = (s & 7), s >>= 3, (a[i] > m) && (m = a[i]);
-			}
 			++m;
 		}
 		void minimal() {

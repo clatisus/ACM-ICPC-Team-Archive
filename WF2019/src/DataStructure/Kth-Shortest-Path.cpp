@@ -17,8 +17,7 @@ namespace kth {
 	ptr tail = pool, rt[max_N];
 	inline ptr new_node(int u, int v) {
 		ptr x = tail++;
-		x->u = u;
-		x->v = v;
+		x->u = u; x->v = v;
 		x->h = 1;
 		x->ls = x->rs = nullptr;
 		return x;
@@ -32,9 +31,8 @@ namespace kth {
 		ptr x = tail++;
 		*x = *u;
 		x->rs = merge(u->rs, v);
-		if (ht(x->ls) < ht(x->rs)) {
+		if (ht(x->ls) < ht(x->rs))
 			std::swap(x->ls, x->rs);
-		}
 		x->h = ht(x->rs) + 1;
 		return x;
 	}
@@ -47,7 +45,6 @@ namespace kth {
 		// 求最长（最短）路, p中记录最长（最短）路树
 		// Q保存树上拓扑序（路径长度序）
 		if (k == 1) return dis[s];
-
 		for (int i = 1; i <= tot; ++i) {
 			int u = Q[i];
 			rt[u] = rt[p[u]];

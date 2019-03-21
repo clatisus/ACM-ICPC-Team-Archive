@@ -16,9 +16,8 @@ namespace mini_tree {
 	void build() {
 		std::sort(st + 1, st + 1 + top, functor());
 		int tmp = top;
-		for (int i = 1; i < tmp; ++i) {
+		for (int i = 1; i < tmp; ++i)
 			st[++top] = lca(st[i], st[i + 1]);
-		}
 		std::sort(st + 1, st + 1 + top, functor());
 		tmp = std::unique(st + 1, st + 1 + top) - (st + 1);
 		top = 1;

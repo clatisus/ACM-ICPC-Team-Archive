@@ -10,9 +10,8 @@ namespace simple_path {
 		state(int col, LL s) : n(col + 1) {
 			end = s & 3, s >>= 2;
 			m = 0;
-			for (int i = n - 1; ~i; --i) {
+			for (int i = n - 1; ~i; --i)
 				a[i] = (s & 7), s >>= 3, (a[i] > m) && (m = a[i]);
-			}
 			++m;
 		}
 		void minimal() {

@@ -1,8 +1,6 @@
 //优化形如dp[i]=max(b[j]*a[i]+c[j])的dp，不要求b[j]单调，min时取反即可 
 //动态维护一个下凸壳，复杂度O(nlogn)
 //适用于int，无精度误差 
-#include<bits/stdc++.h>
-typedef long long ll;
 const ll INF = LLONG_MAX;
 inline ll divide(ll a, ll b){return a / b - ((a ^ b) < 0 && a % b);}
 class L{
@@ -32,7 +30,4 @@ ll query(std::multiset <L> &set, ll x){
 	auto u = *(set.lower_bound(L (0, 0, x)));
 	L::isquery = false;
 	return u.gety(x);
-}
-int main(){
-	return 0;
 }

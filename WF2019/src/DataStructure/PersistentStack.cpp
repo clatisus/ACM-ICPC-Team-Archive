@@ -20,9 +20,8 @@ namespace persistent_stack { // min x + ky
 			}
 		}
 		int ret = INT_MAX;
-		for (int i = 0; i < 4 && u; ++i, u = st[u][0]) {
+		for (int i = 0; i < 4 && u; ++i, u = st[u][0])
 			ret = std::min(ret, x[u] + k * y[u]);
-		}
 		return ret;
 	}
 	inline bool onLeft(int p1, int p2, int q) {
@@ -36,9 +35,8 @@ namespace persistent_stack { // min x + ky
 			if (!p || !pp) continue;
 			if (onLeft(pp, p, v)) u = p;
 		}
-		if (st[u][0] && onLeft(st[u][0], u, v)) {
+		if (st[u][0] && onLeft(st[u][0], u, v))
 			u = st[u][0];
-		}
 		return u;
 	}
 };

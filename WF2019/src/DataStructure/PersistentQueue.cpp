@@ -11,14 +11,11 @@ void dfs(int u, int fa, int head, int tail) {
 		if (gety(que[m + 1], que[m]) 
 			<= d[u] * getx(que[m + 1], que[m])) {
 			l = m + 1;
-		} else {
-			r = m;
-		}
+		} else r = m;
 	}
 	if (l + 1 < tail && gety(que[l + 1], que[l]) 
-		<= d[u] * getx(que[l + 1], que[l])) {
+		  <= d[u] * getx(que[l + 1], que[l]))
 		++l;
-	}
 	head = l;
 	dp[u] = dp[que[head]] + sqr(d[u] - d[que[head]]) + p;
 	l = head + 2, r = tail;
@@ -27,14 +24,11 @@ void dfs(int u, int fa, int head, int tail) {
 		if (gety(que[m - 1], que[m - 2]) * getx(u, que[m - 1]) 
 			>= gety(u, que[m - 1]) * getx(que[m - 1], que[m - 2])) {
 			r = m;
-		} else {
-			l = m + 1;
-		}
+		} else l = m + 1;
 	}
 	if (l - 1 > head && gety(que[l - 1], que[l - 2]) * getx(u, que[l - 1]) 
-		>= gety(u, que[l - 1]) * getx(que[l - 1], que[l - 2])) {
+		>= gety(u, que[l - 1]) * getx(que[l - 1], que[l - 2]))
 		--l;
-	}
 	tail = l;
 	int sit = tail, value = que[tail];
 	que[tail++] = u;
