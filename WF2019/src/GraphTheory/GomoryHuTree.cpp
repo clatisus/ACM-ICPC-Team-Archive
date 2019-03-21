@@ -1,9 +1,9 @@
 namespace maxFlow {
 	//...
 	void addEdge(int u, int v, flowType c) {
-        e.push_back({v, head[u], c});
-        head[u] = M++;
-    }
+		e.push_back({v, head[u], c});
+		head[u] = M++;
+	}
 	//...
 };
 namespace GHtree {

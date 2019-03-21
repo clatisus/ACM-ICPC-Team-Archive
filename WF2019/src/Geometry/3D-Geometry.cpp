@@ -125,7 +125,7 @@ P rotate(P a, P b, double angle){
 }
 
 /*绕任意轴（过原点）逆时针旋转（注意要把轴向量归一化，不然点在轴上时会出问题） 
-    rotate x y z d 
+	rotate x y z d 
    | (1-cos(d))*x*x+cos(d)     (1-cos(d))*x*y+sin(d)*z   (1-cos(d))*x*z-sin(d)*y   0 |
    | (1-cos(d))*y*x-sin(d)*z   (1-cos(d))*y*y+cos(d)     (1-cos(d))*y*z+sin(d)*x   0 |
    | (1-cos(d))*z*x+sin(d)*y   (1-cos(d))*z*y-sin(d)*x   (1-cos(d))*z*z+cos(d)     0 |
