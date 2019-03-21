@@ -34,12 +34,10 @@ struct MST{
 		//init()
 		tot = 0;
 		for(int dir = 0; dir <= 3; ++ dir){
-			if(dir & 1){
+			if(dir & 1)
 				for(int i = 1; i <= n; ++ i) std::swap(p[i].x, p[i].y);
-			}
-			else if(dir){
+			else if(dir)
 				for(int i = 1; i <= n; ++ i) p[i].x = - p[i].x;
-			}
 			std::sort(p + 1, n + p + 1);
 			for(int i = 1; i <= n; ++ i) a[i] = b[i] = p[i].y - p[i].x;
 			std::sort(b + 1, n + b + 1);

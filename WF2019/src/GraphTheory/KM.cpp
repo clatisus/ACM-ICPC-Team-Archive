@@ -33,8 +33,7 @@ namespace KM {
 	void solve() {
 		for (int i = 1; i <= n; ++i) {
 			lv[i] = INT_MIN;
-			rv[i] = 0;
-			mat[i] = 0;
+			rv[i] = mat[i] = 0;
 			for (int j = 1; j <= n; ++j)
 				lv[i] = std::max(lv[i], w[i][j]);
 		}

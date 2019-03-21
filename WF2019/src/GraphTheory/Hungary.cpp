@@ -1,8 +1,6 @@
 // O(VE)
 namespace Hungary {
-	int n;
-	// edge only from left to right
-	// vec[left].push_back(right)
+	int n; // edge only from left to right
 	std::vector<int> vec[MAXN], left;
 	int match[MAXN];
 	bool check[MAXN];

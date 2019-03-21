@@ -28,8 +28,7 @@ struct MaxClique{
 		for(int i = n; i; -- i){
 			int cur = 0;
 			for(int j = i + 1; j <= n; ++ j)
-				if(g[i][j])
-					alt[1][cur ++] = j;
+				if(g[i][j]) alt[1][cur ++] = j;
 			dfs(cur, 1);
 			nmax[i] = ans;
 		}

@@ -2,7 +2,7 @@ struct AC_DFA{
 	int go[MAXNODE][DICSIZE], fail[MAXNODE];
 	int sz, root;
 	int newnode(){
-		int ret = ++ sz;
+		int ret = ++sz;
 		memset(go[ret], 0, sizeof(go[ret]));
 		fail[ret] = root; //f[ret] = 0;
 		return ret;

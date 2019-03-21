@@ -4,8 +4,7 @@ namespace HK {
 	bool vis[MAXN];
 	std::vector<int> vec[MAXN], left;
 	bool bfs() {
-		std::queue<int> q;
-		dis = INT_MAX;
+		std::queue<int> q; dis = INT_MAX;
 		memset(d, -1, sizeof(d));
 		for (auto u : left)
 			if (match[u] == -1) {

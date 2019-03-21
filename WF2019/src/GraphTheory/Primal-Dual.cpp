@@ -100,14 +100,13 @@ namespace primal_dual {
 				flow += adt;
 				cost += adt * sum;
 			}
-		} while (dijkstra(n, s, t) && sum < 0); //for feasible flow
-		//} while (dijkstra(n, s, t)); //for max flow
+		} while (dijkstra(n, s, t) && sum < 0); //feasible
+		//} while (dijkstra(n, s, t)); //max flow
 	}
 	void clear(int n) {
 		e.clear();
-		for (int i = 1; i <= n; ++i) {
+		for (int i = 1; i <= n; ++i)
 			std::vector<int>().swap(vec[i]);
-		}
 		M = sum = flow = cost = 0;
 	}
 };
