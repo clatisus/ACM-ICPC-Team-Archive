@@ -1,14 +1,6 @@
 // bsgs模板
 // 求方程 a^x = b(mod moder) 的最小正解，无解时返回-1
 // solve() 返回解
-
-#include<bits/stdc++.h>
-#include"euclidinv.cpp"
-#define mp std::make_pair
-
-typedef long long ll;
-typedef std::pair <int, int> pii;
-
 int BSGS(int a, int b, int moder){
 	a = (a % moder + moder) % moder;
 	b = (b % moder + moder) % moder;
@@ -16,9 +8,8 @@ int BSGS(int a, int b, int moder){
 	if (!a || !b) return -1;
 	int now = b, x = a, m = std::sqrt(moder) + 1;
 	std::vector <pii> vec;
-	for (int i = 0; i < m; ++ i, now = 1ll * now * x % moder){
+	for (int i = 0; i < m; ++ i, now = 1ll * now * x % moder)
 		vec.push_back({now, -i});
-	}
 	std::sort(vec.begin(), vec.end());
 	x = now = powermod(a, m, moder);
 	for (int i = 1; i <= m; ++ i, now = 1ll * now * x % moder){
@@ -27,7 +18,6 @@ int BSGS(int a, int b, int moder){
 	}
 	return -1;
 }
-
 int Bsgs(int a, int b, int moder){
 	int cnt = 0;
 	for (int gcd; (gcd = std::__gcd(a, moder)) != 1; ++ cnt){
@@ -38,8 +28,4 @@ int Bsgs(int a, int b, int moder){
 	}
 	int ret = BSGS(a, b, moder);
 	return !~ret ? -1 : ret + cnt;
-}
-
-int main(){
-	return 0;
 }
