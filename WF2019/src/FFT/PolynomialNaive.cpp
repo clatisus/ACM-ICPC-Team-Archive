@@ -1,23 +1,9 @@
-#include<bits/stdc++.h>
-
-typedef long long ll;
-typedef std::pair <int, int> pii;
-const int moder = 998244353;
-
-const int N = 1000010;
-
 int inv[N], invf[N];
-
 struct poly{
 	static const int N = 1000;
-
-	int a[N];
-	int len;
-
+	int a[N], len;
 	poly():len(-1){memset(a, 0, sizeof(a));}
-
 	int &operator [](int sit){return a[sit];}
-
 	static poly interpolation(std::vector <pii> vec){
 		int n = vec.size() - 1;
 		poly aux; aux.len = 0; aux.a[0] = 1;
@@ -51,7 +37,6 @@ struct poly{
 		ret.len = n;
 		return ret;
 	}
-
 	static int interpolation(std::vector <int> vec, int x){
 		int n = vec.size() - 1;
 		if (x >= 0 && x <= n) return vec[x];
@@ -66,13 +51,9 @@ struct poly{
 			suf[i] += suf[i] < 0 ? moder : 0;
 		}
 		int ans = 0;
-		for (int i = 0; i <= n; ++ i){
+		for (int i = 0; i <= n; ++ i)
 			ans = (ans + ((n - i) & 1 ? -1ll : 1ll) * vec[i] * pre[i] % moder * suf[i] % moder * invf[i] % moder * invf[n - i]) % moder;
-		}
 		ans += ans < 0 ? moder : 0;
 		return ans;
 	}
 };
-
-int main(){
-}
