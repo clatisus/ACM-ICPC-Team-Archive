@@ -1,11 +1,10 @@
-// 字符串从1开始
-namespace SuffixArray {
+namespace SuffixArray { // 字符串从1开始
 	int sa[max_N], rk[max_N], height[max_N];
 	int tmp[max_N], cnt[max_N], bc[max_N];
 	inline void build(const char *s, int n) {
 		int i, j, k, T, sigma;
 		for (i = 1; i <= n; ++i) sa[i] = i;
-		std::sort(sa + 1, sa + 1 + n, [&](int a, int b) { return s[a] < s[b]; });
+		std::sort(sa + 1, sa + 1 + n, [&](int a, int b) {return s[a] < s[b];});
 		for (i = 2, bc[sa[1]] = 1; i <= n; ++i) {
 			bc[sa[i]] = bc[sa[i - 1]] + (s[sa[i - 1]] < s[sa[i]]);
 		}
@@ -24,13 +23,12 @@ namespace SuffixArray {
 			for (i = 1; i <= n; ++i) ++cnt[bc[i]];
 			for (i = 1; i <= sigma; ++i) cnt[i] += cnt[i - 1];
 			for (i = n; i; --i) sa[cnt[bc[tmp[i]]]--] = tmp[i];
-
 			for (i = 2, tmp[sa[1]] = 1; i <= n; ++i) {
 				tmp[sa[i]] = tmp[sa[i - 1]] + cmp(sa[i - 1], sa[i]);
 			}
 			memcpy(bc + 1, tmp + 1, sizeof(int) * n);
 		}
-		for (i = 1; i <= n; ++i)rk[sa[i]] = i;
+		for (i = 1; i <= n; ++i) rk[sa[i]] = i;
 		for (i = 1, k = 0; i <= n; ++i) {
 			if (rk[i] == 1) k = 0;
 			else {

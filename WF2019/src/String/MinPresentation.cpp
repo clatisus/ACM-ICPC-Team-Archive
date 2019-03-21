@@ -7,14 +7,10 @@ namespace minimal_representation {
 		int i = 0, j = 1, k = 0;
 		while (i < n && j < n && k < n) {
 			int t = s[i + k] - s[j + k];
-			if (!t) {
-				++k;
-			} else {
-				if (t < 0) {
-					j += k + 1;
-				} else {
-					i += k + 1;
-				}
+			if (!t) ++k;
+			else {
+				if (t < 0) j += k + 1;
+				else i += k + 1;
 				if (i == j) ++j;
 				k = 0;
 			}

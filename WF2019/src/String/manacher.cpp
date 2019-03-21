@@ -1,5 +1,4 @@
-//S starts at 0
-namespace Manacher {
+namespace Manacher { //S starts at 0
 	int r[2][size]; //palindromic radius
 	//type = 0 -> odd, type = 1 -> even
 	//palindromic centre of 'abba' is 1

@@ -20,20 +20,15 @@ namespace sais {
 		for (int i = 0, x, y; i < n; i++)
 			if (~(x = rk[sa[i]])) {
 				if (ch < 1 || p[x + 1] - p[x] != p[y + 1] - p[y]) ch++;
-				else {
-					for (int j = p[x], k = p[y]; j <= p[x + 1]; j++, k++)
+				else for (int j = p[x], k = p[y]; j <= p[x + 1]; j++, k++)
 						if ((s[j] << 1 | t[j]) != (s[k] << 1 | t[k])) {
 							ch++;
 							break;
 						}
-				}
 				s1[y = x] = ch;
 			}
-		if (ch + 1 < n1) {
-			sais(n1, ch + 1, s1, t + n, p + n1);
-		} else {
-			for (int i = 0; i < n1; i++) sa[s1[i]] = i;
-		}
+		if (ch + 1 < n1) sais(n1, ch + 1, s1, t + n, p + n1);
+		else for (int i = 0; i < n1; i++) sa[s1[i]] = i;
 		for (int i = 0; i < n1; i++) s1[i] = p[sa[i]];
 		inducedSort(s1);
 	}
