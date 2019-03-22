@@ -37,7 +37,4 @@ namespace Tarjan {
             } else if (dfn[v] < dfn[u]) {
                 stE[++topE] = w;
                 low[u] = std::min(low[u], dfn[v]);
-            }
-        }
-    }
-}
+            }}}}
