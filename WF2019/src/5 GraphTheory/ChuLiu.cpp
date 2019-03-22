@@ -1,22 +1,20 @@
 namespace ChuLiu {
-	using LL = long long;
 	const LL inf = 0x3f3f3f3f;
 	LL val[max_M], tag[max_M];
 	int n, m, u[max_M], v[max_M], ls[max_M], rs[max_M];
 	int st[max_N], top, rt[max_N];
 	struct dsu {
 		int f[max_N];
-		int find(int x) { return x == f[x] ? x : f[x] = find(f[x]);}
+		int find(int x) {return x==f[x]?x:f[x]=find(f[x]);}
 		void merge(int x, int y) { f[find(x)] = find(y); }
-		bool check(int x, int y) { return find(x) == find(y); }
+		bool check(int x, int y) {return find(x) == find(y);}
 	} F[2];
 	inline void down(int x) {
-		if (tag[x]) {
-			val[x] += tag[x];
-			tag[ls[x]] += tag[x];
-			tag[rs[x]] += tag[x];
-			tag[x] = 0;
-		}
+		if (!tag[x]) return;
+		val[x] += tag[x];
+		tag[ls[x]] += tag[x];
+		tag[rs[x]] += tag[x];
+		tag[x] = 0;
 	}
 	int merge(int x, int y) {
 		down(x), down(y);
@@ -43,8 +41,7 @@ namespace ChuLiu {
 			while (!F[0].check(st[top], root)) {
 				int x = st[top], y;
 				LL w;
-				do {
-					y = F[1].find(u[rt[x]]);
+				do{ y = F[1].find(u[rt[x]]);
 					w = val[rt[x]];
 					rt[x] = merge(ls[rt[x]], rs[rt[x]]);
 				} while (x == y);
@@ -59,8 +56,4 @@ namespace ChuLiu {
 				} else {
 					F[0].merge(x, y);
 					st[++top] = y;
-				}
-			}
-		}
-	}
-}
+				}}}}}

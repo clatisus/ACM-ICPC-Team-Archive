@@ -17,8 +17,7 @@ double isLF(L l, F f){
 	P u = f.p - l.p;
 	return (u % f.o) / (l.v % f.o);
 }
-// 返回有向距离，q 在法向量方向为正 
-double disFP(F f, P p){
+double disFP(F f, P p){ // 有向距离，q 在法向为正 
 	return f.o % (p - f.p) / f.o.abs();
 }
 double area(P p1, P p2, P p3){
@@ -40,10 +39,9 @@ double isLL(L l1, L l2){ //共面时使用
 	return INF;
 }
 L isFF(F f1, F f2){
-	P e = f1.o ^ f2.o;
-	P v = f1.o ^ e;
+	P e = f1.o ^ f2.o, v = f1.o ^ e;
 	double d = f2.o % v;
-	if (!sig(d)) return L (P (INF, INF, INF), P (INF, INF, INF));
+	if (!sig(d)) return L(P(INF,INF,INF),P(INF,INF,INF));
 	P q = f1.p + v * ((f2.o % (f2.p - f1.p)) / d);
 	return L (q, q + e);
 }
@@ -61,17 +59,14 @@ P rotate(P a, P b, double angle){
 	return e3 * lens + e1 * y2 + e2 * x2;
 }
 /*绕任意轴（过原点）逆时针旋转（注意要把轴向量归一化，不然点在轴上时会出问题） 
-	rotate x y z d 
-   | (1-cos(d))*x*x+cos(d)     (1-cos(d))*x*y+sin(d)*z   (1-cos(d))*x*z-sin(d)*y   0 |
-   | (1-cos(d))*y*x-sin(d)*z   (1-cos(d))*y*y+cos(d)     (1-cos(d))*y*z+sin(d)*x   0 |
-   | (1-cos(d))*z*x+sin(d)*y   (1-cos(d))*z*y-sin(d)*x   (1-cos(d))*z*z+cos(d)     0 |
-   |           0                          0                           0            1 |
-*/
-
+	rotate x y z d, let t=(1-cos(d))
+   | txx+cos(d)     txy+sin(d)*z   txz-sin(d)*y   0 |
+   | tyx-sin(d)*z   tyy+cos(d)     tyz+sin(d)*x   0 |
+   | tzx+sin(d)*y   tzy-sin(d)*x   tzz+cos(d)     0 |
+   |    0              0              0           1 | */
 double onLeft(L l, P p, P o){ // >0表示 p 在 l 左边
 	return mix(o, p - l.p, l.v);
 }
-
 std::vector <P> convexHull2D(std::vector <P> &ps, P o){
 	const int N = 100010;
 	static P stack[N];
@@ -90,26 +85,21 @@ std::vector <P> convexHull2D(std::vector <P> &ps, P o){
 	}
 	if (n > 1) -- top;
 	std::vector <P> ret;
-	for (int i = 0; i < top; ++ i)
-		ret.push_back(stack[i]);
+	for (int i = 0; i < top; ++i) ret.push_back(stack[i]);
 	return ret;
 }
-std::vector <std::vector <P>> convexHull(std::vector <P> &ps){
+std::vector<vector<P>> convexHull(vector <P> &ps){
 	auto area = [ps](int a, int b, int c){
 		return ((ps[b] - ps[a]) ^ (ps[c] - ps[a])).abs();
 	};
 	auto volume = [&](int a, int b, int c, int d){
-		return mix(ps[b] - ps[a], ps[c] - ps[a], ps[d] - ps[a]);
+		return mix(ps[b]-ps[a], ps[c]-ps[a], ps[d]-ps[a]);
 	};
 	struct Face{
 		int a[3];
 		Face(){}
-		Face(int x, int y, int z){
-			a[0] = x, a[1] = y, a[2] = z;
-		}
-		int &operator [](int k){
-			return a[k];
-		}
+		Face(int x, int y, int z){a[0]=x, a[1]=y, a[2]=z;}
+		int &operator [](int k){return a[k];}
 	};
 	std::vector <Face> face;
 	std::sort(ps.begin(), ps.end());
@@ -145,13 +135,14 @@ std::vector <std::vector <P>> convexHull(std::vector <P> &ps){
 			for (auto u : face){
 				int a = u[0], b = u[1], c = u[2];
 				if (sig(volume(i, a, b, c)) < 0){
-					mark[a][b] = mark[b][a] = mark[b][c] = mark[c][b] = mark[c][a] = mark[a][c] = cnt;
+					mark[a][b] = mark[b][a] = mark[b][c] = 
+					mark[c][b] = mark[c][a] = mark[a][c] = cnt;
 				}
 				else tmp.push_back(u);
 			}
 			face = tmp;
 			for (int j = 0, sz = tmp.size(); j < sz; ++ j){
-				int a = face[j][0], b = face[j][1], c = face[j][2];
+				int a=face[j][0], b=face[j][1], c=face[j][2];
 				if (mark[a][b] == cnt) face.emplace_back(b, a, i);
 				if (mark[b][c] == cnt) face.emplace_back(c, b, i);
 				if (mark[c][a] == cnt) face.emplace_back(a, c, i);
@@ -168,7 +159,7 @@ std::vector <std::vector <P>> convexHull(std::vector <P> &ps){
 		std::vector <P> pss;
 		for (int i = 0, sz = faces.size(); i <= sz; ++ i) {
 			if (i == sz || i > 0 && !(faces[i].first == faces[i - 1].first)){
-				ret.push_back(convexHull2D(pss, faces[i - 1].first));
+				ret.push_back(convexHull2D(pss,faces[i-1].first));
 				pss.clear();
 			}
 			if (i < sz){
@@ -187,7 +178,7 @@ std::vector <std::vector <P>> convexHull(std::vector <P> &ps){
 	}
 	return ret;
 }
-std::vector <std::vector <P>> cutCon(std::vector <std::vector <P>> &ps, F f){
+vector<vector<P>> cutCon(vector<vector <P>> &ps, F f){
 	std::vector <std::vector <P>> ret;
 	std::vector <P> sec;
 	for (auto &u : ps){
@@ -203,15 +194,14 @@ std::vector <std::vector <P>> cutCon(std::vector <std::vector <P>> &ps, F f){
 				L l(p1, p2);
 				double t = isLF(l, f);
 				P q = l.point(t);
-				qs.push_back(q);
-				sec.push_back(q);
+				qs.push_back(q); sec.push_back(q);
 			}
 			if (!d1) sec.push_back(p1);
 			else dif = true;
-			dif = dif || sig(mix(f.o, p2 - p1, u[(i + 2) % n] - p1)) < 0;
+			dif |= sig(mix(f.o, p2-p1, u[(i+2)%n] - p1)) < 0;
 		}
 		if (qs.size() > 0 && dif) ret.push_back(qs);
 	}
-	if (sec.size() > 0) ret.push_back(convexHull2D(sec, f.o));
+	if(sec.size()>0) ret.push_back(convexHull2D(sec, f.o));
 	return ret;
 }

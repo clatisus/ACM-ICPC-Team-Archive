@@ -26,7 +26,4 @@ namespace domi_tree {
 				if (!--deg[v]) Q[++tail] = v;
 				if (anc[v][0]) anc[v][0] = lca(anc[v][0], u);
 				else anc[v][0] = u;
-			}
-		}
-	}
-};
+			}}}};

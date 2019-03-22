@@ -46,7 +46,7 @@ double disSP(P p1, P p2, P q) {
 P proj(L l, P p) {
 	return l.p.add(l.v.mul(l.v.dot(p.sub(l.p).mul(1. / l.v.abs2()))));
 }
-// 判断线段是否严格相交（包括严格重合）, 即交点不仅是端点处
+// 判断线段是否严格相交（含严格重合）, 交点不仅在端点
 bool crsSS(P p1, P p2, P q1, P q2) {
 	double c1 = p2.sub(p1).det(q1.sub(p1));
 	double c2 = p2.sub(p1).det(q2.sub(p1));
@@ -94,7 +94,7 @@ std::pair<int, std::vector<P>> isCC(C c1, C c2) {
 		return {0, {}};
 	}
 	if (sig(c1.r + c2.r - std::sqrt(d)) < 0) return {4, {}};
-	if (sig(std::abs(c1.r - c2.r) - std::sqrt(d)) > 0) return {0, {}};
+	if (sig(abs(c1.r - c2.r) - sqrt(d)) > 0) return {0, {}};
 	double x = ((sqr(c1.r) - sqr(c2.r)) / d + 1) / 2;
 	double y = std::max(sqr(c1.r) / d - sqr(x), 0.0);
 	P q1 = c1.o.add(c2.o.sub(c1.o).mul(x));
@@ -275,20 +275,19 @@ int tanConPR(std::vector<P> &ps, P q) {
 		bool dnl = onLeft(L(q, ps[lo + 1]), ps[lo]) > 0;
 		int mid = (lo + hi) >> 1;
 		bool dnm = onLeft(L(q, ps[mid + 1]), ps[mid]) > 0;
-		if (dnm && onLeft(L(q, ps[ret]), ps[mid]) > 0)
-			ret = mid;
+		if(dnm&&onLeft(L(q,ps[ret]),ps[mid]) > 0) ret = mid;
 		if (dnl) {
 			if (onLeft(L(q, ps[ret]), ps[lo]) > 0) ret = lo;
-			if (dnm && onLeft(L(q, ps[lo]), ps[mid]) > 0) hi = mid - 1;
+			if(dnm&&onLeft(L(q,ps[lo]),ps[mid])>0) hi=mid-1;
 			else lo = mid + 1;
 		} else {
-			if (!dnm && onLeft(L(q, ps[lo]), ps[mid]) > 0) lo = mid + 1;
+			if(!dnm&&onLeft(L(q,ps[lo]),ps[mid])>0) lo=mid+1;
 			else hi = mid - 1;
 		}
 	}
 	return ret;
 }
-// O(logn) 求过凸包 ps 外一点 q 与凸包的切线交点, 左边的一个
+// O(logn) 过凸包 ps 外一点 q 与凸包的切线交点, 左边的一个
 int tanConPL(std::vector<P> &ps, P q) {
 	int ret = 0, n = ps.size();
 	int lo = 1, hi = n - 1;
@@ -296,14 +295,13 @@ int tanConPL(std::vector<P> &ps, P q) {
 		bool dnl = onLeft(L(q, ps[lo - 1]), ps[lo]) < 0;
 		int mid = (lo + hi + 1) >> 1;
 		bool dnm = onLeft(L(q, ps[mid - 1]), ps[mid]) < 0;
-		if (dnm && onLeft(L(q, ps[ret]), ps[mid]) < 0)
-			ret = mid;
+		if(dnm&&onLeft(L(q,ps[ret]),ps[mid]) < 0) ret = mid;
 		if (dnl) {
 			if (onLeft(L(q, ps[ret]), ps[lo]) < 0) ret = lo;
-			if (dnm && onLeft(L(q, ps[lo]), ps[mid]) < 0) lo = mid + 1;
+			if(dnm&&onLeft(L(q,ps[lo]),ps[mid])<0) lo=mid+1;
 			else hi = mid - 1;
 		} else {
-			if (!dnm && onLeft(L(q, ps[lo]), ps[mid]) > 0) hi = mid - 1;
+			if(!dnm&&onLeft(L(q,ps[lo]),ps[mid])>0) hi=mid-1;
 			else lo = mid + 1;
 		}
 	}
@@ -532,7 +530,7 @@ double areaisCs(std::vector<C> &ccs) {
 	}
 	return ret / 2;
 }
-// 求点 q 到凸多边形 ps 的距离，ps 必须是逆时针的，p 必须在 ps 外部
+// q 到凸多边形 ps 距离，ps 逆时针，p 在 ps 外部
 double disConvexP(std::vector<P> &ps, P q) {
 	int n = ps.size();
 	int left = 0, right = n;
@@ -581,7 +579,8 @@ C minCoverC(std::vector<P> &ps) {
 			ret = C(ps[i], 0);
 			for (int j = 0; j < i; ++j)
 				if (sig(ps[j].sub(ret.o).abs() - ret.r) > 0) {
-					ret = C(ps[i].add(ps[j]).mul(0.5), ps[i].sub(ps[j]).abs() / 2);
+					ret = C(ps[i].add(ps[j]).mul(0.5), 
+					        ps[i].sub(ps[j]).abs() / 2);
 					for (int k = 0; k < j; ++k)
 						if (sig(ps[k].sub(ret.o).abs() - ret.r) > 0)
 							ret = outC(ps[i], ps[j], ps[k]);

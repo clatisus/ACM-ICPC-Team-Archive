@@ -5,8 +5,7 @@ struct poi {
 	}
 	inline poi add(const poi &p) const {
 		poi ret;
-		rep(i, 3) ret.cor[i] = cor[i] + p.cor[i];
-        // sub, mul, dot
+		rep(i, 3) ret.cor[i]=cor[i]+p.cor[i];//sub,mul,dot
 		return ret;
 	}
 	inline poi det(const poi &p) const {
@@ -27,12 +26,12 @@ inline void gauss(int n) {
 		for (k = j = i; j < n; ++j)
 			if (std::abs(a[k][i]) < std::abs(a[j][i])) k = j;
 		if (i != k)
-			for (j = i; j <= n; ++j) std::swap(a[i][j], a[k][j]);
+			for (j = i; j <= n; ++j) std::swap(a[i][j],a[k][j]);
 		for (j = i + 1; j <= n; ++j) a[i][j] /= a[i][i];
 		a[i][i] = 1.;
 		for (j = 0; j < n; ++j) {
 			if (i == j) continue;
-			for (k = i + 1; k <= n; ++k) a[j][k] -= a[j][i] * a[i][k];
+			for(k=i+1;k<=n;++k) a[j][k] -= a[j][i] * a[i][k];
 			a[j][i] = 0.;
 		}
 	}
@@ -40,22 +39,18 @@ inline void gauss(int n) {
 }
 using Ball = std::pair<poi, Float>;
 inline bool cmp(const Ball &B1, const Ball &B2) {
-	return B1.second < B2.second;
-}
+	return B1.second < B2.second;}
 inline Float dis2(const poi &p1, const poi &p2) {
-	return p2.sub(p1).abs2();
-}
+	return p2.sub(p1).abs2();}
 inline bool inBall(const Ball &B, const poi &p) {
-	return dcmp(dis2(B.first, p) - B.second) <= 0;
-}
+	return dcmp(dis2(B.first, p) - B.second) <= 0;}
 inline Ball Ball2(const poi &p1, const poi &p2) {
-	return {p1.add(p2).mul(0.5), dis2(p1, p2) * 0.25};
-}
-inline Ball Ball3(const poi &p1, const poi &p2, const poi &p3) {
+	return {p1.add(p2).mul(0.5), dis2(p1, p2) * 0.25};}
+Ball Ball3(const poi &p1, const poi &p2, const poi &p3) {
 	poi nor = p2.sub(p1).det(p3.sub(p1));
 	Float S = nor.abs2();
 	if (!dcmp(S))
-		return std::max(std::max(Ball2(p1, p2), Ball2(p1, p3), cmp), Ball2(p2, p3), cmp);
+		return max(max(Ball2(p1,p2),Ball2(p1,p3),cmp),Ball2(p2,p3),cmp);
 	rep(i, 3) a[0][i] = 2 * (p2.cor[i] - p1.cor[i]);
 	a[0][3] = p2.abs2() - p1.abs2();
 	rep(i, 3) a[1][i] = 2 * (p3.cor[i] - p1.cor[i]);
@@ -67,12 +62,12 @@ inline Ball Ball3(const poi &p1, const poi &p2, const poi &p3) {
 	Float r2 = dis2(o, p1);
 	return {o, r2};
 }
-inline Ball Ball4(const poi &p1, const poi &p2, const poi &p3, const poi &p4) {
+Ball Ball4(const poi &p1, &p2, &p3, &p4) {
 	poi nor = p2.sub(p1).det(p3.sub(p1));
 	Float V = p4.sub(p1).dot(nor);
 	if (!dcmp(V)) {
-		Ball tmp1 = std::max(Ball3(p1, p2, p3), Ball3(p1, p2, p4), cmp);
-		Ball tmp2 = std::max(Ball3(p1, p3, p4), Ball3(p2, p3, p4), cmp);
+		Ball tmp1=max(Ball3(p1,p2,p3), Ball3(p1,p2,p4), cmp);
+		Ball tmp2=max(Ball3(p1,p3,p4), Ball3(p2,p3,p4), cmp);
 		return std::max(tmp1, tmp2, cmp);
 	}
 	rep(i, 3) a[0][i] = 2 * (p2.cor[i] - p1.cor[i]);
@@ -102,10 +97,7 @@ void solve() {
 				for (int u = 1; u < k; ++u) {
 					if (inBall(B, p[u])) continue;
 					B = Ball4(p[i], p[j], p[k], p[u]);
-				}
-			}
-		}
-	}
+				}}}}
 	double ans = std::sqrt(B.second);
 	printf("%.3f\n", ans);
 }

@@ -22,10 +22,10 @@ struct twoSat{   //for 2-sat MAXN is double large
 		ncnt = scnt = 0;
 		for(int i = 1; i <= n + n; ++ i)
 			if(!dfn[i]) tarjan(i);
-		for(int i = 1; i <= n; ++ i)
+		for(int i = 1; i <= n; ++ i) {
 			if(bel[i] == bel[i + n]) return false;
-		for(int i = 1; i <= n; ++ i)
 			col[i] = (bel[i] < bel[i + n]);
+		}
 		return true;
 	}
 };

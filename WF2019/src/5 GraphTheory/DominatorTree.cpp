@@ -48,6 +48,4 @@ namespace domi_tree {
 		for (int i = 1; i <= n; ++i) {
 			std::vector<int>().swap(vec[i]);
 			std::vector<int>().swap(_vec[i]);
-		}
-	}
-};
+		}}};
