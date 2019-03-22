@@ -1,4 +1,4 @@
-<TeX>树上 $dp$。从上到下 $w,v,u$，$u$ 的决策 $w$ 优于 $v$。$\frac{gety(w,v)}{getx(w,v)}\le d[u]$。$d$ 单调。</TeX>
+<TeX>树上 $dp$。从上到下 $w,v,u$，$u$ 的决策 $w$ 优于 $v$。$\frac{gety(w,v)}{getx(w,v)}\le d[u]$。$d$ 单调。二分 head 和 tail ，记录 tail 改变前的位置和值，回溯时撤销。</TeX>
 ll dp[MAXN], d[MAXN];
 int q[MAXN];
 void dfs(int u, int fa, int head, int tail) {
