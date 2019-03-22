@@ -1,0 +1,96 @@
+\subsubsection{数学分析}
+
+\begin{enumerate}
+
+\item
+
+$$
+\frac{\pi}{2} = \lim_{n \to +\infty}\frac{[\frac{(2n)!!}{(2n-1)!!}]^{2}}{2n+1}
+$$
+
+\item
+
+$$
+n!\sim\sqrt{2\pi n}(\frac{n}{e})^{n}
+$$
+
+\item $n$维球的体积公式：$\displaystyle{\frac{\pi^{\frac{n}{2}}}{\Gamma(\frac{n}{2}+1)}r^{n}}$
+
+$n$维球的表面积公式：$\displaystyle{\frac{2\pi^{\frac{n}{2}}}{\Gamma(\frac{n}{2})}r^{n-1}=V_{n}'(r)}$
+
+其中伽马函数 $\Gamma(z)=\int_{0}^{\infty}x^{z-1}e^{-x}\mathbb{d}x$ ，满足
+
+ - $\Gamma(1)=1,\Gamma(z+1)=z\Gamma(z)(z>0)$
+ - $\Gamma(1-z)\Gamma(z)=\frac{\pi}{\sin(\pi z)}(z\notin\mathbb{Z})$
+ - $\Gamma(z)\Gamma(z+\frac{1}{2})=2^{1-2z}\sqrt{\pi}\Gamma(2z)$
+ - $\Gamma(\frac{1}{2})=\sqrt{\pi}$
+
+\end{enumerate}
+
+\subsubsection{组合数学}
+
+\begin{enumerate}
+
+\item 设 $p(n)$ 为将 $n$ 写成若干个正整数和的方案数，若 $i$ 为自然数，称 $\frac{3i^{2}-i}{2}$ 和 $\frac{3i^{2}+i}{2}$ 为广义五边形数，并定义 $f(\frac{3i^{2}-i}{2}) = f(\frac{3i^{2}+i}{2}) = i$，则 $p(n) = \sum_{u,1 \le u \le n}(-1)^{f(u) - 1}p(n-u)$，其中 $u$ 为广义五边形数。$\displaystyle{\phi(x)=\prod_{i=1}^{\infty}(1-x^{i})}$ 称为欧拉函数，它是划分数生成函数的逆。$\phi(x) = \sum_{u}(-1)^{f(u)}x^{u}$，其中 $u$ 为广义五边形数。
+
+\item $\begin{bmatrix}n\\k\end{bmatrix}$ 表示 $n$ 个元素的置换中能被分解为 $k$ 个循环的置换个数，并定义 $s(n,k)=(-1)^{n-k}\begin{bmatrix}n\\k\end{bmatrix}$。 $\begin{bmatrix}n+1\\k\end{bmatrix}=n\begin{bmatrix}n\\k\end{bmatrix}+\begin{bmatrix}n\\k-1\end{bmatrix}(k>0)$，$\begin{bmatrix}0\\0\end{bmatrix}=1$，$\begin{bmatrix}n\\0\end{bmatrix}=\begin{bmatrix}0\\n\end{bmatrix}=0(n>0)$。
+该数列满足：
+
+- $(x)^{(n)}=\sum_{k=0}^{n}\begin{bmatrix}n\\k\end{bmatrix}x^{k}$
+- $(x)_{n}=\sum_{k=0}^{n}s(n,k)x^{k}$
+
+\item $\begin{Bmatrix}n\\k\end{Bmatrix}$ 表示有 $n$ 个元素的集合划分为 $k$ 个集合的方案数。$\begin{Bmatrix}n+1\\k\end{Bmatrix}=k\begin{Bmatrix}n\\k\end{Bmatrix}+\begin{Bmatrix}n\\k-1\end{Bmatrix}(k>0)$，$\begin{Bmatrix}0\\0\end{Bmatrix}=1$，$\begin{Bmatrix}n\\0\end{Bmatrix}=\begin{Bmatrix}0\\n\end{Bmatrix}=0(n>0)$。
+该数列满足：
+
+- $\begin{Bmatrix}n\\k\end{Bmatrix}=\frac{1}{k!}\sum_{i=0}^{k}(-1)^{i}{k\choose i}(k-i)^{n}$
+
+\item 设 $G$ 是一个有限群，作用于集合 $X$ 上，对 $\forall g\in G$，$X^{g}$ 表示 $X$ 中在 $g$ 作用下的不动元素的集合，$|X/G|$ 表示 $X$ 在 $G$ 作用下的轨道数，则有 $|X/G|=\frac{1}{|G|}\sum_{g\in G}|X^{g}|$。
+
+\item 设 $\bar{G}$ 是 $n$ 个对象的一个置换群，用 $m$ 种颜色涂染这 $n$ 个对象，则不同染色的方案数为 $l=\frac{1}{|\bar{G}|}(m^{c(\bar{a_{1}})}+m^{c(\bar{a_{2}})}+\cdots+m^{c(\bar{a_{g}})})$ ，其中 $c(\bar{a_{i}})$ 表示置换 $\bar{a_{i}}$ 的循环节数。
+
+\item $\sum{n\choose2k}{k\choose m}=\frac{n}{n-m}{n-m\choose n-2m}2^{n-2m-1}$
+
+\end{enumerate}
+
+\subsubsection{数论}
+
+\begin{enumerate}
+
+\item 对 $\forall a, b, n \in N^{+}, b \ge \phi(n)$，有 $a ^ {b} \equiv a ^ {b \% \phi(n) + \phi(n)}\pmod{n}$，注意 $b \ge \phi(n)$ 是必要条件，以及式子中取模后指数必须加上 $\phi(n)$，否则结果可能会出错。
+
+\item
+
+$$
+\prod_{i=1,\gcd(i,m)=1}^{m}i\equiv\begin{cases}
+&-1&(m=1,2,4,p^{l},2p^{l},\text{ p is odd prime})\\
+&1&(\text{otherwise})
+\end{cases}\pmod{m}
+$$
+
+\end{enumerate}
+
+\subsubsection{计算几何}
+
+\begin{enumerate}
+
+\item 设球冠的高为 $h$，半径为 $R$，则表面积为 $2\pi Rh$。
+
+球面三角形的面积为 $(A+B+C-\pi)R^{2}$ 。
+
+球面正弦定理：$\frac{\sin A}{a} = \frac{\sin B}{b} = \frac{\sin C}{c}$
+
+球面余弦定理：$\cos a=\cos b\cos c+\sin b\sin c\cos A$, $\cos A=-\cos B\cos C+\sin B\sin C\cos a$
+
+\item 设有一格点多边形，其面积 $S=a+\frac{b}{2}-1$，其中 $a$ 表示多边形内部的整点数，$b$ 表示多边形边界上的整点数。
+
+\item 将 $y=kx+b$ 反演到 $(-k,b)$，将 $(k,b)$ 反演到 $y=-kx+b$。这样，两点共线反演为两条直线交于一点，该点是原直线反演出的点。
+
+\end{enumerate}
+
+\subsubsection{其它}
+
+\begin{enumerate}
+
+\item $x_{n+1}=x_{n}-\frac{f(x_{n})}{f'(x_{n})}$
+
+\end{enumerate}
