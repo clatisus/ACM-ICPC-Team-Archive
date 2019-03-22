@@ -67,10 +67,12 @@ P rotate(P a, P b, double angle){
    | (1-cos(d))*z*x+sin(d)*y   (1-cos(d))*z*y-sin(d)*x   (1-cos(d))*z*z+cos(d)     0 |
    |           0                          0                           0            1 |
 */
+
+double onLeft(L l, P p, P o){ // >0表示 p 在 l 左边
+	return mix(o, p - l.p, l.v);
+}
+
 std::vector <P> convexHull2D(std::vector <P> &ps, P o){
-	auto onLeft = [o](L l, P p){ // >0表示 q 在 l 左边 
-		return mix(o, p - l.p, l.v);
-	};
 	const int N = 100010;
 	static P stack[N];
 	std::sort(ps.begin(), ps.end());
