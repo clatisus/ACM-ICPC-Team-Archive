@@ -13,7 +13,7 @@ namespace Tarjan {
             if (!dfn[v]) {
                 tarjan(v, u);
                 low[u] = std::min(low[u], low[v]);
-                //bridge(u, v) = dfn[u] < low[v] && !multiEdge(u, v);
+            //bridge(u, v) = dfn[u] < low[v] && !multiEdge(u, v);
                 if (dfn[u] <= low[v]) {
                     cut[u] = 1;
                     int x = -1;
