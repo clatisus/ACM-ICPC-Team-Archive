@@ -1,10 +1,5 @@
-/**
- * Author: Shinrii Tin
- * Description: Divide and Conquer a tree.
- * Time: $O(Cost(N)\log{N})$
- */
+ <TeX>Time: $O(Cost(N)\log{N})$</TeX>
 namespace centroid {
-	const int max_N = (int) 2e5 + 21;
 	int p[max_N], sz[max_N], mx[max_N];
 	bool vis[max_N];
 	std::vector<int> vec[max_N];
@@ -12,8 +7,7 @@ namespace centroid {
 		static int Q[max_N], tot;
 		Q[tot = 1] = u, p[u] = 0;
 		for (int i = 1; i <= tot; ++i) {
-			u = Q[i];
-			sz[u] = 1, mx[u] = 0;
+			u = Q[i]; sz[u] = 1, mx[u] = 0;
 			for (auto v : vec[u]) {
 				if (vis[v] || v == p[u]) continue;
 				p[Q[++tot] = v] = u;
