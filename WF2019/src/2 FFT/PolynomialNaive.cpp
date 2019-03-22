@@ -19,13 +19,13 @@ struct poly{
 			int x = 1;
 			for (int j = 0; j <= n; ++j){
 				if (i == j) continue;
-				x = 1ll * x * (vec[i].first - vec[j].first) % moder;
+				x = 1ll*x*(vec[i].first - vec[j].first) % moder;
 				x += x < 0 ? moder : 0;
 			}
-			x = 1ll * powermod(x, moder - 2) * vec[i].second % moder;
+			x = 1ll*powermod(x,moder-2) * vec[i].second % moder;
 			int left = aux.a[aux.len];
 			for (int j = aux.len; j; --j){
-				ret.a[j - 1] = (ret.a[j - 1] + 1ll * left * x) % moder;
+				ret.a[j-1]=(ret.a[j-1] + 1ll * left * x) % moder;
 				left = (aux.a[j - 1] - 1ll * left * coe) % moder;
 				left += left < 0 ? moder : 0;
 			}

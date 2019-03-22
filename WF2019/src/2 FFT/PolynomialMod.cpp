@@ -18,12 +18,10 @@ struct poly{
 		poly ret(*this, lenret);
 		std::vector<int> aux(lenret);
 		std::copy(p.a.begin(), p.a.begin() + p.len + 1, aux.begin());
-		NTT(ret.a, lenret, 0);
-		NTT(aux, lenret, 0);
+		NTT(ret.a, lenret, 0); NTT(aux, lenret, 0);
 		for (int i = 0; i < lenret; ++i)
 			ret.a[i] = 1ll * ret.a[i] * aux[i] % moder;
-		NTT(ret.a, lenret, 1);
-		ret.len = n;
+		NTT(ret.a, lenret, 1); ret.len = n;
 		return ret;
 	}
 	//表示求最高次为n的inv，log和exp同理
@@ -50,7 +48,7 @@ struct poly{
 		ret *= a;
 		int retlen = len - p.len;
 		ret.setlen(retlen);
-		std::reverse(ret.a.begin(), ret.a.begin() + retlen + 1);
+		std::reverse(ret.a.begin(), ret.a.begin()+retlen+1);
 		return ret;
 	}
 	poly log(int n) const {
@@ -89,14 +87,13 @@ void dfs(int l, int r, int id, std::vector <int> &vec){
 std::vector <int> solve1(int l, int r, int id, poly p){
 	if (l == r) return {p[0]};
 	int mid = (l + r) >> 1;
-	std::vector <int> vec1 = solve1(l, mid, id << 1, p % aux[id << 1]);
-	std::vector <int> vec2 = solve1(mid + 1, r, id << 1 | 1, p % aux[id << 1 | 1]);
+	vi vec1 = solve1(l, mid, id << 1, p % aux[id << 1]);
+	vi vec2 = solve1(mid+1, r, id<<1|1, p % aux[id<<1|1]);
 	vec1.insert(vec1.end(), vec2.begin(), vec2.end());
 	return vec1;
 }
-std::vector <int> multivalue(poly p, std::vector <int> vec){
-	int n = vec.size();
-	dfs(0, n - 1, 1, vec);
+std::vector<int> multivalue(poly p, std::vector<int> vec){
+	int n = vec.size(); dfs(0, n - 1, 1, vec);
 	return solve1(0, n - 1, 1, p);
 }
 poly solve2(int l, int r, int id, std::vector <int> &vec){
@@ -109,12 +106,12 @@ poly solve2(int l, int r, int id, std::vector <int> &vec){
 	poly p2 = solve2(mid + 1, r, id << 1 | 1, vec);
 	return p1 * aux[id << 1 | 1] + p2 * aux[id << 1];
 }
-poly interpolation(std::vector <int> vecx, std::vector <int> vecy){
+poly interpolation(vi vecx, vivecy){
 	int n = vecx.size() - 1;
 	dfs(0, n, 1, vecx);
 	poly p = aux[1].der();
 	std::vector <int> vec = multivalue(p, vecx);
 	for (int i = 0; i <= n; ++ i)
-		vec[i] = 1ll * vecy[i] * powermod(vec[i], moder - 2) % moder;
+		vec[i] = 1ll * vecy[i] * pmod(vec[i], mod - 2) % mod;
 	return solve2(0, n, 1, vec);
 }

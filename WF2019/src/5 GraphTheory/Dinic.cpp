@@ -1,12 +1,10 @@
 namespace maxFlow {
 	using flowType = long long;
 	const flowType inf = 0x3f3f3f3f3f3f3f3fll;
-	const int max_N = 2333; //vertexes number
 	struct edge {
-		int v, n; //vertex, next
-		flowType c; //capacity
+		int v, n; flowType c; // next,capacity
 	};
-	std::vector<edge> e; //all edges
+	std::vector<edge> e; 
 	int M, head[max_N], cur[max_N], dis[max_N];
 	bool bfs(int n, int s, int t) {
 		static int Q[max_N];
@@ -20,9 +18,7 @@ namespace maxFlow {
 				int v = e[it].v;
 				if (dis[v] == -1) {
 					dis[v] = dis[u] + 1; Q[tail++] = v;
-				}
-			}
-		}
+				}}}
 		return dis[t] != -1;
 	}
 	flowType dfs(int t, int u, flowType a) {

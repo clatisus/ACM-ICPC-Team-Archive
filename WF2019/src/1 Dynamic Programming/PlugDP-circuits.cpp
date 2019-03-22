@@ -1,6 +1,5 @@
 namespace circuits {
-	//The number of connected blocks on the contour line will
-	//not exceed half of the number of columns
+	//The number of connected blocks on the contour line will not exceed half of the number of columns
 	using HashT = std::unordered_map<LL, int>;
 	const int max_N = 12;
 	struct state {

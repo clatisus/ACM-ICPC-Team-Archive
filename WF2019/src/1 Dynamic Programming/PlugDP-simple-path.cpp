@@ -1,6 +1,5 @@
 namespace simple_path {
-	//The number of connected blocks on the contour line will
-	//not exceed half of the number of columns plus 1
+	//The number of connected blocks on the contour line will not exceed half of the number of columns plus 1
 	using HashT = std::unordered_map<LL, int>;
 	const int max_N = 12;
 	struct state {
@@ -50,11 +49,10 @@ namespace simple_path {
 		int ans = INT_MIN;
 		//input
 		scanf("%d%d", &n, &m);
-		for (int r = 0; r < n; ++r)
-			for (int c = 0; c < m; ++c) {
-				scanf("%d", v[r] + c);
-				ans = std::max(ans, v[r][c]);
-			}
+		for(int r = 0; r < n; ++r) for(int c = 0; c < m; ++c){
+			scanf("%d", v[r] + c);
+			ans = std::max(ans, v[r][c]);
+		}
 		pre.clear(), pre[0] = 0;
 		for (int r = 0; r < n; ++r) {
 			for (int c = 0; c < m; ++c) {

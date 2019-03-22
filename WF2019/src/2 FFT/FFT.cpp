@@ -3,7 +3,7 @@ void init(){
 	for (int i = 0; i < 1 << MAX; ++i){
 		double angle = 1.0 * i / (1 << (MAX - 1)) * PI;
 		for (int type = -1; type <= 1; type += 2)
-			w[!~type][i] = comp(std::cos(angle), type * std::sin(angle));
+			w[!~type][i] = comp(cos(angle), type * sin(angle));
 	}
 }
 void FFT(std::vector <comp> &a, int len, int type){
@@ -15,7 +15,8 @@ void FFT(std::vector <comp> &a, int len, int type){
 		for (int j = 0; j < len; j += i){
 			auto u = a.begin() + j;
 			for (int k = 0; k < i / 2; ++k){
-				comp s = u[k], t = w[type][k << (MAX - d)] * u[k + i / 2];
+				comp s = u[k];
+				comp t = w[type][k << (MAX - d)] * u[k + i / 2];
 				u[k] = s + t, u[k + i / 2] = s - t;
 			}
 		}
@@ -33,19 +34,17 @@ void FFTcomb(std::vector<comp> &a, std::vector<comp> &b){
 }
 poly operator * (const poly &p)const{
 	int mod = std::sqrt(moder) + 2;
-	int n = len + p.len;
-	int lenret = 1;
+	int n = len + p.len, lenret = 1;
 	for ( ; lenret <= n; lenret <<= 1);
 	std::vector <comp> aux(lenret), aux1(lenret), aux2(lenret), aux3(lenret);
 	for (int i = 0; i <= len; ++ i)
 		aux[i] = comp(a[i] / mod, a[i] % mod);
 	for (int i = 0; i <= p.len; ++ i){
 		aux2[i] = comp(p.a[i] / mod, p.a[i] % mod);
-	FFTcomb(aux, aux1);
-	FFTcomb(aux2, aux3);
+	FFTcomb(aux, aux1); FFTcomb(aux2, aux3);
 	for (int i = 0; i < lenret; ++ i){
-		comp tmp1 = aux[i] * aux2[i] + comp(0, 1) * aux1[i] * aux3[i];
-		comp tmp2 = aux1[i] * aux2[i] + comp(0, 1) * aux[i] * aux3[i];
+		comp tmp1=aux[i]*aux2[i] + comp(0,1)*aux1[i]*aux3[i];
+		comp tmp2=aux1[i]*aux2[i] + comp(0,1)*aux[i]*aux3[i];
 		aux[i] = tmp1, aux1[i] = tmp2;
 	}
 	FFT(aux, lenret, 1); FFT(aux1, lenret, 1);
