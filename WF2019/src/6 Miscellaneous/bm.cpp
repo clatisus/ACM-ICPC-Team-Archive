@@ -4,25 +4,24 @@ namespace linear_seq {
 	void mul(ll *a, ll *b, int k){
 		rep(i, 0, k + k) _c[i] = 0;
 		rep(i, 0, k) if(a[i]) rep(j, 0, k) 
-            _c[i + j] = (_c[i + j] + a[i] * b[j]) % mod;
-		for(int i = k + k - 1; i >= k; -- i) if(_c[i])
+			_c[i + j] = (_c[i + j] + a[i] * b[j]) % mod;
+		for(int i = k + k - 1; i >= k; --i) if(_c[i])
 			rep(j, 0, SZ(Md)) _c[i - k + Md[j]] = (_c[i - k + Md[j]] - _c[i] * _md[Md[j]]) % mod;
 		rep(i, 0, k) a[i] = _c[i];
 	}
 	int solve(ll n, std::vector<int> a, std::vector<int> b){
-		ll ans = 0, pnt = 0;
-		int k = SZ(a);
+		ll ans = 0, pnt = 0; int k = SZ(a);
 		assert(SZ(a) == SZ(b));
 		rep(i, 0, k) _md[k - 1 - i] = - a[i]; _md[k] = 1;
 		Md.clear();
 		rep(i, 0, k) if(_md[i]) Md.push_back(i);
 		rep(i, 0, k) res[i] = base[i] = 0;
 		res[0] = 1;
-		while((1ll << pnt) <= n) ++ pnt;
-		for(int p = pnt; p >= 0; -- p){
+		while((1ll << pnt) <= n) ++pnt;
+		for(int p = pnt; p >= 0; --p){
 			mul(res, res, k);
 			if((n >> p) & 1){
-				for(int i = k - 1; i >= 0; -- i) res[i + 1] = res[i]; res[0] = 0;
+				for(int i = k - 1; i >= 0; --i) res[i + 1] = res[i]; res[0] = 0;
 				rep(j, 0, SZ(Md)) res[Md[j]] = (res[Md[j]] - res[k] * _md[Md[j]]) % mod;
 			}
 		}
