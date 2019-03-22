@@ -1,13 +1,11 @@
 namespace maxFlow {
-	//...
 	void addEdge(int u, int v, flowType c) {
 		e.push_back({v, head[u], c}); head[u] = M++;
 	}
-	//...
-};
+}
 namespace GHtree {
-	int n, m, u[max_M], v[max_M], w[max_M]; // edges in original graph
-	int tu[max_N], tv[max_N], tw[max_N], tot; // edges in Gomory-Hu tree
+	int n, m, u[max_M], v[max_M], w[max_M]; // origin graph
+	int tu[max_N], tv[max_N], tw[max_N], tot; // GH tree
 	int p[max_N], q[max_N];
 	void solve(int l, int r) {
 		std::random_shuffle(p + l, p + r + 1);
@@ -38,4 +36,4 @@ namespace GHtree {
 		for (int i = 1; i <= n; ++i) p[i] = i;
 		solve(1, n);
 	}
-};
+}

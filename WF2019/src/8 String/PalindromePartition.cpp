@@ -1,4 +1,4 @@
-<TeX>Given a string s, find the number of ways to split s to substrings such that if there are k substrings (p1, p2, ..., pk) in partition, then pi = pk-i+1 for all i (1 <= i <= k) and k is even. $series_dp[v] = \sum_{j \in series(v)} dp[i - len[j]]$ </TeX>
+<TeX>Given a string s, find the number of ways to split s to substrings such that if there are k substrings (p1, p2, ..., pk) in partition, then $p_i = p_{k-i+1}$ for all $i \in [1, k]$ and $k$ is even. $\text{series_dp}[v] = \sum_{j \in \text{series}(v)} dp[i - len[j]]$ </TeX>
 PalindromicTree pt;
 int series_dp[max_N], dp[max_N];
 int main() {

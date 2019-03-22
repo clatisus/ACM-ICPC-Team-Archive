@@ -8,7 +8,7 @@ struct P{
 		return z < p.z;
 	}
 	bool operator == (const P &p)const{
-		return !sig(x - p.x) && !sig(y - p.y) && !sig(z - p.z);
+		return !sig(x-p.x) && !sig(y - p.y) && !sig(z - p.z);
 	}
 };
 struct F{

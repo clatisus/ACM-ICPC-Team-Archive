@@ -1,10 +1,7 @@
-<TeX>Approval 1: diff[v] within path of serial links is non-increasing</TeX>
-<TeX>Approval 2: link[v] == slink[v] -> len[slink[v]] < len[v] / 2, </TeX>
-<TeX>so that there are no more than $O(\log{n})$ vertices in the slink chain</TeX>
 char a[max_N];
 struct PalindromicTree {
-	int tot, last;
-	int ch[max_N][sigma], len[max_N], cnt[max_N], link[max_N];
+	int tot, last, ch[max_N][sigma];
+    int len[max_N], cnt[max_N], link[max_N];
 	int diff[max_N], slink[max_N]; // palindrome series
 	inline int new_node(int l) {
 		int x = tot++; len[x] = l;
