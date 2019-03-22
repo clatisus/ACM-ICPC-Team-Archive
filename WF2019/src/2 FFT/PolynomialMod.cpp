@@ -1,6 +1,5 @@
 struct poly{
-	std::vector<int> a;
-	int len;
+	std::vector<int> a; int len;
 	poly() : len(-1) {}
 	poly(int len) : len(len) { a.resize(len + 1); }
 	poly(const poly &p, int len) : len(len) { 
@@ -14,8 +13,7 @@ struct poly{
 	}
 	poly operator * (const poly &p) const {
 		if (!~len || !~p.len) return poly(-1);
-		int n = len + p.len;
-		int lenret = 1;
+		int n = len + p.len, lenret = 1;
 		for ( ; lenret <= n; lenret <<= 1);
 		poly ret(*this, lenret);
 		std::vector<int> aux(lenret);
@@ -57,8 +55,7 @@ struct poly{
 	}
 	poly log(int n) const {
 		assert(~len && a[0] == 1);
-		poly aux(*this, n);
-		poly ret = aux.der() * aux.inv(n - 1);
+		poly aux(*this, n), ret = aux.der() * aux.inv(n - 1);
 		ret.setlen(n - 1);
 		return ret.integral();
 	}
@@ -104,8 +101,7 @@ std::vector <int> multivalue(poly p, std::vector <int> vec){
 }
 poly solve2(int l, int r, int id, std::vector <int> &vec){
 	if (l == r){
-		poly p(0);
-		p[0] = vec[l];
+		poly p(0); p[0] = vec[l];
 		return p;
 	}
 	int mid = (l + r) >> 1;

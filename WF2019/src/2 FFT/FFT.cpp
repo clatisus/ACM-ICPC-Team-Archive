@@ -19,15 +19,13 @@ void FFT(std::vector <comp> &a, int len, int type){
 				u[k] = s + t, u[k + i / 2] = s - t;
 			}
 		}
-	if (type == 0) return;
-	double inv = 1.0 / len;
+	if (type == 0) return; double inv = 1.0 / len;
 	for (int i = 0; i < len; ++i) a[i] = a[i] * inv;
 }
-void FFTcomb(std::vector <comp> &a, std::vector <comp> &b){
-	int n = a.size();
-	FFT(a, n, 0);
-	for (int i = 0; i < n; ++ i) b[i] = a[i ? n - i : 0].conj();
-	for (int i = 0; i < n; ++ i){
+void FFTcomb(std::vector<comp> &a, std::vector<comp> &b){
+	int n = a.size(); FFT(a, n, 0);
+	for (int i = 0; i < n; ++i) b[i] = a[i?n-i:0].conj();
+	for (int i = 0; i < n; ++i){
 		comp tmp1 = (a[i] + b[i]) * comp(0.5, 0);
 		comp tmp2 = (a[i] - b[i]) * comp(0, -0.5);
 		a[i] = tmp1, b[i] = tmp2;
@@ -50,8 +48,7 @@ poly operator * (const poly &p)const{
 		comp tmp2 = aux1[i] * aux2[i] + comp(0, 1) * aux[i] * aux3[i];
 		aux[i] = tmp1, aux1[i] = tmp2;
 	}
-	FFT(aux, lenret, 1);
-	FFT(aux1, lenret, 1);
+	FFT(aux, lenret, 1); FFT(aux1, lenret, 1);
 	poly ret(n);
 	for (int i = 0; i <= n; ++ i){
 		int x = (ll) std::round(aux[i].real) % moder;

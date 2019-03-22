@@ -6,21 +6,7 @@ struct poi {
 	inline poi add(const poi &p) const {
 		poi ret;
 		rep(i, 3) ret.cor[i] = cor[i] + p.cor[i];
-		return ret;
-	}
-	inline poi sub(const poi &p) const {
-		poi ret;
-		rep(i, 3) ret.cor[i] = cor[i] - p.cor[i];
-		return ret;
-	}
-	inline poi mul(Float k) const {
-		poi ret;
-		rep(i, 3) ret.cor[i] = cor[i] * k;
-		return ret;
-	}
-	inline Float dot(const poi &p) const {
-		Float ret = 0;
-		rep(i, 3) ret += cor[i] * p.cor[i];
+        // sub, mul, dot
 		return ret;
 	}
 	inline poi det(const poi &p) const {

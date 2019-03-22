@@ -1,15 +1,13 @@
 namespace simple_path {
 	//The number of connected blocks on the contour line will
 	//not exceed half of the number of columns plus 1
-	using LL = long long;
 	using HashT = std::unordered_map<LL, int>;
 	const int max_N = 12;
 	struct state {
 		int end, a[max_N], n, m;
 		// add count of end point into state
 		state(int col, LL s) : n(col + 1) {
-			end = s & 3, s >>= 2;
-			m = 0;
+			end = s & 3, s >>= 2; m = 0;
 			for (int i = n - 1; ~i; --i)
 				a[i] = (s & 7), s >>= 3, (a[i] > m) && (m = a[i]);
 			++m;
@@ -28,14 +26,12 @@ namespace simple_path {
 		void endSingle(int u) { ++end, a[u] = 0; }
 		void unite(int u, int v) {
 			int b = a[u], c = a[v];
-			for (int i = 0; i < n; ++i)
-				if (a[i] == b) a[i] = c;
+			for (int i = 0; i < n; ++i) if (a[i] == b) a[i] = c;
 			a[u] = a[v] = 0;
 		}
 		void swap(int u, int v) { std::swap(a[u], a[v]); }
 		LL hash() {
-			minimal();
-			LL s = 0;
+			minimal(); LL s = 0;
 			for (int i = 0; i < n; ++i) (s <<= 3) |= a[i];
 			(s <<= 2) |= end;
 			return s;
@@ -109,9 +105,7 @@ namespace simple_path {
 			}
 			pre = cur;
 		}
-		if (cur.count(2)) {
-			ans = std::max(ans, cur[2]);
-		}
+		if (cur.count(2)) ans = std::max(ans, cur[2]);
 		printf("%d\n", ans);
 	}
 };
