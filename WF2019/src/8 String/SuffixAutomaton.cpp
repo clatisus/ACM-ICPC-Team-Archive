@@ -1,7 +1,6 @@
 namespace SAM {
-	int tot, root, last;
-	int go[MAXN << 1][26], par[MAXN << 1], maxlen[MAXN << 1];
-	int first_endpos[MAXN << 1];
+	int tot, root, last, first_endpos[MAXN << 1];
+	int go[MAXN<<1][26], par[MAXN<<1], maxlen[MAXN<<1];
 	ll same[MAXN << 1];
 	void init() { root = last = newnode(tot = 0); }
 	int newnode(int ml) {
@@ -25,7 +24,7 @@ namespace SAM {
 				first_endpos[nq] = first_endpos[q];
 				par[nq] = par[q];
 				par[np] = par[q] = nq;
-				for (; p && go[p][w] == q; p = par[p]) go[p][w] = nq;
+				for (; p&&go[p][w]==q; p=par[p]) go[p][w] = nq;
 			}
 		}
 		last = np;

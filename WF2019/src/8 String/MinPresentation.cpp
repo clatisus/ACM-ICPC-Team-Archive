@@ -1,4 +1,5 @@
-namespace minimal_representation { // 字符串从 0 开始
+<TeX>字符串从 $0$ 开始</TeX>
+namespace minimal_representation { 
 	char s[max_N << 1];
 	int solve(char *S, int n) {
 		memcpy(s, S, sizeof(char) * n);
@@ -8,8 +9,7 @@ namespace minimal_representation { // 字符串从 0 开始
 			int t = s[i + k] - s[j + k];
 			if (!t) ++k;
 			else {
-				if (t < 0) j += k + 1;
-				else i += k + 1;
+				if (t < 0) j += k + 1; else i += k + 1;
 				if (i == j) ++j;
 				k = 0;
 			}

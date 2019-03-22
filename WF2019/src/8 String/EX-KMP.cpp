@@ -15,7 +15,7 @@ namespace exKMP {
 				a = i;
 			}
 		}
-		for (int &x=ext[1]=0; x<n && x<m && s[x+1]==t[x+1]; ++x);
+		for(int &x=ext[1]=0; x<n&&x<m&&s[x+1]==t[x+1]; ++x);
 		for (int a = 1, i = 2; i <= n; ++i) {
 			int p = a + ext[a] - 1, q = nxt[i - a + 1];
 			if (i + q <= p) ext[i] = q;

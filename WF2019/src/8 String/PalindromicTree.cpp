@@ -1,14 +1,13 @@
+<TeX>Approval 1: diff[v] within path of serial links is non-increasing</TeX>
+<TeX>Approval 2: link[v] == slink[v] -> len[slink[v]] < len[v] / 2, </TeX>
+<TeX>so that there are no more than $O(\log{n})$ vertices in the slink chain</TeX>
 char a[max_N];
 struct PalindromicTree {
 	int tot, last;
 	int ch[max_N][sigma], len[max_N], cnt[max_N], link[max_N];
 	int diff[max_N], slink[max_N]; // palindrome series
-	// Approval 1: diff[v] within path of serial links is non-increasing
-	// Approval 2: link[v] == slink[v] -> len[slink[v]] < len[v] / 2, 
-	// so that there are no more than O(logn) vertices in the slink chain
 	inline int new_node(int l) {
-		int x = tot++;
-		len[x] = l;
+		int x = tot++; len[x] = l;
 		std::fill_n(ch[x], sigma, 0);
 		cnt[x] = link[x] = diff[x] = slink[x] = 0;
 		return x;
@@ -26,7 +25,7 @@ struct PalindromicTree {
 			link[v] = ch[get_node(n, link[u])][c];
 			ch[u][c] = v;
 			diff[v] = len[v] - len[link[v]];
-			if (diff[v] == diff[link[v]]) slink[v] = slink[link[v]];
+			if (diff[v]==diff[link[v]]) slink[v]=slink[link[v]];
 			else slink[v] = link[v];
 		}
 		++cnt[last = v];

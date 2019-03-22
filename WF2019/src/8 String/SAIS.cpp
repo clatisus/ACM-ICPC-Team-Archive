@@ -1,5 +1,6 @@
 namespace sais {
-	int t[max_N << 1], sa[max_N], rk[max_N], ht[max_N], p[max_N], cnt[max_N], cur[max_N];
+	int t[max_N << 1], sa[max_N], rk[max_N], ht[max_N];
+	int p[max_N], cnt[max_N], cur[max_N];
 #define pushS(x) sa[cur[s[x]]--] = x
 #define pushL(x) sa[cur[s[x]]++] = x
 #define inducedSort(v) \
@@ -19,12 +20,11 @@ namespace sais {
 		inducedSort(p);
 		for (int i = 0, x, y; i < n; i++)
 			if (~(x = rk[sa[i]])) {
-				if (ch < 1 || p[x + 1] - p[x] != p[y + 1] - p[y]) ch++;
-				else for (int j = p[x], k = p[y]; j <= p[x + 1]; j++, k++)
-						if ((s[j] << 1 | t[j]) != (s[k] << 1 | t[k])) {
-							ch++;
-							break;
-						}
+				if (ch < 1 || p[x+1]-p[x] != p[y+1]-p[y]) ch++;
+				else for (int j=p[x],k=p[y]; j<=p[x+1]; j++,k++)
+					if ((s[j] << 1 | t[j]) != (s[k] << 1|t[k])) {
+						ch++;break;
+					}
 				s1[y = x] = ch;
 			}
 		if (ch + 1 < n1) sais(n1, ch + 1, s1, t + n, p + n1);
@@ -38,7 +38,7 @@ namespace sais {
 		for (int i = 0; i < n; ++i) rk[sa[i]] = i;
 		for (int i = 0, h = ht[0] = 0; i < n - 1; i++) {
 			int j = sa[rk[i] - 1];
-			while (i + h < n && j + h < n && s[i + h] == s[j + h]) ++h;
+			while(i+h<n && j+h<n && s[i+h] == s[j+h]) ++h;
 			if (ht[rk[i]] = h) --h;
 		}
 	}
