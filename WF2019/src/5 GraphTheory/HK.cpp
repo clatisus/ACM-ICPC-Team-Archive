@@ -16,8 +16,7 @@ namespace HK {
 				d[v] = d[u] + 1;
 				if (match[v] == -1) dis = d[v];
 				else {
-					d[match[v]] = d[v] + 1;
-					q.push(match[v]);
+					d[match[v]] = d[v] + 1; q.push(match[v]);
 				}
 			}
 		}
