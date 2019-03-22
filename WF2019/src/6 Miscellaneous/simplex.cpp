@@ -1,5 +1,4 @@
-// maximize: cx
-// subject to: Ax <= b
+// maximize: cx, subject to: Ax <= b
 // x >= 0
 // A[0..n+m-1][0..n-1] = (m * n)
 //                       (-In)
@@ -29,7 +28,7 @@ VD simplex(std::vector<VD> A, VD b, VD c) {
 				if (D[r][j]) speedUp.push_back(j);
 			}
 			for (int i = 0; i <= n + 1; ++i) if (i != r) {
-				for (auto j : speedUp) D[i][j] += D[r][j] * D[i][s];
+				for (auto j : speedUp) D[i][j] += D[r][j]*D[i][s];
 				D[i][s] *= D[r][s];
 			}
 		}
@@ -40,7 +39,8 @@ VD simplex(std::vector<VD> A, VD b, VD c) {
 				|| (D[n + 1][j] > -eps && D[n][j] > eps)) s = j;
 		if (s < 0) break;
 		for (int i = 0; i < n; ++i) if (D[i][s] < -eps)
-			if (r < 0 || (d = D[r][m]/D[r][s] - D[i][m]/D[i][s]) < -eps 
+			if (r < 0 
+			|| (d = D[r][m]/D[r][s] - D[i][m]/D[i][s]) < -eps 
 			|| (d < eps && ix[r + m] > ix[i + m]))
 				r = i;
 		if (r < 0) return VD(); // unbounded

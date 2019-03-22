@@ -17,7 +17,7 @@ ll nimprod(ll x, ll y){
 	for ( ; 1ll << (1 << a) <= max; ++ a);
 	a = 1 << a - 1;
 	ll p = x >> a, q = x & (1ll << a) - 1;
-    ll s = y >> a, t = y & (1ll << a) - 1;
+	ll s = y >> a, t = y & (1ll << a) - 1;
 	ll ret = nimprod(p, s);
 	return (ret ^ nimprod(p, t) ^ nimprod(q, s)) << a ^ nimprodpow(1ll << a - 1, ret) ^ nimprod(q, t);
 }

@@ -29,6 +29,4 @@ struct AC_DFA{
 					queue.push(q);
 				}
 				else go[p][i] = p == root ? root : go[fail[p]][i];
-		}
-	}
-};
+		}}};

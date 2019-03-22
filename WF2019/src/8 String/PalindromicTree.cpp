@@ -1,7 +1,7 @@
 char a[max_N];
 struct PalindromicTree {
 	int tot, last, ch[max_N][sigma];
-    int len[max_N], cnt[max_N], link[max_N];
+	int len[max_N], cnt[max_N], link[max_N];
 	int diff[max_N], slink[max_N]; // palindrome series
 	inline int new_node(int l) {
 		int x = tot++; len[x] = l;

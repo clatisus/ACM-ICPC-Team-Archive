@@ -12,8 +12,7 @@ namespace Tarjan {
 			int v = e.first, w = e.second;
 			if (w == pre) continue;
 			if (!dfn[v]) {
-				stE[++topE] = w;
-				tarjan(v, w);
+				stE[++topE] = w; tarjan(v, w);
 				low[u] = std::min(low[u], low[v]);
 				if (dfn[u] <= low[v]) {
 					int x = -1, sizV = 1;
@@ -25,15 +24,15 @@ namespace Tarjan {
 					int y = -1, sizE = 0;
 					while (y != w) {
 						tmp.push_back(y = stE[topE--]);
-                        ++sizE;
-                    }
-                    if (sizV == sizE) 
-                        for (auto i : tmp) {
-                            ++ans;
-                            ret[i] = true;
-                        }
-                }
-            } else if (dfn[v] < dfn[u]) {
-                stE[++topE] = w;
-                low[u] = std::min(low[u], dfn[v]);
-            }}}}
+						++sizE;
+					}
+					if (sizV == sizE) 
+						for (auto i : tmp) {
+							++ans;
+							ret[i] = true;
+						}
+				}
+			} else if (dfn[v] < dfn[u]) {
+				stE[++topE] = w;
+				low[u] = std::min(low[u], dfn[v]);
+			}}}}

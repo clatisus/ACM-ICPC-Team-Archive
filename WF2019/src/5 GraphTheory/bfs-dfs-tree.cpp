@@ -14,13 +14,13 @@ void bfs(int u){
 			q.push_back(v); ++tot;
 		}
 	}
-	for(int i = tot - 1; ~i; -- i) sz[f[q[i]][0]] += sz[q[i]];
+	for(int i=tot-1; ~i; --i) sz[f[q[i]][0]]+=sz[q[i]];
 	dfn_l[1] = 1; nxt[1] = 2;
 	int last;
 	for(int i = 1; i < tot; ++ i){
-		if(f[q[i]][0] != f[q[i - 1]][0]) last = nxt[f[q[i]][0]];
+		if(f[q[i]][0]!=f[q[i-1]][0]) last=nxt[f[q[i]][0]];
 		else last += sz[q[i - 1]];
 		dfn_l[q[i]] = last; nxt[q[i]] = last + 1;
 	}
-	for(int i = 1; i <= n; ++ i) dfn_r[i] = dfn_l[i] + sz[i] - 1;
+	for(int i=1; i<=n; ++i) dfn_r[i]=dfn_l[i]+sz[i]-1;
 }

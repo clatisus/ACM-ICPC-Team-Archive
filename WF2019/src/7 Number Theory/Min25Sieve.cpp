@@ -1,19 +1,17 @@
 <TeX>这份模板中，$f$ 和 $g$ 分别是 $0$ 次函数和 $1$ 次函数。这里 $N$ 要尽量开大，至少要比 $\sqrt{n}$ 后的一个质数大</TeX>
 int min[N];
-std::vector <int> prime, preg;
+std::vector <int> pri, preg;
 void init(){
 	preg.push_back(1);
 	for (int i = 2; i < N; ++ i){
 		if (!min[i]){
-			min[i] = i; prime.push_back(i);
+			min[i] = i; pri.push_back(i);
 			preg.push_back((preg.back() + i) % moder);
 		}
-		for (int j = 0, sz = prime.size(); j < sz && i * prime[j] < N; ++ j){
-			min[i * prime[j]] = prime[j];
-			if (i % prime[j] == 0) break;
-		}
-	}
-}
+		for(int j=0,sz=pri.size();j<sz&&i*prime[j]<N; ++j){
+			min[i * pri[j]] = prime[j];
+			if (i % pri[j] == 0) break;
+		}}}
 int f[N], g[N], sqroot;
 ll n;
 inline int sum0(ll n){return n % moder;}
@@ -31,8 +29,8 @@ void calcf(){
 		f[sit] = sum0(x), g[sit] = sum1(x);
 		vec.push_back(x); id.push_back(sit);
 	}
-	for (int k = 0, szk = prime.size(); k < szk; ++k) {
-		int p = prime[k];
+	for (int k = 0, szk = pri.size(); k < szk; ++k) {
+		int p = pri[k];
 		if (1ll * p * p > n) break;
 		for (int i = 0, szi = vec.size(); i < szi; ++i) {
 			ll x = vec[i];
@@ -48,12 +46,12 @@ void calcf(){
 	}
 }
 int calcsum(ll n, int sit){
-	if (prime[sit] > n) return 0;
+	if (pri[sit] > n) return 0;
 	int id = getsit(n);
 	int ret = (g[id]-f[id] - (preg[sit]-sit-1)) % moder;
 	if (sit == 0) ret += 2;
-	for (int i = sit, sz = prime.size(); i < sz; ++ i){
-		int p = prime[i];
+	for (int i = sit, sz = pri.size(); i < sz; ++ i){
+		int p = pri[i];
 		ll now1 = p, now2 = 1ll * p * p;
 		if (now2 > n) break;
 		for(int j = 1; now2 <= n; ++j,now1=now2,now2*=p)

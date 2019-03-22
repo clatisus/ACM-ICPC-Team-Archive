@@ -10,8 +10,8 @@ int BSGS(int a, int b, int moder){
 		vec.push_back({now, -i});
 	std::sort(vec.begin(), vec.end());
 	x = now = powermod(a, m, moder);
-	for(int i = 1; i <= m; ++i, now = 1ll * now * x % moder){
-		auto v = std::lower_bound(vec.begin(), vec.end(), mp(now, -INT_MAX));
+	for(int i = 1; i <= m; ++i, now = 1ll*now*x % moder){
+		auto v=lower_bound(vec.begin(),vec.end(),mp(now,INT_MIN));
 		if (v != vec.end() && v -> first == now) 
 			return i * m + v -> second;
 	}
