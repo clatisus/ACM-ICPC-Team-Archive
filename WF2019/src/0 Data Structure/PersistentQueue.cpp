@@ -16,7 +16,7 @@ void dfs(int u, int fa, int head, int tail) {
 	l = head + 2, r = tail;
 	while (l < r) {
 		int m = (l + r) >> 1;
-		if (gety(q[m-1], q[m-2])*getx(u,q[m-1]) 
+		if (gety(q[m-1],q[m-2])*getx(u,q[m-1]) 
 			  >=gety(u,q[m-1])*getx(q[m-1],q[m-2])) {
 			r = m;
 		} else l = m + 1;

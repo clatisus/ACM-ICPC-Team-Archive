@@ -1,4 +1,4 @@
-<TeX>优化形如$dp[i]=\max(b[j]*a[i]+c[j])$的dp，不要求b[j]单调。动态维护一个下凸壳，复杂度$O(n\log{n})$</TeX>
+<TeX>优化形如 $dp[i]=\max(k_j*x[i]+b_j)$ 的dp，不要求b[j]单调。决策是若干条直线，动态维护一个下凸壳，复杂度$O(n\log{n})$</TeX>
 const ll INF = LLONG_MAX;
 inline ll divide(ll a, ll b){return a / b - ((a ^ b) < 0 && a % b);}
 class L{
