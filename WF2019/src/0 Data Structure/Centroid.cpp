@@ -1,4 +1,3 @@
- <TeX>Time: $O(Cost(N)\log{N})$</TeX>
 namespace centroid {
 	int p[max_N], sz[max_N], mx[max_N];
 	bool vis[max_N];

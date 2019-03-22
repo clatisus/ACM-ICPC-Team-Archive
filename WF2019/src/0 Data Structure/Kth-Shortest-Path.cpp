@@ -19,8 +19,7 @@ namespace kth { // longest
 		if (!u) return v;
 		if (!v) return u;
 		if (u->v > v->v) std::swap(u, v);
-		ptr x = tail++;
-		*x = *u;
+		ptr x = tail++; *x = *u;
 		x->rs = merge(u->rs, v);
 		if (ht(x->ls) < ht(x->rs)) std::swap(x->ls, x->rs);
 		x->h = ht(x->rs) + 1;

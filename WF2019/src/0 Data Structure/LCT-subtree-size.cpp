@@ -3,8 +3,7 @@ namespace LCT {
 	using ptr = struct node *;
 	ptr null, tail, rt[max_N];
 	struct node {
-		int val, rev;
-		// int r_siz, v_siz;
+		int val, rev; // int r_siz, v_siz;
 		ptr max, p, ch[2];
 		void updt() {
 			max = this;
@@ -29,8 +28,7 @@ namespace LCT {
 		}
 	} pool[max_N];
 	ptr new_node(int val) {
-		ptr x = tail++;
-		// x->r_siz = x->v_siz = 1;
+		ptr x = tail++; // x->r_siz = x->v_siz = 1;
 		x->val = val; x->rev = 0;
 		x->ch[0] = x->ch[1] = x->p = null;
 		return x->max = x;
@@ -64,9 +62,7 @@ namespace LCT {
 		splay(y);
 	}
 	void evert(ptr x) {access(x), x->rev ^= 1;}
-	ptr path(ptr x, ptr y) {
-		evert(x), access(y); return y;
-	}
+	ptr path(ptr x, ptr y) {evert(x), access(y); return y;}
 	void link(ptr x, ptr y) {
 		evert(x), x->p = y;
 		// evert(x), access(y), x->p = y;

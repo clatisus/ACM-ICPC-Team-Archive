@@ -49,7 +49,7 @@ namespace lct {
 	int kth(star x, int k) {
 		while (x) {
 			int rk = Siz(x->ch[0]) + 1;
-			if (k == rk)break;
+			if (k == rk) break;
 			if (k < rk)x = x->ch[0];
 			else k -= rk, x = x->ch[1];
 		}
