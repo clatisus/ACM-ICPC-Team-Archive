@@ -27,7 +27,7 @@ std::vector <int> remain2(int a, int p){
 	if (!a || p == 2) return {a};
 	if (powermod(a, p - 1 >> 1, p) != 1) return {};
 	while (true){
-		field2 f(randint(p - 1) + 1, randint(p - 1) + 1, a, p);
+		field2 f(randint(p-1) + 1, randint(p - 1) + 1, a, p);
 		f = f.powermod(p - 1 >> 1);
 		if (f.x) continue;
 		int ret = powermod(f.y, p - 2, p);

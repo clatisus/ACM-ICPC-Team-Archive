@@ -1,4 +1,5 @@
-int calc(int a, int b, int c, int n){ //special case for t1 = 0, t2 = 1
+<TeX>special case for $t1 = 0, t2 = 1$</TeX>
+int calc(int a, int b, int c, int n){ 
 	ll m = (1ll * a * n + b) / c;
 	if (!m) return 0;
 	if (!a) return 1ll * (b / c) * (n + 1) % moder;

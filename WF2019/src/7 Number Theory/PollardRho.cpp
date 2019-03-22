@@ -6,8 +6,6 @@ int solve(int n){
 		int d = std::__gcd(std::abs(y - x), n);
 		if (d != 1 && d != n) return d;
 		if (x == y) return n;
-		if (i == k){
-			y = x; k <<= 1;
-		}
+		if (i == k){ y = x; k <<= 1; }
 	}
 }
