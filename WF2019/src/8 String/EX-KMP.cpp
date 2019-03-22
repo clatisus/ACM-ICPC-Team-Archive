@@ -23,7 +23,4 @@ namespace exKMP {
 				int &j = ext[i] = std::max(0, p - i + 1);
 				while(i+j<=n && j<=m && s[i+j]==t[j+1]) ++j;
 				a = i;
-			}
-		}
-	} 
-};
+			}}}};
