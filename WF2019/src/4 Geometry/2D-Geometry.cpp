@@ -1,4 +1,3 @@
-// Geometry Fundamental
 const double eps = 1e-9, PI = acos(-1.0), INF = 1e100;
 inline int dcmp(double p) { return (p > eps) - (p < -eps); }
 inline double sqr(double p) { return p * p; }
