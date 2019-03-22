@@ -38,3 +38,5 @@ Makefile
 # Mac
 .DS_Store
 .dSYM
+
+.vscode
