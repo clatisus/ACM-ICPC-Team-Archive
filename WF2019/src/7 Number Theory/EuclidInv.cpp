@@ -1,4 +1,4 @@
-// x, y 满足 |x|+|y| 最小
+<TEX>x, y 满足 |x|+|y| 最小</TEX>
 int ex_euc(int a, int b, int &x, int &y){
 	if (!b){
 		x = 1, y = 0;

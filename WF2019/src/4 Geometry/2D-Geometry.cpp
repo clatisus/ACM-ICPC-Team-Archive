@@ -1,7 +1,3 @@
-// Geometry Fundamental
-const double eps = 1e-9, PI = acos(-1.0), INF = 1e100;
-inline int dcmp(double p) { return (p > eps) - (p < -eps); }
-inline double sqr(double p) { return p * p; }
 struct P {
 	double x, y;
 	explicit P(double x = 0, double y = 0) : x(x), y(y) {}
@@ -12,15 +8,12 @@ struct P {
 	}
 	P rot90() const { return P(-y, x); }
 	P normal() { return rot90().mul(1. / abs()); }
-	bool operator<(const P &p) const { return dcmp(x - p.x) ? x < p.x : dcmp(y - p.y) < 0; }
-	bool operator==(const P &p) const { return !dcmp(x - p.x) && !dcmp(y - p.y); }
 };
 struct L {
 	P p, v; double angle;
 	L() {}
 	L(P a, P b) : p(a), v(b.sub(a)) { angle = v.angle(); }
 	bool operator<(const L &l) const { return angle < l.angle; }
-	P point(double t) { return p.add(v.mul(t)); }
 };
 struct C {
 	P o; double r;
@@ -33,10 +26,9 @@ struct C {
 double rad(P p1, P p2) {
 	return std::acos(p1.dot(p2) / (p1.abs() * p2.abs()));
 }
-// 交点与距离相关
 // Intersection of Line l1 and Line l2
 double isLL(L l1, L l2) {
-	return l2.p.sub(l1.p).det(l2.v) / l1.v.det(l2.v); // 返回 t, 交点在 l1.p + l1.v * t, 可以用来判断射线、线段等
+	return l2.p.sub(l1.p).det(l2.v) / l1.v.det(l2.v);
 }
 // 返回点 p 到直线 l 的有向距离, p 在直线逆时针方向为正
 double disLP(L l, P p) {
@@ -158,7 +150,6 @@ bool isCs(std::vector<C> &c) {
 	}
 	return false;
 }
-// 圆相关
 // 返回圆 c1 与圆 c2 的交集面积
 double areaCC(C c1, C c2) {
 	double d = c1.o.sub(c2.o).abs();
@@ -204,13 +195,11 @@ std::vector<L> tanCC(C c1, C c2) {
 	}
 	return ret;
 }
-// 返回三角形 p1->p2->p3 的内切圆
 C inC(P p1, P p2, P p3) {
 	double a = p3.sub(p2).abs(), b = p1.sub(p3).abs(), c = p2.sub(p1).abs();
 	P p = p1.mul(a).add(p2.mul(b).add(p3.mul(c))).mul(1. / (a + b + c)); // (a * p1 + b * p2 + c * p3) / (a + b + c)
 	return C(p, std::abs(disLP(L(p1, p2), p)));
 }
-// 返回三角形 p1->p2->p3 的外接圆
 C outC(P p1, P p2, P p3) {
 	P q1 = p1.add(p2).mul(0.5), v1 = p1.sub(p2).normal();
 	P q2 = p2.add(p3).mul(0.5), v2 = p2.sub(p3).normal();
@@ -219,7 +208,6 @@ C outC(P p1, P p2, P p3) {
 	P p = l1.point(t);
 	return C(p, p1.sub(p).abs());
 }
-// 多边形, 凸包, 半平面交
 // 返回点 q 与简单多边形 ps 的位置关系(内部:1, 外部:-1, 边上:0)
 int inPolygon(std::vector<P> &ps, P q) {
 	int n = ps.size();
@@ -371,21 +359,6 @@ std::vector<P> isConL(std::vector<P> &ps, P p, P q) {
 		ret.push_back(l2.point(t));
 	}
 	ps.erase(ps.begin() + n, ps.end());
-	return ret;
-}
-// 用直线 p->q 切割凸包 ps, 保留左半平面部分, O(n)
-std::vector<P> cutCon(std::vector<P> &ps, P p, P q) {
-	std::vector<P> ret;
-	int n = ps.size();
-	for (int i = 0; i < n; ++i) {
-		P a = ps[i], b = ps[(i + 1) % n];
-		if (dcmp(q.sub(p).det(a.sub(p))) >= 0) ret.push_back(a);
-		if (!dcmp(q.sub(p).det(b.sub(a)))) {
-			double t = isLL(L(a, b), L(p, q));
-			if (dcmp(t) > 0 && dcmp(t - 1) < 0)
-				ret.push_back(a.add(b.sub(a).mul(t)));
-		}
-	}
 	return ret;
 }
 // 返回直线集合 ls 的半平面交
@@ -614,7 +587,6 @@ double convexDiameter(std::vector<P> &ps) {
 	} while (i != is || j != js);
 	return maxd;
 }
-// 求 ps 中的点的最小包围圆
 C minCoverC(std::vector<P> &ps) {
 	int n = ps.size();
 	std::random_shuffle(ps.begin(), ps.end());

@@ -1,4 +1,4 @@
-// 操作数之一 >= 65536 时，结果就有可能超出 int 范围
+<TEX>操作数之一 >= 65536 时，结果就有可能超出 int 范围</TEX>
 const int NIMN = 256;
 int threshold = 2;
 ll prod[NIMN][NIMN];
