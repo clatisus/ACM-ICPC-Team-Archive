@@ -1,4 +1,3 @@
-int moder;
 comp w[2][1 << MAX];
 void init(){
 	for (int i = 0; i < 1 << MAX; ++i){

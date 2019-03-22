@@ -1,8 +1,5 @@
 struct poly{
-	static const int N = 1000;
 	int a[N], len;
-	poly():len(-1){memset(a, 0, sizeof(a));}
-	int &operator [](int sit){return a[sit];}
 	static poly interpolation(std::vector <pii> vec){
 		int n = vec.size() - 1;
 		poly aux; aux.len = 0; aux.a[0] = 1;
