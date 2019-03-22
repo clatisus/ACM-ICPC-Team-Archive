@@ -1,16 +1,10 @@
-/*
- * Description: LCT without evert operation.
- * Time: $O(n\log{n})$
- */
+<TeX>LCT without evert operation. Time: $O(n\log{n})$</TeX>
 namespace lct {
 	using star = struct node *;
 #define Siz(x) ((x) ? (x)->siz : 0)
 	struct node {
-		int siz;
-		star p, ch[2];
-		void update() {
-			siz = Siz(ch[0]) + 1 + Siz(ch[1]);
-		}
+		int siz; star p, ch[2];
+		void update() {siz = Siz(ch[0]) + 1 + Siz(ch[1]);}
 		int dir() {
 			if (!p)return -1;
 			if (p->ch[0] == this)return 0;
@@ -23,8 +17,7 @@ namespace lct {
 		}
 	} pool[max_N], *tail = pool;
 	star new_node() {
-		star x = tail++;
-		x->siz = 1;
+		star x = tail++; x->siz = 1;
 		x->ch[0] = x->ch[1] = x->p = 0;
 		return x;
 	}
@@ -37,8 +30,7 @@ namespace lct {
 	}
 	void splay(star x) {
 		for (int d, d1; ~(d = x->dir()); rot(x))
-			if (~(d1 = x->p->dir()))
-				rot((d ^ d1) ? x : x->p);
+			if (~(d1 = x->p->dir())) rot((d ^ d1) ? x : x->p);
 		x->update();
 	}
 	void access(star x) {
@@ -47,14 +39,12 @@ namespace lct {
 			splay(y), y->set(rch, 1), y->update();
 		splay(x);
 	}
-	void link(star x, star y) {//p[x]=y
+	void link(star x, star y) { // p[x]=y
 		access(x), assert(!x->p), x->p = y;
 	}
-	void cut(star x, star y) {//p[x]=y
-		access(x);
-		x->ch[0]->p = 0;
-		x->ch[0] = 0;
-		x->update();
+	void cut(star x, star y) { // p[x]=y
+		access(x); x->ch[0]->p = 0;
+		x->ch[0] = 0; x->update();
 	}
 	int kth(star x, int k) {
 		while (x) {
@@ -66,7 +56,5 @@ namespace lct {
 		splay(x);
 		return x - pool;
 	}
-	int find(star x) {
-		return access(x), kth(x, 1);
-	}
+	int find(star x) {return access(x), kth(x, 1);}
 };

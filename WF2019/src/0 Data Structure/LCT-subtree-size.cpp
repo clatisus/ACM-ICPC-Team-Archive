@@ -1,9 +1,5 @@
-/*
- * Description: LCT maintains subtree size.
- * Time: $O(n\log{n})$
- */
+<TeX>LCT maintains subtree size.Time: $O(n\log{n})$</TeX>
 namespace LCT {
-	const int max_N = (int) 4e5 + 21;
 	using ptr = struct node *;
 	ptr null, tail, rt[max_N];
 	struct node {
@@ -12,17 +8,14 @@ namespace LCT {
 		ptr max, p, ch[2];
 		void updt() {
 			max = this;
-			if (ch[0]->max->val > max->val)
-				max = ch[0]->max;
-			if (ch[1]->max->val > max->val)
-				max = ch[1]->max;
+			if (ch[0]->max->val > max->val) max = ch[0]->max;
+			if (ch[1]->max->val > max->val) max = ch[1]->max;
 			// r_siz = v_siz + ch[0]->r_siz + ch[1]->r_siz;
 		}
 		void down() {
 			if (!rev) return;
 			std::swap(ch[0], ch[1]);
-			ch[0]->rev ^= 1;
-			ch[1]->rev ^= 1;
+			ch[0]->rev ^= 1; ch[1]->rev ^= 1;
 			rev = 0;
 		}
 		int dir() {
@@ -38,8 +31,7 @@ namespace LCT {
 	ptr new_node(int val) {
 		ptr x = tail++;
 		// x->r_siz = x->v_siz = 1;
-		x->val = val;
-		x->rev = 0;
+		x->val = val; x->rev = 0;
 		x->ch[0] = x->ch[1] = x->p = null;
 		return x->max = x;
 	}
@@ -47,8 +39,7 @@ namespace LCT {
 		ptr y = x->p;
 		int d = x->dir(), dd = y->dir();
 		y->p->set_ch(x, dd);
-		y->set_ch(x->ch[d ^ 1], d);
-		y->updt();
+		y->set_ch(x->ch[d ^ 1], d); y->updt();
 		x->set_ch(y, d ^ 1);
 	}
 	void putdown(ptr x) {
@@ -59,8 +50,7 @@ namespace LCT {
 		putdown(x);
 		int d, dd;
 		for(; ~(d = x->dir()); rot(x))
-			if (~(dd = x->p->dir()))
-				rot((d ^ dd) ? x : x->p);
+			if (~(dd = x->p->dir())) rot((d ^ dd) ? x : x->p);
 		x->updt();
 	}
 	void access(ptr x) {
@@ -69,18 +59,13 @@ namespace LCT {
 			splay(x);
 			// x->v_siz += x->ch[1]->r_siz;
 			// x->v_siz -= rch->r_siz;
-			x->set_ch(rch, 1);
-			x->updt();
-			rch = x;
+			x->set_ch(rch, 1); x->updt(); rch = x;
 		}
 		splay(y);
 	}
-	void evert(ptr x) {
-		access(x), x->rev ^= 1;
-	}
+	void evert(ptr x) {access(x), x->rev ^= 1;}
 	ptr path(ptr x, ptr y) {
-		evert(x), access(y);
-		return y;
+		evert(x), access(y); return y;
 	}
 	void link(ptr x, ptr y) {
 		evert(x), x->p = y;
@@ -88,16 +73,13 @@ namespace LCT {
 		// y->v_siz += x->r_siz, y->updt();
 	}
 	void cut(ptr x, ptr y) {
-		path(x, y);
-		x->p = null;
-		y->set_ch(null, 0);
-		y->updt();
+		path(x, y); x->p = null;
+		y->set_ch(null, 0); y->updt();
 	}
 	void init() {
-		tail = pool;
-		null = tail++;
+		tail = pool; null = tail++;
 		null->val = null->rev = 0;
 		// null->r_siz = null->v_siz = 0;
-		null->ch[0] = null->ch[1] = null->p = null->max = null;
+		null->ch[0] = null->ch[1] = null->p = null->max =null;
 	}
 };

@@ -1,7 +1,4 @@
-/*
- * Description: Build mini tree for key vertices st[1...top].
- * Time: $O(n\log{n})$
- */
+<TeX>Build mini tree for key vertices st[1...top].$O(n\log{n})$</TeX>
 namespace mini_tree {
 	int st[max_N << 1], top;
 	struct functor {

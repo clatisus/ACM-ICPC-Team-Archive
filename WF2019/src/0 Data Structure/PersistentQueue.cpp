@@ -1,9 +1,7 @@
-// dp[u] = min(dp[v] + (d[u] - d[v]) ^ 2 + p)
-// 下凸, d 单调
+<TeX>$dp[u] = \min(dp[v] + (d[u] - d[v]) ^ 2 + p)$ 下凸, d 单调</TeX>
 ll dp[MAXN], d[MAXN];
 int que[MAXN];
-ll gety(int a, int b);
-ll getx(int a, int b);
+ll gety(int a, int b); ll getx(int a, int b);
 void dfs(int u, int fa, int head, int tail) {
 	int l = head, r = tail - 2;
 	while (l < r) {
@@ -41,13 +39,10 @@ void dfs(int u, int fa, int head, int tail) {
 	que[sit] = value;
 }
 int main() {
-	dp[1] = -p;
-	d[1] = 0;
-	que[0] = 1;
+	dp[1] = -p; d[1] = 0; que[0] = 1;
 	for (auto &p : vec[1]) {
 		int v = p.first, w = p.second;
-		d[v] = d[1] + w;
-		dfs(v, 1, 0, 1);
+		d[v] = d[1] + w; dfs(v, 1, 0, 1);
 	}
 	return 0;
 }
