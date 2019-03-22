@@ -1,13 +1,11 @@
 namespace maxFlow {
 	//...
 	void addEdge(int u, int v, flowType c) {
-		e.push_back({v, head[u], c});
-		head[u] = M++;
+		e.push_back({v, head[u], c}); head[u] = M++;
 	}
 	//...
 };
 namespace GHtree {
-	const int max_N = 3000 + 21, max_M = 4500 + 21;
 	int n, m, u[max_M], v[max_M], w[max_M]; // edges in original graph
 	int tu[max_N], tv[max_N], tw[max_N], tot; // edges in Gomory-Hu tree
 	int p[max_N], q[max_N];

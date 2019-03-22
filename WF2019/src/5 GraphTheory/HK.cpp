@@ -1,4 +1,4 @@
-// O(V^{0.5}E)
+<TeX>O(V^{0.5}E)</TeX>
 namespace HK {
 	int match[MAXN], d[MAXN], dis;
 	bool vis[MAXN];
@@ -7,10 +7,7 @@ namespace HK {
 		std::queue<int> q; dis = INT_MAX;
 		memset(d, -1, sizeof(d));
 		for (auto u : left)
-			if (match[u] == -1) {
-				d[u] = 0;
-				q.push(u);
-			}
+			if (match[u] == -1) {d[u] = 0; q.push(u);}
 		while (!q.empty()) {
 			int u = q.front(); q.pop();
 			if (d[u] > dis) break;
@@ -32,8 +29,7 @@ namespace HK {
 				vis[v] = true;
 				if (match[v] != -1 && d[v] == dis) continue;
 				if (match[v] == -1 || dfs(match[v])) {
-					match[v] = u;
-					match[u] = v;
+					match[v] = u; match[u] = v;
 					return true;
 				}
 			}
@@ -45,8 +41,7 @@ namespace HK {
 		while (bfs()) {
 			memset(vis, 0, sizeof(vis));
 			for (auto u : left)
-				if (match[u] == -1 && dfs(u))
-					++ret;
+				if (match[u] == -1 && dfs(u)) ++ret;
 		}
 		return ret;
 	}

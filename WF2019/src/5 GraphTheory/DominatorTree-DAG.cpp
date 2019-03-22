@@ -1,6 +1,4 @@
 namespace domi_tree {
-	const int max_N = (int) 2e5 + 21;
-	const int log_N = 20;
 	int n, m, s, Q[max_N], anc[max_N][log_N], dep[max_N], deg[max_N];
 	std::vector<int> vec[max_N];
 	inline void init_anc(int u) {
@@ -15,19 +13,15 @@ namespace domi_tree {
 			if (k & 1) v = anc[v][i];
 		if (u == v) return u;
 		for (int i = log_N - 1; ~i; --i) {
-			if (anc[u][i] == anc[v][i])
-				continue;
-			u = anc[u][i];
-			v = anc[v][i];
+			if (anc[u][i] == anc[v][i]) continue;
+			u = anc[u][i]; v = anc[v][i];
 		}
 		return anc[u][0];
 	}
 	void solve(int s) {
-		int tail = 0;
-		Q[++tail] = s;
+		int tail = 0; Q[++tail] = s;
 		for (int i = 1; i <= tail; ++i) {
-			int u = Q[i];
-			init_anc(u);
+			int u = Q[i]; init_anc(u);
 			for (auto v : vec[u]) {
 				if (!--deg[v]) Q[++tail] = v;
 				if (anc[v][0]) anc[v][0] = lca(anc[v][0], u);

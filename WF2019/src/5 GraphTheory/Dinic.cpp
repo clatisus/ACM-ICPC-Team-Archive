@@ -19,8 +19,7 @@ namespace maxFlow {
 				if (!e[it].c) continue;
 				int v = e[it].v;
 				if (dis[v] == -1) {
-					dis[v] = dis[u] + 1;
-					Q[tail++] = v;
+					dis[v] = dis[u] + 1; Q[tail++] = v;
 				}
 			}
 		}
@@ -46,10 +45,8 @@ namespace maxFlow {
 		memset(head + 1, -1, n * sizeof(int));
 	}
 	void addEdge(int u, int v, flowType c) {
-		e.push_back({v, head[u], c});
-		head[u] = M++;
-		e.push_back({u, head[v], 0});
-		head[v] = M++;
+		e.push_back({v, head[u], c}); head[u] = M++;
+		e.push_back({u, head[v], 0}); head[v] = M++;
 	}
 	flowType dinic(int n, int s, int t) {
 		flowType ret = 0;

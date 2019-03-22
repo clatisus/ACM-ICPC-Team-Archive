@@ -1,25 +1,19 @@
 namespace domi_tree {
-	const int max_N = (int) 1e5 + 21;
 	int n, m, par[max_N], vp[max_N], dfn[max_N], cnt, sdom[max_N], idom[max_N];
-	inline bool cmp(int u, int v) {
-		return dfn[u] < dfn[v];
-	}
-	std::vector<int> vec[max_N], _vec[max_N], tmp[max_N]; // vec 原图, _vec 反图
+	inline bool cmp(int u, int v) {return dfn[u] < dfn[v];}
+	std::vector<int> vec[max_N], _vec[max_N], tmp[max_N];
 	int f[max_N], pos[max_N];
 	int find(int u) {
 		if (f[u] == u) return u;
-		int v = f[u];
-		f[u] = find(v);
-		if (cmp(sdom[pos[v]], sdom[pos[u]]))
-			pos[u] = pos[v];
+		int v = f[u]; f[u] = find(v);
+		if (cmp(sdom[pos[v]], sdom[pos[u]])) pos[u] = pos[v];
 		return f[u];
 	}
 	void dfs(int u) {
 		vp[dfn[u] = ++cnt] = u;
 		for (auto v : vec[u]) {
 			if (dfn[v]) continue;
-			par[v] = u;
-			dfs(v);
+			par[v] = u; dfs(v);
 		}
 	}
 	void solve(int rt) {
