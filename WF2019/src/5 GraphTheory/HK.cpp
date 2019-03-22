@@ -1,4 +1,4 @@
-<TeX>O(V^{0.5}E)</TeX>
+<TeX>$O(\sqrt{V}E)$</TeX>
 namespace HK {
 	int match[MAXN], d[MAXN], dis;
 	bool vis[MAXN];
