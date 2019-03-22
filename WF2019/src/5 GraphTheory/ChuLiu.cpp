@@ -1,8 +1,6 @@
 namespace ChuLiu {
-	const int max_N = 1000 + 21;
-	const int max_M = (int) 2e4 + 21;
 	using LL = long long;
-	const LL inf = (int) 1e9;
+	const LL inf = 0x3f3f3f3f;
 	LL val[max_M], tag[max_M];
 	int n, m, u[max_M], v[max_M], ls[max_M], rs[max_M];
 	int st[max_N], top, rt[max_N];
@@ -29,23 +27,13 @@ namespace ChuLiu {
 		return x;
 	}
 	void solve() {
-		scanf("%d%d", &n, &m);
 		for (int i = 0; i <= n; ++i) {
 			rt[i] = 0;
 			F[0].f[i] = F[1].f[i] = i;
 		}
 		for (int i = 1; i <= m; ++i) {
-			scanf("%d%d%lld", u + i, v + i, val + i);
-			val[i] *= 1000;
 			tag[i] = ls[i] = rs[i] = 0;
 			rt[v[i]] = merge(rt[v[i]], i);
-		}
-		for (int i = 0; i < n; ++i) {
-			int id = i + m + 1;
-			val[id] = inf * 1000 + i;
-			tag[id] = ls[id] = rs[id] = 0;
-			u[id] = n, v[id] = i;
-			rt[i] = merge(rt[i], id);
 		}
 		LL ans = 0;
 		int root = n;
@@ -74,13 +62,5 @@ namespace ChuLiu {
 				}
 			}
 		}
-		if (ans > 2 * inf * 1000) {
-			puts("impossible");
-		} else {
-			LL ans1 = ans / 1000 - inf;
-			LL ans2 = ans % 1000;
-			printf("%lld %lld\n", ans1, ans2);
-		}
-		puts("");
 	}
 }
