@@ -2,14 +2,6 @@ struct P{
 	double x, y, z;
 	explicit P (double x = 0, double y = 0, double z = 0):x(x), y(y), z(z){}
 	P operator ^ (const P &p)const{return P (y * p.z - z * p.y, z * p.x - x * p.z, x * p.y - y * p.x);}
-	bool operator < (const P &p)const{
-		if (sig(x - p.x)) return x < p.x;
-		if (sig(y - p.y)) return y < p.y;
-		return z < p.z;
-	}
-	bool operator == (const P &p)const{
-		return !sig(x-p.x) && !sig(y - p.y) && !sig(z - p.z);
-	}
 };
 struct F{
 	P p, o;
@@ -75,10 +67,12 @@ P rotate(P a, P b, double angle){
    | (1-cos(d))*z*x+sin(d)*y   (1-cos(d))*z*y-sin(d)*x   (1-cos(d))*z*z+cos(d)     0 |
    |           0                          0                           0            1 |
 */
+
+double onLeft(L l, P p, P o){ // >0表示 p 在 l 左边
+	return mix(o, p - l.p, l.v);
+}
+
 std::vector <P> convexHull2D(std::vector <P> &ps, P o){
-	auto onLeft = [o](L l, P p){ // >0表示 q 在 l 左边 
-		return mix(o, p - l.p, l.v);
-	};
 	const int N = 100010;
 	static P stack[N];
 	std::sort(ps.begin(), ps.end());

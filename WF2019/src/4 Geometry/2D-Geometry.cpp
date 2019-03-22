@@ -422,7 +422,7 @@ double areaCPol(C c, std::vector<P> &ps) {
 	return std::abs(ret) / 2;
 }
 // 圆并与圆交
-// O(n^2logn) 求圆集合 cs 的并集面积与中心，被卡时间时可预先去掉被其它圆包含的圆
+// O(n^2logn) 求圆集合 cs 的并集面积与重心，被卡时间时可预先去掉被其它圆包含的圆
 std::pair<double, P> areaCs(std::vector<C> &cs) {
 	double ret = 0;
 	P pret;

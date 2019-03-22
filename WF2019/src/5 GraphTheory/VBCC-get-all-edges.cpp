@@ -25,17 +25,15 @@ namespace Tarjan {
 					int y = -1, sizE = 0;
 					while (y != w) {
 						tmp.push_back(y = stE[topE--]);
-						++sizE;
-					}
-					if (sizV == sizE) for (auto i : tmp) {
-							++ans;
-							ret[i] = true;
-						}
-				}
-			} else if (dfn[v] < dfn[u]) {
-				stE[++topE] = w;
-				low[u] = std::min(low[u], dfn[v]);
-			}
-		}
-	}
-}
+                        ++sizE;
+                    }
+                    if (sizV == sizE) 
+                        for (auto i : tmp) {
+                            ++ans;
+                            ret[i] = true;
+                        }
+                }
+            } else if (dfn[v] < dfn[u]) {
+                stE[++topE] = w;
+                low[u] = std::min(low[u], dfn[v]);
+            }}}}
