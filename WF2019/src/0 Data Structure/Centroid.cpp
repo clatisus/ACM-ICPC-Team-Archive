@@ -23,13 +23,12 @@ namespace centroid {
 	}
 	void solve(int u) {
 		u = find(u);
-		//do something with time Cost(siz[u])
+		//do sth. within time Cost(siz[u])
 		vis[u] = true;
 		for (auto v : vec[u]) if (!vis[v]) solve(v);
 	}
 	void init(int n) {
 		memset(vis + 1, 0, n * sizeof(bool));
-		for (int i = 1; i <= n; ++i)
-			std::vector<int>().swap(vec[i]);
+		rep(i, 1, n + 1) std::vector<int>().swap(vec[i]);
 	}
 };

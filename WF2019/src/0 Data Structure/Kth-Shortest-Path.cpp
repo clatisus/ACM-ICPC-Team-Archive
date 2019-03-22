@@ -1,4 +1,4 @@
-<TeX>$O((n+m)\log{n}+k\log{k})$ </TeX>
+<TeX>求 $s$ 到 $t$ 的 $k$ 长路，先从 $t$ 出发求出最短路径树。每次选一条非树边。左偏树中存父亲和我的所有出边。$O((n+m)\log{n}+k\log{k})$ </TeX>
 namespace kth { // longest
 	using edge = std::pair<int, int>;
 	std::vector<edge> vec[max_N], _vec[max_N];
@@ -30,8 +30,7 @@ namespace kth { // longest
 		std::less<state>> pq;
 	// 求 k 短路时改成 std::greater<state>
 	int solve(int k) {
-		// 建图, vec为反向边表, _vec为原边表
-		// 求最长（最短）路, p中记录最长（最短）路树
+		// vec反图, _vec原图，p中记录最长（最短）路树
 		// Q保存树上拓扑序（路径长度序）
 		if (k == 1) return dis[s];
 		for (int i = 1; i <= tot; ++i) {
@@ -47,7 +46,7 @@ namespace kth { // longest
 		}
 		if (rt[s]) pq.emplace(dis[s] - rt[s]->v, rt[s]);
 		// 当求k短路的时候改为 dis[s] + rt[s]->v, 
-		// 后面代码中的加减也相应取反
+		// 后面代码中v的加减也相应取反
 		while (k--) {
 			auto x = pq.top(); pq.pop();
 			if (k == 1) return x.first;
@@ -65,6 +64,4 @@ namespace kth { // longest
 			rt[i] = nullptr;
 			std::vector<edge>().swap(vec[i]);
 			std::vector<edge>().swap(_vec[i]);
-		}
-	}
-};
+		}}};
