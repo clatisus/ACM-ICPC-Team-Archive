@@ -1,4 +1,4 @@
-<TeX>有撤销操作时，势能分析失效，需要预处理转移。时空复杂度 $O(n\sigm a)$</TeX>
+<TeX>有撤销操作时，势能分析失效，需要预处理转移。时空复杂度 $O(n\sigma)$</TeX>
 namespace KMP {
 	int fail[max_N], trans[max_N][sigma],last[max_N][sigma];
 	char s[max_N];
