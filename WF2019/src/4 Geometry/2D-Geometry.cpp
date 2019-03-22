@@ -46,10 +46,6 @@ double disSP(P p1, P p2, P q) {
 P proj(L l, P p) {
 	return l.p.add(l.v.mul(l.v.dot(p.sub(l.p).mul(1. / l.v.abs2()))));
 }
-// 返回点 p 关于直线 l 对称后的点坐标
-P symm(L l, P p) {
-	return proj(l, p).mul(2).sub(p);
-}
 // 判断线段是否严格相交（包括严格重合）, 即交点不仅是端点处
 bool crsSS(P p1, P p2, P q1, P q2) {
 	double c1 = p2.sub(p1).det(q1.sub(p1));
