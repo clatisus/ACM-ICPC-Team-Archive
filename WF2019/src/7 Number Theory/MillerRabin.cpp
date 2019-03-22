@@ -4,7 +4,7 @@ bool solve(int n, int t, int u){
 	int pre = powermod(a, u, n);
 	for (int i = 0; i < t; ++ i){
 		int now = 1ll * pre * pre % n;
-		if now == 1 && pre != 1 && pre != n - 1) return false;
+		if (now == 1 && pre != 1 && pre != n - 1) return false;
 		pre = now;
 	}
 	return pre == 1;
