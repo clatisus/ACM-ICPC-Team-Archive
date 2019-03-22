@@ -1,3 +1,4 @@
+<TeX>复杂度 $O(3^{\frac{n}{3}})$。</TeX>
 struct MaxClique{
 	bool g[MAXN][MAXN];
 	int n, nmax[MAXN], alt[MAXN][MAXN], ans;

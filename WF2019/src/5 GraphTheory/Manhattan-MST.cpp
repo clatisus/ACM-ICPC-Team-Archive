@@ -1,3 +1,4 @@
+<TeX>最小生成树。若最大生成树，找到 $x+y,x-y$ 最大/小的点 $A,B,C,D$，每个点向这四个点连边，权值为曼哈顿距离。</TeX>
 int n;
 struct P{
 	int x, y, id;
@@ -29,24 +30,21 @@ struct MST{
 			}
 		return ret2;
 	}
-	int solve(){
-		//init()
+	int solve(){ // init
 		tot = 0;
 		for(int dir = 0; dir <= 3; ++ dir){
-			if(dir & 1)
-				for(int i = 1; i <= n; ++ i) std::swap(p[i].x, p[i].y);
-			else if(dir)
-				for(int i = 1; i <= n; ++ i) p[i].x = - p[i].x;
+			if(dir&1)for(int i=1;i<=n;++i) swap(p[i].x, p[i].y);
+			else if(dir) for(int i=1; i<=n; ++i) p[i].x=-p[i].x;
 			std::sort(p + 1, n + p + 1);
-			for(int i = 1; i <= n; ++ i) a[i] = b[i] = p[i].y - p[i].x;
+			for(int i = 1; i <= n; ++i) a[i]=b[i]=p[i].y-p[i].x;
 			std::sort(b + 1, n + b + 1);
 			int lmt = std::unique(b + 1, n + b + 1) - b - 1;
-			for(int i = 1; i <= lmt; ++ i) bit[i] = {INT_MAX, -1};
+			for(int i = 1; i <= lmt; ++i) bit[i]={INT_MAX, -1};
 			for(int i = n; i; -- i){
-				int pos = std::lower_bound(b + 1, lmt + b + 1, a[i]) - b;
+				int pos = lower_bound(b+1, lmt+b+1, a[i]) - b;
 				int ans = query(pos, lmt);
 				if(ans != -1){
-					edge[++ tot].u = p[i].id;
+					edge[++tot].u = p[i].id;
 					edge[tot].v = p[ans].id;
 					edge[tot].w = dis(p[i], p[ans]);
 				}

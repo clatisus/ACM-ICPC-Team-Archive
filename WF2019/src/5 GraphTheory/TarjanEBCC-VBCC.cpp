@@ -4,7 +4,7 @@ namespace Tarjan {
 	int cut[max_N], par[max_N * 2];
 	int st[max_N], top, tot;
 	int ebccno[max_N], ebcc_cnt;
-	std::vector<int> vec[max_N], ebcc[max_N], bcc[max_N * 2];
+	vector<int> vec[max_N], ebcc[max_N], bcc[max_N * 2];
 	void tarjan(int u, int p) {
 		dfn[u] = low[u] = ++cnt;
 		st[++top] = u;
@@ -13,7 +13,7 @@ namespace Tarjan {
 			if (!dfn[v]) {
 				tarjan(v, u);
 				low[u] = std::min(low[u], low[v]);
-				//bridge(u, v) = dfn[u] < low[v] && !multiEdge(u, v);
+				//bridge(u,v)=dfn[u]<low[v]&&!multiEdge(u,v);
 				if (dfn[u] <= low[v]) {
 					cut[u] = 1;
 					int x = -1;
@@ -40,7 +40,6 @@ namespace Tarjan {
 	}
 	void solve(int n) {
 		tot = n;
-		for (int i = 1; i <= n; ++i)
-			if (!dfn[i]) tarjan(i, i);
+		for (int i = 1; i <= n; ++i) if(!dfn[i]) tarjan(i,i);
 	}
 }

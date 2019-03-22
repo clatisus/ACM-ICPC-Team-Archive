@@ -33,10 +33,7 @@ namespace primal_dual {
 					if (!vis[v]) {
 						vis[v] = 1, Q[tail++] = v;
 						if (tail == max_N) tail = 0;
-					}
-				}
-			}
-		}
+					}}}}
 		if (dis[s] == inf) return;
 		adjust(s);
 	}

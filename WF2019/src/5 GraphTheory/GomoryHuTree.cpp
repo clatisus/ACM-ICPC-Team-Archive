@@ -1,8 +1,7 @@
 namespace maxFlow {
 	void addEdge(int u, int v, flowType c) {
 		e.push_back({v, head[u], c}); head[u] = M++;
-	}
-}
+	}}
 namespace GHtree {
 	int n, m, u[max_M], v[max_M], w[max_M]; // origin graph
 	int tu[max_N], tv[max_N], tw[max_N], tot; // GH tree
@@ -30,10 +29,8 @@ namespace GHtree {
 		for (int i = l; i <= r; ++i) p[i] = q[i];
 		solve(l, L - 1), solve(L, r);
 	}
-	void testCase() {
-		//input
+	void testCase() { //input
 		tot = 0;
 		for (int i = 1; i <= n; ++i) p[i] = i;
 		solve(1, n);
-	}
-}
+	}}

@@ -14,7 +14,7 @@ void make_st_table(){
 #define depless(u, v) (dep[seq[u]] < dep[seq[v]] ? u : v)
 	for(int d = 1; d <= logdown[cnt]; ++ d)
 		for(int i = 1; i + (1 << d - 1) <= cnt; ++ i)
-			st[i][d] = depless(st[i][d - 1], st[i + (1 << d - 1)][d - 1]);
+			st[i][d]=depless(st[i][d-1],st[i+(1<<d-1)][d-1]);
 }
 int lca(int u, int v){
 	if(!u || !v) return u + v;

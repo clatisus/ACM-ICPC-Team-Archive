@@ -1,3 +1,4 @@
+<TeX>最大权匹配。$w$ 中存边权，两维编号均为 $1\sim n$。\text{mat[i]} 是 $i$ 的匹配点。答案为 $\sum lv_i+rv_i$，满足 $lv_i+rv_j\ge w_{ij}$。</TeX>
 namespace KM {
 	int n, w[MAXN][MAXN], slack[MAXN];
 	int lv[MAXN], rv[MAXN], pre[MAXN], mat[MAXN];
@@ -7,8 +8,7 @@ namespace KM {
 			slack[i] = INT_MAX; vis[i] = false; pre[i] = 0;
 		}
 		int u = 0; mat[u] = s;
-		do {
-			int now = mat[u], d = INT_MAX, nxt;
+		do{ int now = mat[u], d = INT_MAX, nxt;
 			vis[u] = true;
 			for (int v = 1; v <= n; ++v)
 				if (!vis[v]) {

@@ -17,9 +17,7 @@ namespace HK {
 				if (match[v] == -1) dis = d[v];
 				else {
 					d[match[v]] = d[v] + 1; q.push(match[v]);
-				}
-			}
-		}
+				}}}
 		return dis != INT_MAX;
 	}
 	bool dfs(int u) {
