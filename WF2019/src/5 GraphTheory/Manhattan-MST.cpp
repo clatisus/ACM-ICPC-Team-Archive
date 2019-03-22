@@ -14,12 +14,11 @@ struct MST{
 			return w < rhs.w;
 		}
 	}edge[MAXN << 2];
-	int getfather(int x){ return x == fa[x] ? x : (fa[x] = getfather(fa[x])); }
+	int find(int x){ return x == fa[x] ? x : (fa[x] = find(fa[x])); }
 	int dis(P a, P b){ return std::abs(a.x - b.x) + std::abs(a.y - b.y); }
 	void insert(int x, int val, int pos){
 		for(int i = x; i; i -= lowbit(i))
-			if(val < bit[i].first)
-				bit[i] = {val, pos};
+			if(val < bit[i].first) bit[i] = {val, pos};
 	}
 	int query(int x, int lmt){
 		int ret1 = INT_MAX, ret2 = -1;
@@ -58,8 +57,7 @@ struct MST{
 		for(int i = 1; i <= n; ++ i) fa[i] = i;
 		int cnt = 0, ret = 0;
 		for(int i = 1; i <= tot; ++ i){
-			int u = getfather(edge[i].u);
-			int v = getfather(edge[i].v);
+			int u = find(edge[i].u), v = find(edge[i].v);
 			if(u == v) continue;
 			fa[u] = v;
 			++ cnt; ret += edge[i].w;

@@ -1,12 +1,10 @@
 namespace KM {
-	int n, w[MAXN][MAXN];
-	int slack[MAXN], lv[MAXN], rv[MAXN], pre[MAXN], mat[MAXN];
+	int n, w[MAXN][MAXN], slack[MAXN];
+	int lv[MAXN], rv[MAXN], pre[MAXN], mat[MAXN];
 	bool vis[MAXN];
 	void aug(int s) {
 		for (int i = 0; i <= n; ++i) {
-			slack[i] = INT_MAX;
-			vis[i] = false;
-			pre[i] = 0;
+			slack[i] = INT_MAX; vis[i] = false; pre[i] = 0;
 		}
 		int u = 0; mat[u] = s;
 		do {
@@ -18,10 +16,7 @@ namespace KM {
 						slack[v] = lv[now] + rv[v] - w[now][v];
 						pre[v] = u;
 					}
-					if (d > slack[v]) {
-						d = slack[v];
-						nxt = v;
-					}
+					if (d > slack[v]) { d = slack[v]; nxt = v; }
 				}
 			for (int i = 0; i <= n; ++i)
 				if (vis[i]) lv[mat[i]] -= d, rv[i] += d;
@@ -32,8 +27,7 @@ namespace KM {
 	}
 	void solve() {
 		for (int i = 1; i <= n; ++i) {
-			lv[i] = INT_MIN;
-			rv[i] = mat[i] = 0;
+			lv[i] = INT_MIN; rv[i] = mat[i] = 0;
 			for (int j = 1; j <= n; ++j)
 				lv[i] = std::max(lv[i], w[i][j]);
 		}

@@ -1,18 +1,10 @@
-ll powmod(ll a, ll b){
-	ll res = 1; a %= mod; assert(b >= 0);
-	for(; b; b >>= 1){
-		if(b & 1) res = res * a % mod;
-		a = a * a % mod;
-	}
-	return res;
-}
 namespace linear_seq {
-	const int N = 10010;
 	ll res[N], base[N], _c[N], _md[N];
 	std::vector<int> Md;
 	void mul(ll *a, ll *b, int k){
 		rep(i, 0, k + k) _c[i] = 0;
-		rep(i, 0, k) if(a[i]) rep(j, 0, k) _c[i + j] = (_c[i + j] + a[i] * b[j]) % mod;
+		rep(i, 0, k) if(a[i]) rep(j, 0, k) 
+            _c[i + j] = (_c[i + j] + a[i] * b[j]) % mod;
 		for(int i = k + k - 1; i >= k; -- i) if(_c[i])
 			rep(j, 0, SZ(Md)) _c[i - k + Md[j]] = (_c[i - k + Md[j]] - _c[i] * _md[Md[j]]) % mod;
 		rep(i, 0, k) a[i] = _c[i];

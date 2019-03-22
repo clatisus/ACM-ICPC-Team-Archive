@@ -9,8 +9,7 @@ void solve() {
 			for (int s1 = (s - 1) & s; s1; (--s1) &= s)
 				dp[s][u] = std::min(dp[s][u],
 					dp[s1][u] + dp[s ^ s1][u] - 1);
-			if (dp[s][u] < inf)
-				pq.emplace(-dp[s][u], u);
+			if (dp[s][u] < inf) pq.emplace(-dp[s][u], u);
 		}
 		dijkstra(s);
 	}

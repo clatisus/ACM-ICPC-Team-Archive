@@ -1,14 +1,12 @@
-//Min cost feasible flow or max flow
-//modified to long long: inf, dis[], sum, cost, memset(dis, inf)*2, edge.w, addedge(w)
+<TeX>Min cost feasible flow or max flow. modified to long long: inf, dis[], sum, cost, memset(dis, inf)*2, edge.w, addedge(w)</TeX>
 namespace primal_dual {
-	const int max_N = 2333; //vertexes number
-	const int inf = 0x3f3f3f3f; //a number larger than all dis
+	const int inf = 0x3f3f3f3f; // larger than all dis
 	int M, dis[max_N], vis[max_N], sum, flow, cost;
 	struct edge {
 		int v, c, w; //vertex, capacity, weight
 	};
 	std::vector<edge> e; //all edges
-	std::vector<int> vec[max_N]; //edge indexes for each vertex
+	std::vector<int> vec[max_N]; // edge indexes
 	void adjust(int s) {
 		for (int it = 0; it < M; it += 2) {
 			int u = e[it ^ 1].v, v = e[it].v;
@@ -24,8 +22,7 @@ namespace primal_dual {
 		memset(vis + 1, 0, n * sizeof(int));
 		dis[t] = 0, vis[t] = 1, Q[tail++] = t;
 		while (head != tail) {
-			int u = Q[head++];
-			vis[u] = 0;
+			int u = Q[head++]; vis[u] = 0;
 			if (head == max_N) head = 0;
 			for (auto it : vec[u]) {
 				if (!e[it ^ 1].c) continue;
@@ -49,8 +46,7 @@ namespace primal_dual {
 		memset(vis + 1, 0, n * sizeof(int));
 		dis[t] = 0, pq.push({0, t});
 		while (!pq.empty()) {
-			int u = pq.top().second;
-			pq.pop();
+			int u = pq.top().second; pq.pop();
 			if (vis[u]) continue;
 			vis[u] = 1;
 			for (auto it : vec[u]) {
@@ -58,8 +54,7 @@ namespace primal_dual {
 				int v = e[it].v;
 				auto tmp = dis[u] + e[it ^ 1].w;
 				if (dis[v] > tmp) {
-					dis[v] = tmp;
-					pq.push({-dis[v], v});
+					dis[v] = tmp; pq.push({-dis[v], v});
 				}
 			}
 		}
@@ -83,22 +78,17 @@ namespace primal_dual {
 		return ret;
 	}
 	void addEdge(int u, int v, int c, int w) {
-		e.push_back({v, c, w});
-		vec[u].push_back(M++);
-		e.push_back({u, 0, -w});
-		vec[v].push_back(M++);
+		e.push_back({v, c, w}); vec[u].push_back(M++);
+		e.push_back({u, 0, -w}); vec[v].push_back(M++);
 	}
 	void minCost(int n, int s, int t) {
-		int a = ~0U >> 1;
-		spfa(n, s, t);
+		int a = ~0U >> 1; spfa(n, s, t);
 		do {
 			while (a) {
 				memset(vis + 1, 0, n * sizeof(int));
 				int adt = dfs(t, s, a);
 				if (!adt) break;
-				a -= adt;
-				flow += adt;
-				cost += adt * sum;
+				a -= adt; flow += adt; cost += adt * sum;
 			}
 		} while (dijkstra(n, s, t) && sum < 0); //feasible
 		//} while (dijkstra(n, s, t)); //max flow
