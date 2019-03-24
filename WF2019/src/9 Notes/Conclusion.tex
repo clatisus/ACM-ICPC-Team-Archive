@@ -6,6 +6,8 @@
 
 \item 翻硬币游戏的 $sg$ 值等于所有正面硬币的 $sg$ 值的异或。
 
+\item 对一个 $Nim$ 游戏，如果定义使得所有子游戏的 $sg$ 值为 $0$ 的玩家胜利，先手必胜的条件为：游戏的 $sg$ 值为 $0$ 且所有子游戏 $sg$ 值均不超过 $1$；或者游戏的 $sg$ 值不为 $0$ 且至少一个子游戏 $sg$ 值超过 $1$。
+
 \end{enumerate}
 
 \subsubsection{数学分析}
@@ -49,7 +51,7 @@ $n$维球的表面积公式：$\displaystyle{\frac{2\pi^{\frac{n}{2}}}{\Gamma(\f
 
 \item $B_{0} = 1, B_{i}=1-\sum_{j = 0}^{i-1}C_{i}^{j}\frac{B_{j}}{i-j+1}$。伯努利数的指数型母函数是 $\frac{x}{e^{x}-1}$。
 
-\item $\begin{bmatrix}n\\k\end{bmatrix}$ 表示 $n$ 个元素的置换中能被分解为 $k$ 个循环的置换个数，并定义 $s(n,k)=(-1)^{n-k}\begin{bmatrix}n\\k\end{bmatrix}$。 $\begin{bmatrix}n+1\\k\end{bmatrix}=n\begin{bmatrix}n\\k\end{bmatrix}+\begin{bmatrix}n\\k-1\end{bmatrix}(k>0)$，$\begin{bmatrix}0\\0\end{bmatrix}=1$，$\begin{bmatrix}n\\0\end{bmatrix}=\begin{bmatrix}0\\n\end{bmatrix}=0(n>0)$。
+\item $\begin{bmatrix}n\\k\end{bmatrix}$ 表示 $n$ 个元素的置换中能被分解为 $k$ 个循环的置换个数，并定义 $s(n,k)=(-1)^{n-k}\begin{bmatrix}n\\k\end{bmatrix}$。$\begin{bmatrix}n+1\\k\end{bmatrix}=n\begin{bmatrix}n\\k\end{bmatrix}+\begin{bmatrix}n\\k-1\end{bmatrix}(k>0)$，$\begin{bmatrix}0\\0\end{bmatrix}=1$，$\begin{bmatrix}n\\0\end{bmatrix}=\begin{bmatrix}0\\n\end{bmatrix}=0(n>0)$。
 该数列满足：
 
 - $(x)^{(n)}=\sum_{k=0}^{n}\begin{bmatrix}n\\k\end{bmatrix}x^{k}$
@@ -58,7 +60,7 @@ $n$维球的表面积公式：$\displaystyle{\frac{2\pi^{\frac{n}{2}}}{\Gamma(\f
 \item $\begin{Bmatrix}n\\k\end{Bmatrix}$ 表示有 $n$ 个元素的集合划分为 $k$ 个集合的方案数。$\begin{Bmatrix}n+1\\k\end{Bmatrix}=k\begin{Bmatrix}n\\k\end{Bmatrix}+\begin{Bmatrix}n\\k-1\end{Bmatrix}(k>0)$，$\begin{Bmatrix}0\\0\end{Bmatrix}=1$，$\begin{Bmatrix}n\\0\end{Bmatrix}=\begin{Bmatrix}0\\n\end{Bmatrix}=0(n>0)$。
 该数列满足：
 
-\item 设 $B_{n}$ 表示基数为 $n$ 的集合的划分方法数，则 $B_{n}$ 满足 $B_{n+1}=\sum_{k=0}^{n}{n\choose k}B_{k}$，$B_{n}=\sum_{k=0}^{n}S(n, k)$，其中 $S$ 是第二类斯特林数，对任意质数 $p$ 有 $B_{n+p}\equiv B_{n}+B_{n+1}\pmod{p}$，其指数型母函数是 $\sum_{n=0}^{\infty}\frac{B_{n}}{n!}x^{n}=e^{e^{x}-1}$。
+\item 设 $B_{n}$ 表示基数为 $n$ 的集合的划分方法数，则 $B_{n}$ 满足 $B_{n+1}=\sum_{k=0}^{n}{n\choose k}B_{k}$，$B_{n}=\sum_{k=0}^{n}S(n, k)$，其中 $S$ 是第二类斯特林数，对任意质数 $p$ 有 $B_{n+p^{m}}\equiv mB_{n}+B_{n+1}\pmod{p}$，其指数型母函数是 $\sum_{n=0}^{\infty}\frac{B_{n}}{n!}x^{n}=e^{e^{x}-1}$。
 
 - $\begin{Bmatrix}n\\k\end{Bmatrix}=\frac{1}{k!}\sum_{i=0}^{k}(-1)^{i}{k\choose i}(k-i)^{n}$
 
@@ -135,5 +137,26 @@ $$
 \begin{enumerate}
 
 \item $x_{n+1}=x_{n}-\frac{f(x_{n})}{f'(x_{n})}$
+
+\item 设有一棵无限的满三叉树，根结点表示列向量 $(3,4,5)^{T}$ ，设有三个矩阵 $
+A=\begin{pmatrix}
+1&-2&2\\
+2&-1&2\\
+2&-2&3\\
+\end{pmatrix}
+,
+B=\begin{pmatrix}
+1&2&2\\
+2&1&2\\
+2&2&3\\
+\end{pmatrix}
+,
+C=\begin{pmatrix}
+-1&2&2\\
+-2&1&2\\
+-2&2&3\\
+\end{pmatrix}
+$ 设父结点的向量为 $\alpha$，则它从左到右的三个孩子的向量分别为 $A\alpha, B\alpha, C\alpha$，这棵树不重不漏地枚举完了所有基本毕达哥拉斯三元组（$a^{2}+b^{2}=c^{2}$）。
+
 
 \end{enumerate}
