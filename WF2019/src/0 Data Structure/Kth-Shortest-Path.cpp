@@ -64,4 +64,4 @@ namespace kth { // longest
 			rt[i] = nullptr;
 			std::vector<edge>().swap(vec[i]);
 			std::vector<edge>().swap(_vec[i]);
-		}}};
+		}}}

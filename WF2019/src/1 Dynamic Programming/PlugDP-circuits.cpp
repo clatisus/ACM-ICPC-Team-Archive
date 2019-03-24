@@ -67,4 +67,4 @@ namespace circuits {
 		assert(cur.count(0));
 		printf("%d\n", cur[0]);
 	}
-};
+}

@@ -78,4 +78,4 @@ namespace LCT {
 		// null->r_siz = null->v_siz = 0;
 		null->ch[0] = null->ch[1] = null->p = null->max =null;
 	}
-};
+}

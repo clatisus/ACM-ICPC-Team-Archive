@@ -42,4 +42,4 @@ namespace sais {
 			if (ht[rk[i]] = h) --h;
 		}
 	}
-};
+}

@@ -33,4 +33,4 @@ namespace SuffixArray { // 字符串从1开始
 				while(i+k<=n && j+k<=n && s[i+k]==s[j+k]) ++k;
 			}
 			height[rk[i]] = k;
-		}}};
+		}}}

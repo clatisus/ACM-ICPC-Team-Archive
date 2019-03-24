@@ -57,4 +57,4 @@ namespace lct {
 		return x - pool;
 	}
 	int find(star x) {return access(x), kth(x, 1);}
-};
+}

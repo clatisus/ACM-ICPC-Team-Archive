@@ -96,4 +96,4 @@ namespace primal_dual {
 			std::vector<int>().swap(vec[i]);
 		M = sum = flow = cost = 0;
 	}
-};
+}

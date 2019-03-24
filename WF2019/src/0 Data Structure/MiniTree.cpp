@@ -21,4 +21,4 @@ namespace mini_tree {
 			while (top && !isanc(st[top], st[i])) --top;
 			_vec[st[top]].e_b(st[i],dep[st[i]]-dep[st[top]]);
 			st[++top] = st[i];
-		}}};
+		}}}

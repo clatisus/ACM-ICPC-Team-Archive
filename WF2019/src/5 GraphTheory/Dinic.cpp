@@ -52,5 +52,5 @@ namespace maxFlow {
 		}
 		return ret;
 	}
-};
+}
 

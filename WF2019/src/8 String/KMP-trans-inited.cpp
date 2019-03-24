@@ -21,4 +21,4 @@ namespace KMP {
 		for (int j = 0; j < sigma; ++j)
 			trans[n][j] = trans[fail[n]][j];
 	}
-};
+}

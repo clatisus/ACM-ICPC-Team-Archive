@@ -85,4 +85,4 @@ namespace dlx_with_overlapping{
 		dfs(MAX, 0);
 		return ans;
 	}
-};
+}

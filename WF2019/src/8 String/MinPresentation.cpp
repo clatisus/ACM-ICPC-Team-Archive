@@ -16,4 +16,4 @@ namespace minimal_representation {
 		}
 		return std::min(i, j);
 	}
-};
+}

@@ -17,4 +17,4 @@ namespace fastIO {
 		x *= f;
 	}
 #undef BSIZE
-};
+}

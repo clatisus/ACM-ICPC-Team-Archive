@@ -12,4 +12,4 @@ namespace Manacher {
 			R[i] = j;
 			for (k = 1; k < j && R[i - k] != R[i] - k; ++k)
 				R[i + k] = std::min(R[i - k], R[i] - k);
-		}}};
+		}}}

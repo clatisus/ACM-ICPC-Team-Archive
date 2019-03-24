@@ -40,4 +40,4 @@ namespace SAM {
 		for (int i = 1; i <= n; ++i) cnt[i] += cnt[i - 1];
 		for (int i = tot; i; --i) ord[cnt[maxlen[i]]--] = i;
 	}
-};
+}

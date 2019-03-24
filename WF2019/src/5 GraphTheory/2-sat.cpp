@@ -28,4 +28,4 @@ struct twoSat{   //for 2-sat MAXN is double large
 		}
 		return true;
 	}
-};
+}

@@ -106,4 +106,4 @@ namespace simple_path {
 		if (cur.count(2)) ans = std::max(ans, cur[2]);
 		printf("%d\n", ans);
 	}
-};
+}
