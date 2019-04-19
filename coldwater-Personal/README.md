@@ -2,4 +2,4 @@
 
 ## Topcoder
 
-`srm 6xx`: `1/100`
+ - [x] SRM 755
