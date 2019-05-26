@@ -39,7 +39,7 @@ poly operator * (const poly &p)const{
 	std::vector <comp> aux(lenret), aux1(lenret), aux2(lenret), aux3(lenret);
 	for (int i = 0; i <= len; ++ i)
 		aux[i] = comp(a[i] / mod, a[i] % mod);
-	for (int i = 0; i <= p.len; ++ i){
+	for (int i = 0; i <= p.len; ++ i)
 		aux2[i] = comp(p.a[i] / mod, p.a[i] % mod);
 	FFTcomb(aux, aux1); FFTcomb(aux2, aux3);
 	for (int i = 0; i < lenret; ++ i){
