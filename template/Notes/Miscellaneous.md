@@ -39,7 +39,7 @@ C=\begin{pmatrix}
 \end{pmatrix}
 $$
 
-设父结点的向量为 $\alpha$ ，则它从左到右的三个孩子的向量分别为 $A\alpha, B\alpha, C\alpha$ ，这棵树不重不漏地枚举完了所有基本毕达哥拉斯三元组（$a^{2}+b^{2}=c^{2}$）。
+设父结点的向量为 $\alpha$，则它从左到右的三个孩子的向量分别为 $A\alpha, B\alpha, C\alpha$，这棵树不重不漏地枚举完了所有基本毕达哥拉斯三元组（$a^{2}+b^{2}=c^{2}$）。
 
 ## 最大反链
 
@@ -95,4 +95,3 @@ $$
 |      |     $\pm\frac{1}{3}\sqrt{5+2\sqrt{\frac{10}{7}}}$     | $\frac{322-13\sqrt{70}}{900}$ |
 
 若积分区间不是 $[-1,1]$，那么需要变换积分区间：$\int_{a}^{b}f(x)\mathbb{d}x=\frac{b-a}{2}\int_{-1}^{1}f(\frac{b-a}{2}x+\frac{a+b}{2})\mathbb{d}x$
-

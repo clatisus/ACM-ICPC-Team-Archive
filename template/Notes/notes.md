@@ -34,20 +34,37 @@ $n$维球的表面积公式：$\displaystyle{\frac{2\pi^{\frac{n}{2}}}{\Gamma(\f
  - $\Gamma(z)\Gamma(z+\frac{1}{2})=2^{1-2z}\sqrt{\pi}\Gamma(2z)$
  - $\Gamma(\frac{1}{2})=\sqrt{\pi}$
 
+## KKT 条件
+
+设有函数 $f(\mathbf{p})$，我们要求在 $g_{1}(\mathbf{p})\le0,\cdots,g_{n}(\mathbf{p})\le0,h_{1}(\mathbf{p})=\cdots=h_{m}(\mathbf{p})=0$ 的条件下求其极值，则必要条件为：
+
+$$
+\begin{cases}
+&\nabla f(\mathbf{p})+\sum_{i=1}^{m}\lambda_{i}\nabla h_{i}(\mathbf{p})+\sum_{i=1}^{n}\mu_{i}\nabla g_{i}(\mathbf{p})=0\\
+&h_{i}(\mathbf{p})=0\\
+&\mu_{i}g_{i}(\mathbf{p})=0\\
+&\mu_{i}\ge0\\
+&g_{i}(\mathbf{p})\le0
+\end{cases}
+$$
+
+可以看出这是拉格朗日乘因子法的推广。如果 $f$ 是凸函数（注意凸函数要求定义域是凸集，即 $g$ 和 $h$ 的限制以及 $f$ 的定义域都要是凸集），那么 KKT 条件是充要的。
+
+
 
 # 组合数学
 
 ## 划分数
 
-设 $p(n)$ 为将 $n$ 写成若干个正整数和的方案数，若 $i$ 为自然数，称 $\frac{3i^{2}-i}{2}$ 和 $\frac{3i^{2}+i}{2}$ 为广义五边形数，并定义 $f(\frac{3i^{2}-i}{2}) = f(\frac{3i^{2}+i}{2}) = i$ ，则 $p(n) = \sum_{u,1 \le u \le n}(-1)^{f(u) - 1}p(n-u)$ ，其中 $u$ 为广义五边形数。$\displaystyle{\phi(x)=\prod_{i=1}^{\infty}(1-x^{i})}$ 称为欧拉函数，它是划分数生成函数的逆。 $\phi(x) = \sum_{u}(-1)^{f(u)}x^{u}$ ，其中 $u$ 为广义五边形数。从 $0$ 开始， $p(n)$ 的前若干项为 $1,1,2,3,5,7,11,15,22,30,42,56,77$ 。
+设 $p(n)$ 为将 $n$ 写成若干个正整数和的方案数，若 $i$ 为自然数，称 $\frac{3i^{2}-i}{2}$ 和 $\frac{3i^{2}+i}{2}$ 为广义五边形数，并定义 $f(\frac{3i^{2}-i}{2}) = f(\frac{3i^{2}+i}{2}) = i$，则 $p(n) = \sum_{u,1 \le u \le n}(-1)^{f(u) - 1}p(n-u)$，其中 $u$ 为广义五边形数。$\displaystyle{\phi(x)=\prod_{i=1}^{\infty}(1-x^{i})}$ 称为欧拉函数，它是划分数生成函数的逆。$\phi(x) = \sum_{u}(-1)^{f(u)}x^{u}$，其中 $u$ 为广义五边形数。从 $0$ 开始，$p(n)$ 的前若干项为 $1,1,2,3,5,7,11,15,22,30,42,56,77$ 。
 
 ## 模2意义下的组合数
 
-${n\choose m}\% 2=!(m\And(\sim n))$ 。由此易知， ${n\choose m}\% 2=1$ ，当且仅当  $n$ 在 $m$ 为 $1$ 的二进制位上也都为 $1$ 。易知， ${n+m\choose m}\% 2=1$ ，当且仅当  $n$ 在 $m$ 为 $1$ 的二进制位上都为 $0$ 。
+${n\choose m}\% 2=!(m\And\sim n)$。由此易知，${n\choose m}\% 2=1$，当且仅当 $n$ 在 $m$ 为 $1$ 的二进制位上也都为 $1$。易知，${n+m\choose m}\% 2=1$，当且仅当 $n$ 在 $m$ 为 $1$ 的二进制位上都为 $0$。
 
 ## 默慈金数
 
-设 $M_{n}$ 表示在一个圆上的 $n$ 个不同点间，画出彼此不相交的弦的全部方法的总数。 $M_{0} = M_{1} = 1, M_{n + 1} = M_{n}+\sum_{i=0}^{n-1}M_{i}M_{n-i-1} = \frac{2n+3}{n+3}M_{n}+\frac{3n}{n+3}M_{n-1}$ 。它也可以表示数列 $\{a_{i}\}(0 \le i \le n)$ 的数量，满足： $a_{0} = a_{n} = 0, a_{i} \ge 0, |a_{i}-a_{i + 1}| \le 1$ 。从 $0$ 开始， $M_{n}$ 的前若干项为
+设 $M_{n}$ 表示在一个圆上的 $n$ 个不同点间，画出彼此不相交的弦的全部方法的总数。$M_{0} = M_{1} = 1, M_{n + 1} = M_{n}+\sum_{i=0}^{n-1}M_{i}M_{n-i-1} = \frac{2n+3}{n+3}M_{n}+\frac{3n}{n+3}M_{n-1}$。它也可以表示数列 $\{a_{i}\}(0 \le i \le n)$ 的数量，满足：$a_{0} = a_{n} = 0, a_{i} \ge 0, |a_{i}-a_{i + 1}| \le 1$。从 $0$ 开始，$M_{n}$ 的前若干项为
 $$
 \begin{aligned}
 &1,1,2,4,9,21,51,127,323,835,2188,\\
@@ -60,7 +77,7 @@ $$
 
 ## 卡特兰数
 
-设 $C_{0}=1,C_{n}=\sum_{i=0}^{n-1}C_{i}C_{n-i-1}$ ，它满足 $\displaystyle{C_{n} = \frac{C_{2n}^{n}}{n+1}}$ ，它可以表示：
+设 $C_{0}=1,C_{n}=\sum_{i=0}^{n-1}C_{i}C_{n-i-1}$，它满足 $\displaystyle{C_{n} = \frac{C_{2n}^{n}}{n+1}}$，它可以表示：
 
 - $n$ 对括号组成的合法的表达式种数
 - $n$ 个结点不同构二叉树的方案数
@@ -115,7 +132,6 @@ $\begin{bmatrix}n\\k\end{bmatrix}$ 表示 $n$ 个元素的置换中能被分解�
 ### 第二类斯特林数
 
 $\begin{Bmatrix}n\\k\end{Bmatrix}$ 表示有 $n$ 个元素的集合划分为 $k$ 个集合的方案数。$\begin{Bmatrix}n+1\\k\end{Bmatrix}=k\begin{Bmatrix}n\\k\end{Bmatrix}+\begin{Bmatrix}n\\k-1\end{Bmatrix}(k>0)$，$\begin{Bmatrix}0\\0\end{Bmatrix}=1$，$\begin{Bmatrix}n\\0\end{Bmatrix}=\begin{Bmatrix}0\\n\end{Bmatrix}=0(n>0)$。
-
 该数列满足：
 
 - $\begin{Bmatrix}n\\k\end{Bmatrix}=\frac{1}{k!}\sum_{i=0}^{k}(-1)^{i}{k\choose i}(k-i)^{n}$
@@ -129,7 +145,7 @@ $\begin{Bmatrix}n\\k\end{Bmatrix}$ 表示有 $n$ 个元素的集合划分为 $k$
 
 ## 贝尔数
 
-设 $B_{n}$ 表示基数为 $n$ 的集合的划分方法数，则 $B_{n}$ 满足 $B_{n+1}=\sum_{k=0}^{n}{n\choose k}B_{k}$ ， $B_{n}=\sum_{k=0}^{n}S(n, k)$ ，其中 $S$ 是第二类斯特林数，对任意质数 $p$ 有 $B_{n+p}\equiv B_{n}+B_{n+1}\pmod{p}$ ，其指数型母函数是 $\sum_{n=0}^{\infty}\frac{B_{n}}{n!}x^{n}=e^{e^{x}-1}$ 。从 $0$ 开始， $B_{n}$ 的前若干项为 
+设 $B_{n}$ 表示基数为 $n$ 的集合的划分方法数，则 $B_{n}$ 满足 $B_{n+1}=\sum_{k=0}^{n}{n\choose k}B_{k}$，$B_{n}=\sum_{k=0}^{n}S(n, k)$，其中 $S$ 是第二类斯特林数，对任意质数 $p$ 有 $B_{n+p^{m}}\equiv mB_{n}+B_{n+1}\pmod{p}$，其指数型母函数是 $\sum_{n=0}^{\infty}\frac{B_{n}}{n!}x^{n}=e^{e^{x}-1}$。从 $0$ 开始，$B_{n}$ 的前若干项为 
 $$
 \begin{aligned}
 &1,1,2,5,15,52,203,877,\\
@@ -203,7 +219,7 @@ $$
 
 ## 库默尔定理
 
-设 $p$ 为质数，$a,b$ 在 $p$ 进制下的表示分别为 $\overline{\cdots a_{n}\cdots a_{0}}$ 和 $\overline{\cdots b_{n}\cdots b_{0}}$，那么 ${a\choose b}$ 中含有质因子 $p$ 的个数为满足 $\overline{\cdots a_{i}\cdots a_{0}}<\overline{\cdots b_{i}\cdots b_{0}}$ 的下标 $i$ 的个数。特别的，当 $a<b$ 时，${a\choose b}=0$，而满足条件的 $i$ 也有无穷多个。从另一种角度来说，也可以理解成 $a$ 和 $a-b$ 在做 $p$ 进制加法时产生进位的次数。这可以得到一个显然的推论：${a\choose b}$ 中 $p$ 的个数不超过 $\log_{p}a$。
+设 $p$ 为质数，$a,b$ 在 $p$ 进制下的表示分别为 $\overline{\cdots a_{n}\cdots a_{0}}$ 和 $\overline{\cdots b_{n}\cdots b_{0}}$，那么 ${a\choose b}$ 中含有质因子 $p$ 的个数为满足 $\overline{\cdots a_{i}\cdots a_{0}}<\overline{\cdots b_{i}\cdots b_{0}}$ 的下标 $i$ 的个数。特别的，当 $a<b$ 时，${a\choose b}=0$，而满足条件的 $i$ 也有无穷多个。从另一种角度来说，也可以理解成 $b$ 和 $a-b$ 在做 $p$ 进制加法时产生进位的次数。这可以得到一个显然的推论：${a\choose b}$ 中 $p$ 的个数不超过 $\log_{p}a$。
 
 ## 不动函数的数量
 
@@ -249,11 +265,18 @@ $\sum{n\choose2k}{k\choose m}=\frac{n}{n-m}{n-m\choose n-2m}2^{n-2m-1}$
 
 最大化$x+ky$，$k>0$时维护上凸壳，$k<0$时维护下凸壳，最小化时相反。
 
+# 树上连通块DP
+
+- 强制选根的情况，可以按`dfs`序进行`dp`，选择$i$则转移到$i+1$，否则转移到$R[vp[i]]+1$这样把合并操作替换为了插入操作，在插入比合并更容易做的情况可以考虑；
+- 统计满足某性质的树上连通块个数时，枚举每个点，计算包含这个点的合法方案数，再枚举每条边，计算同时包含这条边两个端点的合法方案数，分别求和后，用前者减去后者，就能让所有合法的非空树上连通块被统计到恰好$1$次；
+- 不强制选根的情况，点分治，每次强制选择分治中心；
+- 这样把合并操作替换为了插入操作，在插入更容易做的情况可以考虑；
+
 # 博弈论
 
 ## 威佐夫游戏
 
-有两堆石子，两人轮流取，每次可以从一堆中取若干颗石子，也可以从两堆中取一样多的石子。负态为$\{\lfloor k\cdot\frac{1+\sqrt{5}}{2}\rfloor, k+\lfloor k\cdot\frac{1+\sqrt{5}}{2}\rfloor\}(k = 0,1,2,\cdots)$
+有两堆石子，两人轮流取，每次可以从一堆中取若干颗石子，也可以从两堆中取一样多的石子。负态为 $\{\lfloor k\cdot\frac{1+\sqrt{5}}{2}\rfloor, k+\lfloor k\cdot\frac{1+\sqrt{5}}{2}\rfloor\}(k = 0,1,2,\cdots)$
 
 ## 翻硬币游戏
 
@@ -270,34 +293,34 @@ $a\otimes b=\text{mex}\{a'\otimes b\oplus a\otimes b'\oplus a'\otimes b'|0\le a'
 
 nim积还具有如下的性质：
 
-- 对全体自然数 $n$ ， $[0,2^{2^{n}}-1]$ 中的自然数在 nim 和和 nim 积下成一域
-- 对全体自然数 $n$ ， $2^{2^{n}}\otimes x=2^{2^{n}}\times x(0\le x<2^{2^{n}})$
-- 对全体自然数 $n$ ， $2^{2^{n}}\otimes 2^{2^{n}}=\frac{3}{2}\cdot2^{2^{n}}=2^{2^{n}}\oplus2^{2^{n}-1}$
+- 对全体自然数 $n$，$[0,2^{2^{n}}-1]$ 中的自然数在 nim 和和 nim 积下成一域
+- 对全体自然数 $n$，$2^{2^{n}}\otimes x=2^{2^{n}}\times x(0\le x<2^{2^{n}})$
+- 对全体自然数 $n$，$2^{2^{n}}\otimes 2^{2^{n}}=\frac{3}{2}\cdot2^{2^{n}}=2^{2^{n}}\oplus2^{2^{n}-1}$
 
 ## surreal number
 
-$surreal\;number$ 是一个包含无穷小、无穷大和实数的域，用它可以十分方便地研究一些不平等博弈问题。 $surreal\;number$ 定义为一个集合对 $\{L|R\}$ ，其中 $L$ 中的每个元素小于 $R$ 中的每个元素。我们称 $x\le y$ 当且仅当不存在 $x_{L}\in X_{L}$ 使得 $y\le x_{L}$ ，且不存在 $y_{R}\in Y_{R}$ 使得 $y_{R}\le x$ 。 $surreal\;number$ 有如下的一些性质：
+$surreal\;number$ 是一个包含无穷小、无穷大和实数的域，用它可以十分方便地研究一些不平等博弈问题。$surreal\;number$ 定义为一个集合对 $\{L|R\}$，其中 $L$ 中的每个元素小于 $R$ 中的每个元素。我们称 $x\le y$ 当且仅当不存在 $x_{L}\in X_{L}$ 使得 $y\le x_{L}$，且不存在 $y_{R}\in Y_{R}$ 使得 $y_{R}\le x$。 $surreal\;number$ 有如下的一些性质：
 
-- 对于一个 $surreal\;number$ $x=\{L|R\}$  ， $x$ 大于 $L$ 中的任意一个元素，小于 $R$ 中的任意一个元素。
-- 对于一个 $surreal\;number$ $x=\{L|R\}$ ，若 $L$ 有最大值 $l_{max}$，则 $x=\{l_{max}|R\}$ ，对于 $R$ 同理。
+- 对于一个 $surreal\;number$ $x=\{L|R\}$ ，$x$ 大于 $L$ 中的任意一个元素，小于 $R$ 中的任意一个元素。
+- 对于一个 $surreal\;number$ $x=\{L|R\}$ ，若 $L$ 有最大值 $l_{max}$，则 $x=\{l_{max}|R\}$，对于 $R$ 同理。
 - 设 $a$ 到 $b$ 之间最早出生的 $surreal\;number$ 在第 $i$ 天出生，那么在 $a$ 到 $b$ 之间且在第 $i$ 天出生的 $surreal\;number$ 有且只有一个。
-- 若 $a<x<b$ 且 $x$ 是 $a$ 和 $b$ 之间最早出生的 $surreal\;number$ ，则 $x=\{a|b\}$ 
+- 若 $a<x<b$ 且 $x$ 是 $a$ 和 $b$ 之间最早出生的 $surreal\;number$，则 $x=\{a|b\}$ 
 
-$surreal\;number$ 的加法法则为 $x+y=\{X_{L}|X_{R}\}+\{Y_{L}|Y_{R}\}=\{X_{L}+y,x+Y_{L}|X_{R}+y,x+Y_{R}\}$ 。
+$surreal\;number$ 的加法法则为 $x+y=\{X_{L}|X_{R}\}+\{Y_{L}|Y_{R}\}=\{X_{L}+y,x+Y_{L}|X_{R}+y,x+Y_{R}\}$
 
 $surreal\;number$ 的取反法则为 $-x=-\{X_{L}|X_{R}\}=\{-X_{R}|-X_{L}\}$ 
 
 $surreal\;number$ 的乘法法则为 $xy=\{X_{L}|X_{R}\}\{Y_{L}|Y_{R}\}=\{X_{L}y+xY_{L}-X_{L}Y_{L}，X_{R}y+xY_{R}-X_{R}Y_{R}|X_{L}y+xY_{R}-X_{L}Y_{R}，xY_{L}+X_{R}y-X_{R}Y_{L}\}$
 
-$surreal\;number$ 的取逆法则为 $\displaystyle{\frac{1}{y}=\{0,\frac{1+(y^{R}-y)(\frac{1}{y})^{L}}{y^{R}},\frac{1+(y^{L}-y)(\frac{1}{y})^{R}}{y^{L}}|\frac{1+(y^{L}-y)(\frac{1}{y})^{L}}{y^{L}},\frac{1+(y^{R}-y)(\frac{1}{y})^{R}}{y^{R}}\}}$ ，其中 $y^{L}>0,y^{R}>0$
+$surreal\;number$ 的取逆法则为 $\displaystyle{\frac{1}{y}=\{0,\frac{1+(y^{R}-y)(\frac{1}{y})^{L}}{y^{R}},\frac{1+(y^{L}-y)(\frac{1}{y})^{R}}{y^{L}}|\frac{1+(y^{L}-y)(\frac{1}{y})^{L}}{y^{L}},\frac{1+(y^{R}-y)(\frac{1}{y})^{R}}{y^{R}}\}}$，其中 $y^{L}>0,y^{R}>0$
 
-设有一组合游戏处于局面 $P$ ，玩家 $L$ 可以转移到的状态为 $P^{L}$ ，玩家 $R$ 可以转移到的状态为 $P^{R}$ ，我们记 $P=\{P^{L}|P^{R}\}$ 。那么：
+设有一组合游戏处于局面 $P$，玩家 $L$ 可以转移到的状态为 $P^{L}$，玩家 $R$ 可以转移到的状态为 $P^{R}$，我们记 $P=\{P^{L}|P^{R}\}$。那么：
 
-- 若 $P>0$ ，则不论先手还是后手， $L$ 获胜
-- 若 $P<0$ ，则不论先手还是后手， $R$ 获胜
-- 若 $P=0$ ，则后手获胜
+- 若 $P>0$，则不论先手还是后手，$L$ 获胜
+- 若 $P<0$，则不论先手还是后手，$R$ 获胜
+- 若 $P=0$，则后手获胜
 
-类似于 $Nim$ 和游戏，若有 $n$ 个不平等游戏 $P_{1},\cdots,P_{n}$ ，它们分别对应的 $surreal\;number$ 为 $x_{1},\cdots,x_{n}$ ，则 $P_{1}+\cdots+P_{n}$ 对应的 $surreal\;number$ 为 $x_{1}+\cdots+x_{n}$ 。
+类似于 $Nim$ 和游戏，若有 $n$ 个不平等游戏 $P_{1},\cdots,P_{n}$，它们分别对应的 $surreal\;number$ 为 $x_{1},\cdots,x_{n}$，则 $P_{1}+\cdots+P_{n}$ 对应的 $surreal\;number$ 为 $x_{1}+\cdots+x_{n}$。
 
 最后给出一些无穷大和无穷小的 $surreal\;number$
 
@@ -313,23 +336,38 @@ $$
 \end{aligned}\\
 $$
 
+## SJ 定理
+
+对一个 $Nim$ 游戏，如果定义使得所有子游戏的 $sg$ 值为 $0$ 的玩家胜利，先手必胜的条件为：
+
+- 游戏的 $sg$ 值为 $0$ 且所有子游戏 $sg$ 值均不超过 $1$。
+- 游戏的 $sg$ 值不为 $0$ 且至少一个子游戏 $sg$ 值超过 $1$。
 
 
-# Geometry
 
-## 法向量极角序
-
-如果将$\vec{AB}$的法向量放在单位圆上，当$\vec{v}$与该法向量重合时，$\vec{OA}.dot(\vec{v})=\vec{OB}.dot(\vec{v})$，而在法向量的一侧满足$\vec{OA}.dot(\vec{v})<\vec{OB}.dot(\vec{v})$，另一侧满足$\vec{OA}.dot(\vec{v})>\vec{OB}.dot(\vec{v})$。
+# 计算几何
 
 ## 球面几何
 
-设球冠的高为 $h$ ，半径为 $R$ ，则表面积为 $2\pi Rh$ 。
+设球冠的高为 $h$，半径为 $R$，则表面积为 $2\pi Rh$。
 
 球面三角形的面积为 $(A+B+C-\pi)R^{2}$ 。
 
 球面正弦定理：$\frac{\sin A}{a} = \frac{\sin B}{b} = \frac{\sin C}{c}$
 
 球面余弦定理：$\cos a=\cos b\cos c+\sin b\sin c\cos A$, $\cos A=-\cos B\cos C+\sin B\sin C\cos a$
+
+## 皮克定理
+
+设有一格点多边形，其面积 $S=a+\frac{b}{2}-1$，其中 $a$ 表示多边形内部的整点数，$b$ 表示多边形边界上的整点数。
+
+## 直线反演
+
+将 $y=kx+b$ 反演到 $(-k,b)$，将 $(k,b)$ 反演到 $y=-kx+b$。这样，两点共线反演为两条直线交于一点，该点是原直线反演出的点。
+
+## 笛卡尔定理
+
+假设有四个两两相切的圆，设第 $i$ 个的曲率为 $k_{i}=\pm\frac{1}{r_{i}}$，当该圆与其它圆相外切时，曲率为正，否则为负。那么有 $2\sum_{i=1}^{4}k_{i}^{2}=(\sum_{i=1}^{4}k_{i})^{2}$。推广到 $n$ 维，有 $n\sum_{i=1}^{n+2}k_{i}^{2}=(\sum_{i=1}^{n+2}k_{i})^{2}$。
 
 ## 其它
 
@@ -339,7 +377,7 @@ $$
 
 有理坐标正多边形只有正方形一种。
 
-
+三角形的垂心、外心、重心和九点圆圆心共线，其中九点圆圆心到垂心和外心的距离相等，而且重心到外心的距离是重心到垂心距离的一半。
 
 
 # Best Theorem
@@ -647,7 +685,7 @@ C=\begin{pmatrix}
 \end{pmatrix}
 $$
 
-设父结点的向量为 $\alpha$ ，则它从左到右的三个孩子的向量分别为 $A\alpha, B\alpha, C\alpha$ ，这棵树不重不漏地枚举完了所有基本毕达哥拉斯三元组（$a^{2}+b^{2}=c^{2}$）。
+设父结点的向量为 $\alpha$，则它从左到右的三个孩子的向量分别为 $A\alpha, B\alpha, C\alpha$，这棵树不重不漏地枚举完了所有基本毕达哥拉斯三元组（$a^{2}+b^{2}=c^{2}$）。
 
 ## 最大反链
 
@@ -705,31 +743,36 @@ $$
 若积分区间不是 $[-1,1]$，那么需要变换积分区间：$\int_{a}^{b}f(x)\mathbb{d}x=\frac{b-a}{2}\int_{-1}^{1}f(\frac{b-a}{2}x+\frac{a+b}{2})\mathbb{d}x$
 
 
-
 # 数论
 
 ## 连分数与佩尔方程
 
 记 $<x_{0},x_{1},x_{2},x_{3},\cdots> = x_{0}+\frac{1}{x_{1}+\frac{1}{x_{2}+\frac{1}{x_{3}+\cdots}}}$ ，其中 $x_{i}>0(i\ge1)$ 。称 $\frac{p_{n}}{q_n}=<x_{0},x_{1},\cdots,x_{n}>$ 为它的第 $n$ 个渐近分数。补充定义 $p_{-1}=1,q_{-1}=0$ ，则有递推式 $p_{n}=x_{n}p_{n-1}+p_{n-2},q_{n}=x_{n}q_{n-1}+q_{n-2}(n\ge1)$ 。对无限简单连分数，我们称 $\xi_{n}=<x_{n},x_{n+1},\cdots>$ 为它的第 $n$ 个完全商，满足 $\xi_{0}=\frac{p_{n}\xi_{n+1}+p_{n-1}}{q_{n}\xi_{n+1}+q_{n-1}}$。一个实数是二次根式当且仅当它是循环简单连分数，我们用 $<x_{0},\cdots,x_{m_{0}-1},<\overline{x_{m_{0}},\cdots,x_{m_{0}+l-1}}>>$ ，其中 $l$ 是 $\xi_{0}$ 的周期。设 $\xi_{0}=\frac{\sqrt{d}+c_{0}}{r_{0}},q_{0}|d-c^{2}_{0}$ ，我们有 $\xi_{n}=\frac{\sqrt{d}+c_{n}}{r_{n}}$ ，其中 $r_{n+1}=r_{n-1}+\frac{c_{n}^{2}-c_{n+1}^{2}}{r_{n}}=r_{n-1}+(c_{n}-c_{n+1})x_{n}$,$c_{n+1}=x_{n}r_{n}-c_{n}$,$a_{n}=\lfloor\xi_{n}\rfloor(n\ge1)$ 。
 
-我们给出两个不定方程： $x-dy^{2}=1$ 和 $x-dy^{2}=-1$ ，若 $d$ 为完全平方数，则第一个方程只有解 $(\pm1,0)$ ，第二个方程无解。若 $d$ 不为完全平方数，设 $\xi_{0}=\sqrt{d}$ ，设它的循环连分数周期为 $l$ ，渐近分数为 $\frac{p_{n}}{q_{n}}$ ，则：
+我们给出两个不定方程：$x-dy^{2}=1$ 和 $x-dy^{2}=-1$，若 $d$ 为完全平方数，则第一个方程只有解 $(\pm1,0)$，第二个方程无解。若 $d$ 不为完全平方数，设 $\xi_{0}=\sqrt{d}$，设它的循环连分数周期为 $l$，渐近分数为 $\frac{p_{n}}{q_{n}}$，则：
 
-- 当 $l$ 为偶数时，第一个方程的全体正解为 $x=p_{jl-1},y=q_{jl-1},j=1,2,3,\cdots$ ，第二个方程无解
-- 当 $l$ 为奇数时，第一个方程的全体正解为 $x=p_{jl-1},y=q_{jl-1},j=2,4,6,\cdots$ ，第二个方程的全体正解为 $x=p_{jl-1},y=q_{jl-1},j=1,3,5,\cdots$
+- 当 $l$ 为偶数时，第一个方程的全体正解为 $x=p_{jl-1},y=q_{jl-1},j=1,2,3,\cdots$，第二个方程无解
+- 当 $l$ 为奇数时，第一个方程的全体正解为 $x=p_{jl-1},y=q_{jl-1},j=2,4,6,\cdots$，第二个方程的全体正解为 $x=p_{jl-1},y=q_{jl-1},j=1,3,5,\cdots$
 
 还有另一种更加简单的表示方法：
 
-- 当 $l$ 为偶数时，第一个方程的全体解为 $x+y\sqrt{d}=\pm(p_{l-1}\pm q_{l-1}\sqrt{d})^{j},j=0,1,2,\cdots$ ，第二个方程无解
-- 当 $l$ 为奇数时，第一个方程的全体正解为 $x+y\sqrt{d}=\pm(p_{l-1}\pm q_{l-1}\sqrt{d})^{j},j=0,2,4,\cdots$ ，第二个方程的全体正解为 $x+y\sqrt{d}=\pm(p_{l-1}\pm q_{l-1}\sqrt{d})^{j},j=1,3,5,\cdots$
+- 当 $l$ 为偶数时，第一个方程的全体解为 $x+y\sqrt{d}=\pm(p_{l-1}\pm q_{l-1}\sqrt{d})^{j},j=0,1,2,\cdots$，第二个方程无解
+- 当 $l$ 为奇数时，第一个方程的全体正解为 $x+y\sqrt{d}=\pm(p_{l-1}\pm q_{l-1}\sqrt{d})^{j},j=0,2,4,\cdots$，第二个方程的全体正解为 $x+y\sqrt{d}=\pm(p_{l-1}\pm q_{l-1}\sqrt{d})^{j},j=1,3,5,\cdots$
+
+设有一佩尔方程 $x^{2}-ny^{2}=k$，利用 Brahmagupta's identity 求解：$(a^{2}+nb^{2})(c^{2}+nd^{2})=(ac-nbd)^{2}+n(ad+bc)^{2}=(ac+nbd)^{2}+n(ad-bc)^{2}$。
+
+设 $(x_{1},y_{1})$ 是 $x^{2}-ny^{2}=k$ 的最小解，$(x_{2},y_{2})$ 是 $x^{2}-ny^{2}=1$ 的解，那么 $(x_{1}^{2}-ny_{1}^{2})(x_{2}^{2}-ny_{2}^{2})=(x_{1}x_{2}+ny_{1}y_{2})^{2}-n(x_{1}y_{2}+x_{2}y_{1})^{2}=(x_{1}x_{2}-ny_{1}y_{2})^{2}-n(x_{1}y_{2}-x_{2}y_{1})^{2}=k$。从而 $(x_{1}x_{2}+ny_{1}y_{2},x_{1}y_{2}+x_{2}y_{1})$ 和 $(x_{1}x_{2}-ny_{1}y_{2},x_{1}y_{2}-x_{2}y_{1})$ 都是原方程的解。
+
+对于 $ax^{2}-by^{2}=c$ 型的佩尔方程，改写成 $(ax)^{2}-aby^{2}=ac$ 的形式就可以了。
 
 ## 指数循环节
 
-对 $\forall a, b, n \in N^{+}, b \ge \phi(n)$ ，有 $a ^ {b} \equiv a ^ {b \% \phi(n) + \phi(n)}\pmod{n}$ ，注意 $b \ge \phi(n)$ 是必要条件，以及式子中取模后指数必须加上 $\phi(n)$ ，否则结果可能会出错。
+对 $\forall a, b, n \in N^{+}, b \ge \phi(n)$，有 $a ^ {b} \equiv a ^ {b \% \phi(n) + \phi(n)}\pmod{n}$，注意 $b \ge \phi(n)$ 是必要条件，以及式子中取模后指数必须加上 $\phi(n)$，否则结果可能会出错。
 
 ## 威尔逊定理
 
 $$
-\prod_{i=1,\text{gcd}(i,m)=1}^{m}i\equiv\begin{cases}
+\prod_{i=1,\gcd(i,m)=1}^{m}i\equiv\begin{cases}
 &-1&(m=1,2,4,p^{l},2p^{l},\text{ p is odd prime})\\
 &1&(\text{otherwise})
 \end{cases}\pmod{m}
