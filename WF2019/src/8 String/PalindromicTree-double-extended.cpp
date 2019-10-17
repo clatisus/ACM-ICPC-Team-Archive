@@ -41,6 +41,7 @@ struct PalindromicTree {
 	}
 	inline void init() {
 		first = last = tot = 0;
-		link[new_node(0)] = new_node(-1);
+		int rt = new_node(0);
+		link[rt] = new_node(-1);
 	}
 };
