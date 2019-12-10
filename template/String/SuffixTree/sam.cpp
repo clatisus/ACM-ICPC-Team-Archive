@@ -122,23 +122,9 @@ int query(int ql, int qr, int x, int l = 1, int r = n) {
     return ret;
   }
 }
-
-int get_right(int x) {
-  int l = 1, r = n;
-  while (l < r) {
-    if (sum[ls[x]]) {
-      x = ls[x];
-      r = mid;
-    } else {
-      x = rs[x];
-      l = mid + 1;
-    }
-  }
-  return l;
-}
 }
 
-int sl[max_N], sr[max_N];
+int right[max_N], sl[max_N], sr[max_N];
 
 std::vector<int> vec[max_N];
 
@@ -162,14 +148,16 @@ void init() {
   for (int i = n; i; --i) {
     p = SAM::go[p][s[i - 1] - 'a'];
     SegmentTree::rt[p] = SegmentTree::new_node(i);
+    right[p] = i;
   }
   SAM::sort(n + 1);
   for (int i = SAM::tot; i > 1; --i) {
     int u = SAM::Q[i], v = SAM::par[u];
-    sl[u] = SegmentTree::get_right(SegmentTree::rt[u]) + SAM::len[v];
+    sl[u] = right[u] + SAM::len[v];
     sr[u] = sl[u] + SAM::len[u] - SAM::len[v];
-    SegmentTree::rt[v] = SegmentTree::merge(SegmentTree::rt[u], SegmentTree::rt[v]);
     vec[v].push_back(u);
+    right[v] = std::max(right[u], right[v]);
+    SegmentTree::rt[v] = SegmentTree::merge(SegmentTree::rt[u], SegmentTree::rt[v]);
   }
   for (int i = 1; i <= SAM::tot; ++i) {
     std::sort(vec[i].begin(), vec[i].end(), [&](int x, int y) { return s[sl[x] - 1] < s[sl[y] - 1]; });
